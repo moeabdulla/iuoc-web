@@ -15,6 +15,7 @@ export const latest = query({
 
 export const featured = query({
   args: {},
+  // Full-collection scans are fine at this catalog size (~700 docs, single channel); revisit if it grows past ~5k.
   handler: async (ctx) => {
     const all = await ctx.db
       .query("videos")
@@ -31,6 +32,7 @@ export const bySlug = query({
     return await ctx.db
       .query("videos")
       .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      // Slugs are unique by construction (makeSlug appends a youtubeId suffix); .unique() throwing on duplicates is intentional loud failure.
       .unique();
   },
 });
@@ -67,18 +69,25 @@ export const search = query({
 });
 
 export const paginate = query({
-  args: { paginationOpts: paginationOptsValidator, tag: v.optional(v.string()) },
+  args: { paginationOpts: paginationOptsValidator },
   handler: async (ctx, args) => {
-    const page = await ctx.db
+    return await ctx.db
       .query("videos")
       .withIndex("by_publishedAt")
       .order("desc")
       .paginate(args.paginationOpts);
-    if (!args.tag) return page;
-    return {
-      ...page,
-      page: page.page.filter((video) => video.tags.includes(args.tag!)),
-    };
+  },
+});
+
+export const byTag = query({
+  args: { tag: v.string() },
+  handler: async (ctx, args) => {
+    const all = await ctx.db
+      .query("videos")
+      .withIndex("by_publishedAt")
+      .order("desc")
+      .collect();
+    return all.filter((video) => video.tags.includes(args.tag)).slice(0, 200);
   },
 });
 
