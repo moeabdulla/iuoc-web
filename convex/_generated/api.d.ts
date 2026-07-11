@@ -8,13 +8,17 @@
  * @module
  */
 
+import type * as lib_youtube from "../lib/youtube.js";
+
 import type {
   ApiFromModules,
   FilterApi,
   FunctionReference,
 } from "convex/server";
 
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  "lib/youtube": typeof lib_youtube;
+}>;
 
 /**
  * A utility for referencing Convex functions in your app's public API.
