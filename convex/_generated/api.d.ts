@@ -11,6 +11,8 @@
 import type * as crons from "../crons.js";
 import type * as ingest from "../ingest.js";
 import type * as lib_youtube from "../lib/youtube.js";
+import type * as playlists from "../playlists.js";
+import type * as videos from "../videos.js";
 
 import type {
   ApiFromModules,
@@ -22,6 +24,8 @@ declare const fullApi: ApiFromModules<{
   crons: typeof crons;
   ingest: typeof ingest;
   "lib/youtube": typeof lib_youtube;
+  playlists: typeof playlists;
+  videos: typeof videos;
 }>;
 
 /**
