@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as crons from "../crons.js";
 import type * as ingest from "../ingest.js";
 import type * as lib_youtube from "../lib/youtube.js";
 
@@ -18,6 +19,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  crons: typeof crons;
   ingest: typeof ingest;
   "lib/youtube": typeof lib_youtube;
 }>;
