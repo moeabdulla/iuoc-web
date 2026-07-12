@@ -75,12 +75,11 @@
     font-feature-settings: "cv11", "ss01";
     /* Editorial atmosphere: a soft green wash anchored to the top,
        so pages never read as flat gray shadcn cards. */
-    background-image:
-      radial-gradient(
-        70rem 40rem at 50% -12rem,
-        hsl(var(--primary) / 0.1),
-        transparent 70%
-      );
+    background-image: radial-gradient(
+      70rem 40rem at 50% -12rem,
+      hsl(var(--primary) / 0.1),
+      transparent 70%
+    );
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
@@ -117,5 +116,28 @@
   .nav-underline:hover,
   .nav-underline:focus-visible {
     background-size: 100% 2px;
+  }
+
+  /* Orchestrated hero entrance: staggered fade-up on first paint.
+     Children opt in with .reveal-up and an inline animation-delay. */
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .reveal-up {
+    animation: reveal-up 0.75s cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-up {
+      animation: none;
+    }
   }
 }
