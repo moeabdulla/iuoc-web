@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Doc } from "@/convex/_generated/dataModel";
+import { stripHashtags } from "@/lib/strip-hashtags";
+
+export { stripHashtags };
 
 export function formatDuration(totalSeconds: number): string {
   const h = Math.floor(totalSeconds / 3600);
@@ -13,34 +16,40 @@ export function formatDuration(totalSeconds: number): string {
 export function VideoCard({ video }: { video: Doc<"videos"> }) {
   // Shorts get YouTube's letterboxed 16:9 auto-thumbnail (blurred bars around
   // a vertical frame), which reads poorly in a horizontal grid cell. Instead
-  // of showing that, split the cell: a title panel on the left, the vertical
-  // frame center-cropped on the right.
+  // of showing that, anchor the vertical frame to the right and let a
+  // horizontal gradient fade it into a deep neutral background on the left,
+  // where the (hashtag-free) title sits as large display serif.
   if (video.isShort) {
+    const displayTitle = stripHashtags(video.title);
     return (
       <Link href={`/videos/${video.slug}`} className="group block">
-        <div className="relative flex aspect-video overflow-hidden rounded-lg">
-          <div className="flex w-[58%] flex-col justify-between gap-2 bg-primary p-2.5 text-primary-foreground sm:p-3">
-            <p className="flex items-center gap-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-primary-foreground/75">
-              <span aria-hidden className="h-px w-4 bg-primary-foreground/50" />
-              Short
-            </p>
-            <h3 className="line-clamp-3 font-serif text-xs font-semibold leading-snug text-primary-foreground sm:text-sm">
-              {video.title}
-            </h3>
-            {video.durationSeconds > 0 && (
-              <span className="inline-flex w-fit items-center rounded bg-primary-foreground/15 px-1.5 py-0.5 text-[0.6rem] font-medium text-primary-foreground sm:text-[0.65rem]">
-                {formatDuration(video.durationSeconds)}
-              </span>
-            )}
-          </div>
-          <div className="relative w-[42%] shrink-0 overflow-hidden">
+        <div className="relative aspect-video overflow-hidden rounded-lg bg-foreground dark:bg-background">
+          <div className="absolute inset-y-0 right-0 w-[55%] overflow-hidden">
             <Image
               src={video.thumbnail}
               alt={video.title}
               fill
-              sizes="(max-width: 640px) 42vw, (max-width: 1024px) 21vw, 11vw"
+              sizes="(max-width: 640px) 55vw, (max-width: 1024px) 28vw, 14vw"
               className="object-cover transition-transform group-hover:scale-105"
             />
+          </div>
+          <div
+            aria-hidden
+            className="absolute inset-y-0 left-0 w-[80%] bg-gradient-to-r from-foreground via-foreground/90 to-transparent dark:from-background dark:via-background/90"
+          />
+          <div className="relative flex h-full w-[70%] flex-col justify-between gap-2 p-2.5 sm:p-3.5">
+            <p className="flex items-center gap-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-background/70 dark:text-foreground/70">
+              <span aria-hidden className="h-px w-4 bg-background/50 dark:bg-foreground/50" />
+              Short
+            </p>
+            <h3 className="line-clamp-4 font-serif text-lg font-semibold leading-[1.1] text-background dark:text-foreground sm:text-xl">
+              {displayTitle}
+            </h3>
+            {video.durationSeconds > 0 && (
+              <span className="inline-flex w-fit items-center rounded bg-background/15 px-1.5 py-0.5 text-[0.6rem] font-medium text-background dark:bg-foreground/15 dark:text-foreground sm:text-[0.65rem]">
+                {formatDuration(video.durationSeconds)}
+              </span>
+            )}
           </div>
         </div>
         <p className="text-muted-foreground mt-2 text-sm">

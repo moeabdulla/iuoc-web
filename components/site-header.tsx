@@ -7,13 +7,13 @@ import { siteConfig } from "@/lib/site";
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-20 items-center justify-between gap-4 md:h-24">
+      <div className="container flex h-24 items-center justify-between gap-4 md:h-28">
         <Link
           href="/"
           className="group flex items-center gap-3"
           aria-label={`${siteConfig.name} home`}
         >
-          <Logo className="h-16 w-16 transition-transform duration-300 group-hover:-rotate-6 md:h-[4.5rem] md:w-[4.5rem]" />
+          <Logo className="h-[4.5rem] w-[4.5rem] transition-transform duration-300 group-hover:-rotate-6 md:h-20 md:w-20" />
           <span className="flex flex-col leading-none">
             <span className="font-serif text-lg font-semibold tracking-tight">
               {siteConfig.name}

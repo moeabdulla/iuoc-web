@@ -7,16 +7,16 @@ export function Logo({ className }: { className?: string }) {
       <Image
         src="/brand/iuoc-logo-light@3x.png"
         alt="Project IUoC"
-        width={44}
-        height={44}
+        width={192}
+        height={192}
         className="block h-full w-full object-contain dark:hidden"
         priority
       />
       <Image
         src="/brand/iuoc-logo-dark@3x.png"
         alt="Project IUoC"
-        width={44}
-        height={44}
+        width={192}
+        height={192}
         className="hidden h-full w-full object-contain dark:block"
         priority
       />
