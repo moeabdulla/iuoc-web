@@ -2,61 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* To change the theme colors, change the values below
-  or use the "Copy code" button at https://ui.shadcn.com/themes */
+/* Project IUoC design tokens.
+   Brand green #00A94F -> hsl(148 100% 33%) drives --primary.
+   Brand red   #EA1B22 -> hsl(358 83% 51%) is reserved for small accents
+   (mapped to --destructive / --accent-red), never large fills. */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 20 14.3% 4.1%;
-    --card: 0 0% 100%;
-    --card-foreground: 20 14.3% 4.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 20 14.3% 4.1%;
-    --primary: 24 9.8% 10%;
-    --primary-foreground: 60 9.1% 97.8%;
-    --secondary: 60 4.8% 95.9%;
-    --secondary-foreground: 24 9.8% 10%;
-    --muted: 60 4.8% 95.9%;
-    --muted-foreground: 25 5.3% 44.7%;
-    --accent: 60 4.8% 95.9%;
-    --accent-foreground: 24 9.8% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 60 9.1% 97.8%;
-    --border: 20 5.9% 90%;
-    --input: 20 5.9% 90%;
-    --ring: 20 14.3% 4.1%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --background: 44 40% 97%;
+    --foreground: 155 30% 8%;
+    --card: 44 44% 99%;
+    --card-foreground: 155 30% 8%;
+    --popover: 44 44% 99%;
+    --popover-foreground: 155 30% 8%;
+    --primary: 148 100% 33%;
+    --primary-foreground: 44 44% 98%;
+    --secondary: 44 24% 92%;
+    --secondary-foreground: 155 25% 12%;
+    --muted: 44 24% 92%;
+    --muted-foreground: 150 8% 36%;
+    --accent: 148 45% 92%;
+    --accent-foreground: 150 60% 16%;
+    --destructive: 358 83% 51%;
+    --destructive-foreground: 44 44% 98%;
+    --accent-red: 358 83% 51%;
+    --border: 44 18% 87%;
+    --input: 44 18% 87%;
+    --ring: 148 100% 33%;
+    --chart-1: 148 100% 33%;
+    --chart-2: 168 62% 34%;
+    --chart-3: 44 70% 55%;
+    --chart-4: 20 65% 52%;
+    --chart-5: 358 83% 51%;
+    --radius: 0.65rem;
   }
+
   .dark {
-    --background: 20 14.3% 4.1%;
-    --foreground: 60 9.1% 97.8%;
-    --card: 20 14.3% 4.1%;
-    --card-foreground: 60 9.1% 97.8%;
-    --popover: 20 14.3% 4.1%;
-    --popover-foreground: 60 9.1% 97.8%;
-    --primary: 60 9.1% 97.8%;
-    --primary-foreground: 24 9.8% 10%;
-    --secondary: 12 6.5% 15.1%;
-    --secondary-foreground: 60 9.1% 97.8%;
-    --muted: 12 6.5% 15.1%;
-    --muted-foreground: 24 5.4% 63.9%;
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 60 9.1% 97.8%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 60 9.1% 97.8%;
-    --border: 12 6.5% 15.1%;
-    --input: 12 6.5% 15.1%;
-    --ring: 24 5.7% 82.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: 156 28% 5%;
+    --foreground: 44 30% 92%;
+    --card: 156 24% 7%;
+    --card-foreground: 44 30% 92%;
+    --popover: 156 26% 6%;
+    --popover-foreground: 44 30% 92%;
+    --primary: 148 72% 42%;
+    --primary-foreground: 156 40% 5%;
+    --secondary: 152 14% 13%;
+    --secondary-foreground: 44 30% 92%;
+    --muted: 152 12% 13%;
+    --muted-foreground: 150 10% 62%;
+    --accent: 150 30% 12%;
+    --accent-foreground: 148 60% 70%;
+    --destructive: 358 74% 56%;
+    --destructive-foreground: 44 30% 96%;
+    --accent-red: 358 78% 60%;
+    --border: 152 12% 15%;
+    --input: 152 12% 16%;
+    --ring: 148 72% 45%;
+    --chart-1: 148 72% 45%;
+    --chart-2: 168 55% 45%;
+    --chart-3: 44 60% 58%;
+    --chart-4: 20 62% 56%;
+    --chart-5: 358 78% 60%;
   }
 }
 
@@ -64,7 +69,53 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "cv11", "ss01";
+    /* Editorial atmosphere: a soft green wash anchored to the top,
+       so pages never read as flat gray shadcn cards. */
+    background-image:
+      radial-gradient(
+        70rem 40rem at 50% -12rem,
+        hsl(var(--primary) / 0.1),
+        transparent 70%
+      );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif), ui-serif, Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+}
+
+@layer utilities {
+  .text-accent-red {
+    color: hsl(var(--accent-red));
+  }
+
+  .font-serif {
+    font-family: var(--font-serif), ui-serif, Georgia, serif;
+  }
+
+  /* Animated underline used for header navigation. */
+  .nav-underline {
+    background-image: linear-gradient(hsl(var(--primary)), hsl(var(--primary)));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-underline:hover,
+  .nav-underline:focus-visible {
+    background-size: 100% 2px;
   }
 }
