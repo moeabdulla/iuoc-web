@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 border-b-[3px] border-double border-foreground/70 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
       <div className="container flex h-24 items-center justify-between gap-4 md:h-28">
         <Link
           href="/"
@@ -18,7 +18,7 @@ export function SiteHeader() {
             <span className="font-serif text-lg font-semibold tracking-tight">
               {siteConfig.name}
             </span>
-            <span className="mt-1 hidden text-[0.7rem] font-medium uppercase tracking-[0.22em] text-muted-foreground sm:block">
+            <span className="mt-1 hidden text-[0.7rem] font-medium uppercase tracking-[0.28em] text-primary sm:block">
               Knowledge for everyone
             </span>
           </span>

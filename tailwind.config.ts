@@ -18,8 +18,11 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        // The manuscript speaks in one serif voice; legacy `font-sans` labels
+        // resolve to it as small-caps serif rather than a humanist sans.
+        sans: ["var(--font-serif)", "ui-serif", "Georgia", "serif"],
         serif: ["var(--font-serif)", "ui-serif", "Georgia", "serif"],
+        arabic: ["var(--font-arabic)", "var(--font-serif)", "serif"],
       },
       colors: {
         background: "hsl(var(--background))",
@@ -48,6 +51,7 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        gold: "hsl(var(--gold))",
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",

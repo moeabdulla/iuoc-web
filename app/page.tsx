@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Play, Sparkles } from "lucide-react";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
 import type { Doc } from "@/convex/_generated/dataModel";
@@ -11,41 +10,50 @@ import { siteConfig } from "@/lib/site";
 
 export const revalidate = 3600;
 
-const SERIES_LIMIT = 8;
+// A tighter latest section than before: one lead plate plus a small grid.
+const LATEST_LIMIT = 7;
+const TOC_LIMIT = 6;
 
 const supportOptions = [
-  {
-    href: siteConfig.links.patreon,
-    label: "Patreon",
-    note: "Monthly support",
-  },
-  {
-    href: siteConfig.links.gofundme,
-    label: "GoFundMe",
-    note: "One-time gift",
-  },
-  {
-    href: siteConfig.links.paypal,
-    label: "PayPal",
-    note: "Direct donation",
-  },
+  { href: siteConfig.links.patreon, label: "Patreon", note: "Monthly" },
+  { href: siteConfig.links.gofundme, label: "GoFundMe", note: "One-time" },
+  { href: siteConfig.links.paypal, label: "PayPal", note: "Direct" },
 ];
+
+const ROMAN = [
+  "",
+  "I",
+  "II",
+  "III",
+  "IV",
+  "V",
+  "VI",
+  "VII",
+  "VIII",
+  "IX",
+  "X",
+];
+
+function roman(n: number): string {
+  return ROMAN[n] ?? String(n);
+}
 
 export default async function HomePage() {
   const [featured, latest, playlists] = await Promise.all([
     fetchQuery(api.videos.featured, {}),
-    fetchQuery(api.videos.latest, { limit: 12 }),
+    fetchQuery(api.videos.latest, { limit: LATEST_LIMIT }),
     fetchQuery(api.playlists.listVisible, {}),
   ]);
 
   const [leadFeature, ...restFeatured] = featured;
-  const series = playlists.slice(0, SERIES_LIMIT);
+  const [leadLatest, ...compactLatest] = latest;
+  const series = playlists.slice(0, TOC_LIMIT);
 
   return (
     <>
       <Hero />
 
-      <div className="container space-y-24 pb-8 md:space-y-32">
+      <div className="container space-y-8 pb-8">
         {leadFeature && (
           <section aria-labelledby="featured-heading">
             <SectionHeading
@@ -53,11 +61,11 @@ export default async function HomePage() {
               eyebrow="Featured"
               title="Worth your time"
             />
-            <FeaturedFilm video={leadFeature} />
+            <FeaturedPlate video={leadFeature} />
             {restFeatured.length > 0 && (
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3">
                 {restFeatured.map((video) => (
-                  <VideoCard key={video._id} video={video} />
+                  <VideoCard key={video._id} video={video} compact />
                 ))}
               </div>
             )}
@@ -67,18 +75,39 @@ export default async function HomePage() {
         <section aria-labelledby="latest-heading">
           <SectionHeading
             id="latest-heading"
-            eyebrow="Fresh from the channel"
-            title="Latest videos"
-            action={{ href: "/videos", label: "View all" }}
+            eyebrow="Chapter the First"
+            title="Latest Lectures"
           />
           {latest.length === 0 ? (
             <ComingSoon />
           ) : (
-            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {latest.map((video) => (
-                <VideoCard key={video._id} video={video} />
-              ))}
-            </div>
+            <>
+              {leadLatest && (
+                <div className="mx-auto max-w-3xl">
+                  <VideoCard video={leadLatest} label={`Plate ${roman(1)}`} />
+                </div>
+              )}
+              {compactLatest.length > 0 && (
+                <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-8 md:grid-cols-3">
+                  {compactLatest.map((video, index) => (
+                    <VideoCard
+                      key={video._id}
+                      video={video}
+                      label={`Plate ${roman(index + 2)}`}
+                      compact
+                    />
+                  ))}
+                </div>
+              )}
+              <p className="mt-10 text-center">
+                <Link
+                  href="/videos"
+                  className="font-serif text-sm italic text-primary underline-offset-4 hover:underline"
+                >
+                  &mdash; view all lectures &mdash;
+                </Link>
+              </p>
+            </>
           )}
         </section>
 
@@ -86,19 +115,32 @@ export default async function HomePage() {
           <section aria-labelledby="series-heading">
             <SectionHeading
               id="series-heading"
-              eyebrow="Curated paths"
-              title="Explore by series"
-              action={{ href: "/videos", label: "All series" }}
+              eyebrow="Chapter the Second"
+              title="The Series"
             />
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 lg:grid-cols-4">
-              {series.map((playlist) => (
-                <SeriesCard key={playlist._id} playlist={playlist} />
-              ))}
-            </div>
+            <nav aria-label="Series" className="mx-auto max-w-3xl">
+              <ol>
+                {series.map((playlist, index) => (
+                  <TocRow
+                    key={playlist._id}
+                    marker={roman(index + 1).toLowerCase()}
+                    playlist={playlist}
+                  />
+                ))}
+              </ol>
+            </nav>
+            <p className="mt-8 text-center">
+              <Link
+                href="/videos"
+                className="font-serif text-sm italic text-primary underline-offset-4 hover:underline"
+              >
+                &mdash; view the full table of contents &mdash;
+              </Link>
+            </p>
           </section>
         )}
 
-        <SupportBand />
+        <Colophon />
       </div>
     </>
   );
@@ -106,58 +148,58 @@ export default async function HomePage() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <Crescent />
-      <div className="container relative py-20 md:py-28 lg:py-32">
-        <div className="max-w-3xl">
+    <section className="relative overflow-hidden border-b border-border">
+      <div
+        aria-hidden
+        className="pt-8 text-center text-sm tracking-[0.6em] text-gold"
+      >
+        &#10022; &#10022; &#10022;
+      </div>
+      <div className="container py-12 text-center md:py-20">
+        <div className="mx-auto max-w-2xl">
           <p
-            className="reveal-up mb-6 inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/60 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground backdrop-blur"
-            style={{ animationDelay: "0ms" }}
+            lang="ar"
+            dir="rtl"
+            className="font-arabic text-4xl leading-none text-primary md:text-5xl"
           >
-            <Sparkles className="size-3.5 text-primary" aria-hidden />
-            Canadian Islamic education
+            &#65021;
           </p>
 
-          <h1
-            className="reveal-up font-serif text-[2.75rem] leading-[1.02] tracking-[-0.03em] sm:text-6xl lg:text-7xl"
-            style={{ animationDelay: "90ms" }}
-          >
-            Deepen your understanding of Islam
-            <span className="text-primary"> &mdash; beautifully</span>, and for
-            free.
+          <h1 className="mt-7 font-serif text-[2.1rem] font-medium italic leading-[1.2] sm:text-4xl md:text-5xl">
+            <span className="text-gold">&ldquo;</span>
+            <span className="illumine-sheen">
+              <span className="illumine-lit">Convey</span> from me, even{" "}
+              <span className="illumine-lit">a single verse</span>.
+            </span>
+            <span className="text-gold">&rdquo;</span>
           </h1>
 
-          <p
-            className="reveal-up mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground"
-            style={{ animationDelay: "180ms" }}
-          >
+          <p className="mt-6 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            &mdash; The Prophet Muhammad{" "}
+            <span lang="ar" className="font-arabic text-base text-primary">
+              &#65018;
+            </span>
+          </p>
+
+          <p className="mx-auto mt-7 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
             {siteConfig.description}
           </p>
 
-          <div
-            className="reveal-up mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
-            style={{ animationDelay: "270ms" }}
-          >
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <Button
               asChild
               size="lg"
-              className="h-12 gap-2 px-7 text-base shadow-lg shadow-primary/20"
+              className="rounded-none px-7 shadow-none"
             >
-              <Link href="/videos">
-                <Play className="size-4 fill-current" aria-hidden />
-                Browse videos
-              </Link>
+              <Link href="/videos">Browse the library</Link>
             </Button>
             <Button
               asChild
-              variant="outline"
               size="lg"
-              className="h-12 gap-2 px-7 text-base"
+              variant="outline"
+              className="rounded-none border-primary bg-transparent px-7 text-primary shadow-none hover:bg-primary/10 hover:text-primary"
             >
-              <Link href="/support">
-                Support the project
-                <ArrowRight className="size-4" aria-hidden />
-              </Link>
+              <Link href="/support">Support us</Link>
             </Button>
           </div>
         </div>
@@ -166,171 +208,131 @@ function Hero() {
   );
 }
 
-function Crescent() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute -right-24 -top-24 hidden opacity-[0.09] md:block lg:-right-16"
-    >
-      <svg
-        width="520"
-        height="520"
-        viewBox="0 0 520 520"
-        fill="none"
-        className="text-primary"
-      >
-        <defs>
-          <mask id="crescent-mask">
-            <rect width="520" height="520" fill="black" />
-            <circle cx="260" cy="260" r="220" fill="white" />
-            <circle cx="330" cy="220" r="200" fill="black" />
-          </mask>
-        </defs>
-        <circle
-          cx="260"
-          cy="260"
-          r="220"
-          fill="currentColor"
-          mask="url(#crescent-mask)"
-        />
-      </svg>
-    </div>
-  );
-}
-
-function FeaturedFilm({ video }: { video: Doc<"videos"> }) {
+function FeaturedPlate({ video }: { video: Doc<"videos"> }) {
   return (
     <Link
       href={`/videos/${video.slug}`}
-      className="group grid overflow-hidden rounded-2xl border border-border/60 bg-card/40 transition-colors hover:border-primary/40 md:grid-cols-2"
+      className="group mx-auto grid max-w-4xl overflow-hidden border border-foreground bg-secondary md:grid-cols-2"
     >
-      <div className="relative aspect-video overflow-hidden md:aspect-auto">
-        <Image
-          src={video.thumbnail}
-          alt={video.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          priority
-        />
-        <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground shadow">
-          <Sparkles className="size-3.5" aria-hidden />
-          Featured
-        </span>
-        {video.durationSeconds > 0 && (
-          <span className="absolute bottom-4 right-4 rounded bg-black/80 px-2 py-1 text-xs font-medium text-white">
-            {formatDuration(video.durationSeconds)}
-          </span>
-        )}
-        <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex size-16 items-center justify-center rounded-full bg-white/15 text-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
-            <Play className="size-6 fill-current" aria-hidden />
-          </span>
-        </span>
+      <div className="p-1.5">
+        <div className="relative aspect-video overflow-hidden border border-gold">
+          <Image
+            src={video.thumbnail}
+            alt={video.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            priority
+          />
+          {video.durationSeconds > 0 && (
+            <span className="absolute bottom-1.5 right-1.5 border border-foreground bg-background px-1.5 py-0.5 text-[0.7rem] tabular-nums text-foreground">
+              {formatDuration(video.durationSeconds)}
+            </span>
+          )}
+        </div>
       </div>
 
-      <div className="flex flex-col justify-center gap-4 p-6 md:p-10">
-        <h3 className="font-serif text-2xl leading-tight tracking-tight md:text-3xl">
+      <div className="flex flex-col justify-center gap-3 p-6 text-center md:p-9 md:text-left">
+        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-accent-red">
+          The Featured Plate
+        </p>
+        <h3 className="font-serif text-2xl leading-tight transition-colors group-hover:text-primary md:text-3xl">
           {video.title}
         </h3>
         {video.description && (
-          <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground md:text-base">
+          <p className="line-clamp-3 text-sm italic leading-relaxed text-muted-foreground md:text-base">
             {video.description}
           </p>
         )}
-        <span className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-primary">
-          Watch now
-          <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
+        <span className="mt-1 font-serif text-sm italic text-primary">
+          Watch now &rarr;
         </span>
       </div>
     </Link>
   );
 }
 
-function SeriesCard({ playlist }: { playlist: Doc<"playlists"> }) {
+function TocRow({
+  marker,
+  playlist,
+}: {
+  marker: string;
+  playlist: Doc<"playlists">;
+}) {
+  const count =
+    playlist.itemCount > 0
+      ? `${playlist.itemCount} lecture${playlist.itemCount === 1 ? "" : "s"}`
+      : "New series";
+
   return (
-    <Link
-      href={`/series/${playlist.youtubeId}`}
-      className="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-xl border border-border/60"
-    >
-      <Image
-        src={playlist.thumbnail}
-        alt=""
-        fill
-        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-        className="object-cover transition-transform duration-500 group-hover:scale-105"
-      />
-      <span
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent"
-      />
-      <div className="relative p-4">
-        <p className="mb-1 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-white/70">
-          {playlist.itemCount > 0
-            ? `${playlist.itemCount} video${playlist.itemCount === 1 ? "" : "s"}`
-            : "New series"}
-        </p>
-        <h3 className="font-serif text-base font-semibold leading-snug text-white">
+    <li>
+      <Link
+        href={`/series/${playlist.youtubeId}`}
+        className="group flex items-baseline gap-3 border-b border-border py-3.5"
+      >
+        <span className="w-7 shrink-0 font-serif text-sm text-gold">
+          {marker}.
+        </span>
+        <span className="min-w-0 shrink font-serif text-base font-medium transition-colors group-hover:text-primary md:text-lg">
           {playlist.title}
-        </h3>
-      </div>
-    </Link>
+        </span>
+        <span
+          aria-hidden
+          className="min-w-4 flex-1 translate-y-[-0.3em] border-b border-dotted border-border"
+        />
+        <span className="shrink-0 whitespace-nowrap font-serif text-sm italic text-muted-foreground">
+          {count}
+        </span>
+      </Link>
+    </li>
   );
 }
 
-function SupportBand() {
+function Colophon() {
   return (
-    <section aria-labelledby="support-heading">
-      <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-primary/[0.06] px-6 py-14 text-center md:px-16 md:py-20">
+    <section aria-labelledby="support-heading" className="relative pt-4">
+      <div className="relative mx-auto max-w-2xl border border-foreground bg-secondary px-6 py-12 text-center md:px-12">
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 -top-24 mx-auto h-48 w-[36rem] max-w-full rounded-full bg-primary/20 blur-3xl"
-        />
-        <div className="relative mx-auto max-w-2xl">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            Sadaqah jariyah
-          </p>
-          <h2
-            id="support-heading"
-            className="font-serif text-3xl leading-tight tracking-tight md:text-4xl"
-          >
-            Keep this knowledge free for everyone.
-          </h2>
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-            Every video is produced and shared at no cost to the viewer. Your
-            support pays for the research, animation, and production that carry
-            this work forward &mdash; a continuous charity that keeps giving.
-          </p>
+          className="absolute -top-3 left-1/2 -translate-x-1/2 bg-background px-3 text-gold"
+        >
+          &#10022;
+        </span>
+        <h2
+          id="support-heading"
+          className="font-serif text-2xl leading-tight md:text-3xl"
+        >
+          Keep this knowledge free.
+        </h2>
+        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
+          Every lecture, reminder, and animation is produced at no cost to the
+          viewer. Your support carries this work forward &mdash; a charity that
+          keeps giving.
+        </p>
 
-          <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row">
-            {supportOptions.map((option, index) => (
-              <a
-                key={option.label}
-                href={option.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={
-                  "group flex flex-col items-center gap-0.5 rounded-xl border px-6 py-3 transition-colors " +
-                  (index === 0
-                    ? "border-transparent bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90"
-                    : "border-border/70 bg-card/60 text-foreground hover:border-primary/50")
-                }
-              >
-                <span className="text-sm font-semibold">{option.label}</span>
-                <span
-                  className={
-                    "text-xs " +
-                    (index === 0
-                      ? "text-primary-foreground/80"
-                      : "text-muted-foreground")
-                  }
-                >
-                  {option.note}
-                </span>
-              </a>
-            ))}
-          </div>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {supportOptions.map((option, index) => (
+            <a
+              key={option.label}
+              href={option.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={
+                "border px-5 py-2.5 text-sm transition-colors " +
+                (index === 0
+                  ? "border-primary bg-primary text-primary-foreground hover:bg-primary/90"
+                  : "border-primary bg-transparent text-primary hover:bg-primary/10")
+              }
+            >
+              <span className="font-medium">{option.label}</span>
+              <span className="ml-1.5 text-xs opacity-80">{option.note}</span>
+            </a>
+          ))}
         </div>
+
+        <p className="mt-8 text-xs uppercase tracking-[0.28em] text-gold">
+          Sadaqah Jariyah
+        </p>
       </div>
     </section>
   );
@@ -338,18 +340,20 @@ function SupportBand() {
 
 function ComingSoon() {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/70 bg-card/30 px-6 py-20 text-center">
-      <span className="mb-4 flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-        <Sparkles className="size-5" aria-hidden />
-      </span>
-      <h3 className="font-serif text-2xl tracking-tight">
-        Content is on its way
-      </h3>
-      <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-        New videos are being prepared. In the meantime, follow along on YouTube
-        to be the first to watch.
+    <div className="mx-auto max-w-xl border border-border bg-secondary/50 px-6 py-16 text-center">
+      <div aria-hidden className="text-sm tracking-[0.5em] text-gold">
+        &#10087;
+      </div>
+      <h3 className="mt-4 font-serif text-2xl">Content is on its way</h3>
+      <p className="mx-auto mt-2 max-w-sm text-sm italic text-muted-foreground">
+        New lectures are being prepared. In the meantime, follow along on
+        YouTube to be the first to watch.
       </p>
-      <Button asChild variant="outline" className="mt-6">
+      <Button
+        asChild
+        variant="outline"
+        className="mt-6 rounded-none border-primary bg-transparent text-primary shadow-none hover:bg-primary/10 hover:text-primary"
+      >
         <a
           href={siteConfig.links.youtube}
           target="_blank"

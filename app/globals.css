@@ -2,66 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Project IUoC design tokens.
-   Brand green #00A94F -> hsl(148 100% 33%) drives --primary.
-   Brand red   #EA1B22 -> hsl(358 83% 51%) is reserved for small accents
-   (mapped to --destructive / --accent-red), never large fills. */
+/* Project IUoC — "Manuscript / Illuminated Print" design tokens.
+   Light  ("day library"):  paper #f5efe1, ink #22301f, deep green #14563a.
+   Dark   ("night library"): green-black paper, warm ivory ink, same green.
+   Gold #a87d2a is an ACCENT only (rules, ornaments, illuminated key words),
+   never body text. Madder red is rare and tiny (figure labels). The shadcn
+   HSL token architecture is preserved; only the values are re-mapped. */
 @layer base {
   :root {
-    --background: 44 40% 97%;
-    --foreground: 155 30% 8%;
-    --card: 44 44% 99%;
-    --card-foreground: 155 30% 8%;
-    --popover: 44 44% 99%;
-    --popover-foreground: 155 30% 8%;
-    --primary: 148 100% 33%;
-    --primary-foreground: 44 44% 98%;
-    --secondary: 44 24% 92%;
-    --secondary-foreground: 155 25% 12%;
-    --muted: 44 24% 92%;
-    --muted-foreground: 150 8% 36%;
-    --accent: 148 45% 92%;
-    --accent-foreground: 150 60% 16%;
-    --destructive: 358 83% 51%;
-    --destructive-foreground: 44 44% 98%;
-    --accent-red: 358 83% 51%;
-    --border: 44 18% 87%;
-    --input: 44 18% 87%;
-    --ring: 148 100% 33%;
-    --chart-1: 148 100% 33%;
-    --chart-2: 168 62% 34%;
-    --chart-3: 44 70% 55%;
-    --chart-4: 20 65% 52%;
-    --chart-5: 358 83% 51%;
-    --radius: 0.65rem;
+    --background: 42 50% 92%;
+    --foreground: 110 21% 15%;
+    --card: 43 48% 95%;
+    --card-foreground: 110 21% 15%;
+    --popover: 42 50% 96%;
+    --popover-foreground: 110 21% 15%;
+    --primary: 155 62% 21%;
+    --primary-foreground: 42 50% 95%;
+    --secondary: 43 47% 88%;
+    --secondary-foreground: 110 21% 15%;
+    --muted: 43 40% 88%;
+    --muted-foreground: 41 15% 37%;
+    --accent: 43 45% 85%;
+    --accent-foreground: 155 55% 20%;
+    --destructive: 7 55% 38%;
+    --destructive-foreground: 42 50% 95%;
+    --accent-red: 7 55% 38%;
+    --gold: 40 60% 41%;
+    --border: 41 28% 72%;
+    --input: 41 28% 72%;
+    --ring: 155 62% 21%;
+    --chart-1: 155 62% 21%;
+    --chart-2: 40 60% 41%;
+    --chart-3: 168 40% 34%;
+    --chart-4: 20 55% 45%;
+    --chart-5: 7 55% 38%;
+    --radius: 0.25rem;
   }
 
   .dark {
-    --background: 156 28% 5%;
-    --foreground: 44 30% 92%;
-    --card: 156 24% 7%;
-    --card-foreground: 44 30% 92%;
-    --popover: 156 26% 6%;
-    --popover-foreground: 44 30% 92%;
-    --primary: 148 72% 42%;
-    --primary-foreground: 156 40% 5%;
-    --secondary: 152 14% 13%;
-    --secondary-foreground: 44 30% 92%;
-    --muted: 152 12% 13%;
-    --muted-foreground: 150 10% 62%;
-    --accent: 150 30% 12%;
-    --accent-foreground: 148 60% 70%;
-    --destructive: 358 74% 56%;
-    --destructive-foreground: 44 30% 96%;
-    --accent-red: 358 78% 60%;
-    --border: 152 12% 15%;
-    --input: 152 12% 16%;
-    --ring: 148 72% 45%;
-    --chart-1: 148 72% 45%;
-    --chart-2: 168 55% 45%;
-    --chart-3: 44 60% 58%;
-    --chart-4: 20 62% 56%;
-    --chart-5: 358 78% 60%;
+    --background: 146 18% 8%;
+    --foreground: 42 38% 90%;
+    --card: 148 16% 10%;
+    --card-foreground: 42 38% 90%;
+    --popover: 148 18% 9%;
+    --popover-foreground: 42 38% 90%;
+    --primary: 150 44% 42%;
+    --primary-foreground: 42 38% 92%;
+    --secondary: 150 12% 14%;
+    --secondary-foreground: 42 38% 90%;
+    --muted: 150 10% 14%;
+    --muted-foreground: 44 18% 66%;
+    --accent: 150 20% 14%;
+    --accent-foreground: 41 55% 62%;
+    --destructive: 7 60% 52%;
+    --destructive-foreground: 42 38% 92%;
+    --accent-red: 7 62% 58%;
+    --gold: 41 58% 55%;
+    --border: 150 12% 18%;
+    --input: 150 12% 20%;
+    --ring: 150 44% 46%;
+    --chart-1: 150 44% 46%;
+    --chart-2: 41 58% 55%;
+    --chart-3: 168 40% 48%;
+    --chart-4: 20 55% 56%;
+    --chart-5: 7 62% 58%;
   }
 }
 
@@ -72,16 +76,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "cv11", "ss01";
-    /* Editorial atmosphere: a soft green wash anchored to the top,
-       so pages never read as flat gray shadcn cards. */
-    background-image: radial-gradient(
-      70rem 40rem at 50% -12rem,
-      hsl(var(--primary) / 0.1),
-      transparent 70%
-    );
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    /* Flat paper. Character comes from rules, ornaments and gold — not washes. */
   }
 
   h1,
@@ -89,8 +84,7 @@
   h3,
   h4 {
     font-family: var(--font-serif), ui-serif, Georgia, serif;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-weight: 500;
     text-wrap: balance;
   }
 }
@@ -100,8 +94,16 @@
     color: hsl(var(--accent-red));
   }
 
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+
   .font-serif {
     font-family: var(--font-serif), ui-serif, Georgia, serif;
+  }
+
+  .font-arabic {
+    font-family: var(--font-arabic), var(--font-serif), ui-serif, serif;
   }
 
   /* Animated underline used for header navigation. */
@@ -109,35 +111,73 @@
     background-image: linear-gradient(hsl(var(--primary)), hsl(var(--primary)));
     background-position: 0 100%;
     background-repeat: no-repeat;
-    background-size: 0% 2px;
+    background-size: 0% 1.5px;
     transition: background-size 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav-underline:hover,
   .nav-underline:focus-visible {
-    background-size: 100% 2px;
+    background-size: 100% 1.5px;
   }
 
-  /* Orchestrated hero entrance: staggered fade-up on first paint.
-     Children opt in with .reveal-up and an inline animation-delay. */
-  @keyframes reveal-up {
-    from {
-      opacity: 0;
-      transform: translateY(1.25rem);
-    }
+  /* ── The Illumination ──────────────────────────────────────────────
+     Once per load a light sheen sweeps the hadith, then the key words
+     flare and settle into gold with a soft residual halo. Values ported
+     verbatim from the owner-approved mockup (approved intensity).
+     prefers-reduced-motion → key words render statically gold. */
+  .illumine-sheen {
+    background: linear-gradient(
+      100deg,
+      hsl(var(--foreground)) 42%,
+      #e9c36a 50%,
+      hsl(var(--foreground)) 58%
+    );
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: illumine-sweep 2.6s ease-in-out 0.6s 1 forwards;
+  }
+
+  @keyframes illumine-sweep {
     to {
-      opacity: 1;
-      transform: translateY(0);
+      background-position: 0% 0;
     }
   }
 
-  .reveal-up {
-    animation: reveal-up 0.75s cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  .illumine-lit {
+    color: hsl(var(--foreground));
+    font-style: italic;
+    animation: illumine-glow 1.6s ease 0.9s 1 forwards;
+  }
+
+  .illumine-lit:last-of-type {
+    animation-delay: 1.7s;
+  }
+
+  @keyframes illumine-glow {
+    60% {
+      color: #d9a94e;
+      text-shadow:
+        0 0 22px rgba(217, 169, 78, 0.85),
+        0 0 6px rgba(217, 169, 78, 0.6);
+    }
+    100% {
+      color: hsl(var(--gold));
+      text-shadow: 0 0 14px rgba(217, 169, 78, 0.45);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .reveal-up {
+    .illumine-sheen {
       animation: none;
+      color: hsl(var(--foreground));
+    }
+    .illumine-lit {
+      animation: none;
+      color: hsl(var(--gold));
+      text-shadow: none;
     }
   }
 }

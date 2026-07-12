@@ -16,7 +16,7 @@ const supportLinks = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-border/60 bg-secondary/30">
+    <footer className="mt-24 border-t-[3px] border-double border-foreground/70 bg-secondary/50">
       <div className="container grid gap-12 py-16 md:grid-cols-[1.6fr_1fr_1fr_1fr] md:gap-8">
         <div className="max-w-sm">
           <Link href="/" className="flex items-center gap-3">
@@ -25,7 +25,7 @@ export function SiteFooter() {
               {siteConfig.name}
             </span>
           </Link>
-          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-5 text-sm italic leading-relaxed text-muted-foreground">
             {siteConfig.description}
           </p>
           <div className="mt-6 flex items-center gap-3">
@@ -36,7 +36,7 @@ export function SiteFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="flex size-9 items-center justify-center rounded-full border border-border/70 text-foreground/70 transition-colors hover:border-primary hover:text-primary"
+                className="flex size-9 items-center justify-center rounded-none border border-foreground/60 text-foreground/70 transition-colors hover:border-primary hover:text-primary"
               >
                 <Icon className="size-[1.1rem]" />
               </a>
@@ -88,7 +88,13 @@ export function SiteFooter() {
         </FooterColumn>
       </div>
 
-      <div className="border-t border-border/60">
+      <div className="border-t border-border">
+        <p className="container py-6 text-center font-serif text-sm italic text-muted-foreground">
+          &ldquo;&hellip;may Allah accept from us all.&rdquo;
+        </p>
+      </div>
+
+      <div className="border-t border-border">
         <div className="container flex flex-col items-center justify-between gap-3 py-6 text-xs text-muted-foreground sm:flex-row">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights
@@ -96,7 +102,7 @@ export function SiteFooter() {
           </p>
           <p className="flex items-center gap-1.5">
             Sadaqah jariyah
-            <span className="text-accent-red" aria-hidden>
+            <span className="text-gold" aria-hidden>
               &#10022;
             </span>
             made in Canada
@@ -116,7 +122,7 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h2 className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-foreground/80">
+      <h2 className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">
         {title}
       </h2>
       <ul className="mt-4 space-y-3 text-sm">{children}</ul>

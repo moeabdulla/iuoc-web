@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 
 type SectionHeadingProps = {
   eyebrow?: string;
@@ -8,6 +7,9 @@ type SectionHeadingProps = {
   id?: string;
 };
 
+// Chapter heading: a small-caps number line, a centered serif title, and a
+// gold ornament — the printed-book convention that replaces eyebrow chips.
+// API is unchanged; `eyebrow` now reads as the chapter/section line.
 export function SectionHeading({
   eyebrow,
   title,
@@ -15,29 +17,31 @@ export function SectionHeading({
   id,
 }: SectionHeadingProps) {
   return (
-    <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-border/60 pb-4 md:mb-10">
-      <div className="max-w-2xl">
-        {eyebrow && (
-          <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            <span aria-hidden className="h-px w-6 bg-primary/60" />
-            {eyebrow}
-          </p>
-        )}
-        <h2
-          id={id}
-          className="font-serif text-3xl leading-none tracking-tight md:text-4xl"
-        >
-          {title}
-        </h2>
+    <div className="mb-10 border-t border-border pt-8 text-center md:mb-12">
+      {eyebrow && (
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">
+          {eyebrow}
+        </p>
+      )}
+      <h2
+        id={id}
+        className="mt-2 font-serif text-3xl leading-tight md:text-4xl"
+      >
+        {title}
+      </h2>
+      <div
+        aria-hidden
+        className="mt-3 text-sm tracking-[0.5em] text-gold"
+      >
+        &#10087;
       </div>
 
       {action && (
         <Link
           href={action.href}
-          className="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground/70 transition-colors hover:text-primary"
+          className="mt-4 inline-block font-serif text-sm italic text-primary underline-offset-4 transition-colors hover:underline"
         >
-          {action.label}
-          <ArrowUpRight className="size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          &mdash; {action.label} &mdash;
         </Link>
       )}
     </div>
