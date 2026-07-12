@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
 import { SectionHeading } from "@/components/section-heading";
@@ -5,7 +6,7 @@ import { SeriesSection } from "@/components/series-section";
 import { VideoExplorer } from "@/components/video-explorer";
 
 export const revalidate = 3600;
-export const metadata = { title: "Videos" };
+export const metadata: Metadata = { title: "Videos" };
 
 export default async function VideosPage() {
   const [playlists, initialVideos, tags] = await Promise.all([

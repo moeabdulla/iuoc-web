@@ -48,7 +48,7 @@ export function MobileNav() {
             Main navigation
           </SheetDescription>
         </SheetHeader>
-        <nav className="mt-10 flex flex-col gap-1">
+        <nav aria-label="Mobile" className="mt-10 flex flex-col gap-1">
           {siteConfig.nav.map((item, index) => (
             <Link
               key={item.href}

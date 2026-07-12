@@ -34,7 +34,7 @@ export function SiteFooter() {
                 key={label}
                 href={href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label={label}
                 className="flex size-9 items-center justify-center rounded-full border border-border/70 text-foreground/70 transition-colors hover:border-primary hover:text-primary"
               >
@@ -63,7 +63,7 @@ export function SiteFooter() {
               <a
                 href={item.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 {item.label}
@@ -78,7 +78,7 @@ export function SiteFooter() {
               <a
                 href={href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 {label}

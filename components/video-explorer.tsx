@@ -47,8 +47,9 @@ export function VideoExplorer({
         : initialVideos;
 
   const searchPending = searching && searchResults === undefined;
+  const tagPending = tagFiltering && tagResults === undefined;
   const noSearchMatches = searching && searchResults?.length === 0;
-  const dbEmpty = !searching && gridVideos.length === 0;
+  const dbEmpty = !searching && !tagPending && gridVideos.length === 0;
   const canLoadMore =
     !searching && !tagFiltering && paginated.status === "CanLoadMore";
   const loadingMore = paginated.status === "LoadingMore";
@@ -104,7 +105,7 @@ export function VideoExplorer({
         )}
       </div>
 
-      {searchPending ? (
+      {searchPending || tagPending ? (
         <VideoGridSkeleton />
       ) : noSearchMatches ? (
         <EmptyState
@@ -129,7 +130,7 @@ export function VideoExplorer({
               <a
                 href={siteConfig.links.youtube}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Visit the channel
               </a>

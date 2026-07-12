@@ -5,12 +5,14 @@ type SectionHeadingProps = {
   eyebrow?: string;
   title: string;
   action?: { href: string; label: string };
+  id?: string;
 };
 
 export function SectionHeading({
   eyebrow,
   title,
   action,
+  id,
 }: SectionHeadingProps) {
   return (
     <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-border/60 pb-4 md:mb-10">
@@ -21,7 +23,10 @@ export function SectionHeading({
             {eyebrow}
           </p>
         )}
-        <h2 className="font-serif text-3xl leading-none tracking-tight md:text-4xl">
+        <h2
+          id={id}
+          className="font-serif text-3xl leading-none tracking-tight md:text-4xl"
+        >
           {title}
         </h2>
       </div>

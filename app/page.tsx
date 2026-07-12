@@ -48,7 +48,11 @@ export default async function HomePage() {
       <div className="container space-y-24 pb-8 md:space-y-32">
         {leadFeature && (
           <section aria-labelledby="featured-heading">
-            <SectionHeading eyebrow="Featured" title="Worth your time" />
+            <SectionHeading
+              id="featured-heading"
+              eyebrow="Featured"
+              title="Worth your time"
+            />
             <FeaturedFilm video={leadFeature} />
             {restFeatured.length > 0 && (
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -62,6 +66,7 @@ export default async function HomePage() {
 
         <section aria-labelledby="latest-heading">
           <SectionHeading
+            id="latest-heading"
             eyebrow="Fresh from the channel"
             title="Latest videos"
             action={{ href: "/videos", label: "View all" }}
@@ -80,6 +85,7 @@ export default async function HomePage() {
         {series.length > 0 && (
           <section aria-labelledby="series-heading">
             <SectionHeading
+              id="series-heading"
               eyebrow="Curated paths"
               title="Explore by series"
               action={{ href: "/videos", label: "All series" }}
@@ -302,7 +308,7 @@ function SupportBand() {
                 key={option.label}
                 href={option.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className={
                   "group flex flex-col items-center gap-0.5 rounded-xl border px-6 py-3 transition-colors " +
                   (index === 0
@@ -344,7 +350,11 @@ function ComingSoon() {
         to be the first to watch.
       </p>
       <Button asChild variant="outline" className="mt-6">
-        <a href={siteConfig.links.youtube} target="_blank" rel="noreferrer">
+        <a
+          href={siteConfig.links.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Visit the channel
         </a>
       </Button>

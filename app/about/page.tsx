@@ -87,7 +87,11 @@ export default function AboutPage() {
       </header>
 
       <section aria-labelledby="formats-heading">
-        <SectionHeading eyebrow="What we make" title="Three formats, one mission" />
+        <SectionHeading
+          id="formats-heading"
+          eyebrow="What we make"
+          title="Three formats, one mission"
+        />
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3">
           {formats.map(({ icon: Icon, title, description }) => (
             <div key={title}>
@@ -107,6 +111,7 @@ export default function AboutPage() {
 
       <section aria-labelledby="topics-heading">
         <SectionHeading
+          id="topics-heading"
           eyebrow="Topics we cover"
           title="From the Quran to the cosmos"
         />
