@@ -5,6 +5,7 @@ import { fetchQuery } from "convex/nextjs";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { siteConfig } from "@/lib/site";
+import { stripHashtags } from "@/lib/strip-hashtags";
 import { YouTubeEmbed } from "@/components/youtube-embed";
 import { VideoCard, formatDuration } from "@/components/video-card";
 import { VideoDescription } from "@/components/video-description";
@@ -72,50 +73,47 @@ export default async function VideoPage({ params }: Props) {
         Back to videos
       </Link>
 
-      <YouTubeEmbed youtubeId={video.youtubeId} title={video.title} />
+      <div className="mt-8 md:mt-10">
+        <YouTubeEmbed youtubeId={video.youtubeId} title={video.title} />
+      </div>
 
       <div className="mt-8 md:mt-10">
-        <h1 className="font-serif text-3xl leading-[1.08] tracking-tight md:text-4xl lg:text-5xl">
-          {video.title}
+        <h1 className="font-serif text-3xl leading-[1.12] md:text-4xl lg:text-5xl">
+          {stripHashtags(video.title)}
         </h1>
 
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
+        <p className="mt-4 font-serif text-sm italic text-muted-foreground">
           <time dateTime={new Date(video.publishedAt).toISOString()}>
             {publishedDate}
           </time>
           {video.durationSeconds > 0 && (
-            <>
-              <span aria-hidden className="text-border">
-                •
-              </span>
-              <span>{formatDuration(video.durationSeconds)}</span>
-            </>
+            <> &middot; {formatDuration(video.durationSeconds)}</>
           )}
-        </div>
+        </p>
 
         {series.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs uppercase tracking-[0.2em]">
             {series.map((playlist) => (
               <Link
                 key={playlist.youtubeId}
-                href={`/videos#series-${playlist.youtubeId}`}
-                className="rounded-full border border-border/70 bg-card/60 px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+                href={`/series/${playlist.youtubeId}`}
+                className="text-gold transition-colors hover:text-primary"
               >
                 {playlist.title}
               </Link>
             ))}
-          </div>
+          </p>
         )}
       </div>
 
-      <div className="mt-6 border-t border-border/60 pt-6 md:mt-8 md:pt-8">
+      <div className="mt-6 border-t border-border pt-6 md:mt-8 md:pt-8">
         <VideoDescription description={video.description} />
 
         <a
           href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="group mt-6 inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/60 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-primary/50 hover:text-primary"
+          className="group mt-8 inline-flex items-center gap-2 rounded-none border border-primary bg-transparent px-5 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
         >
           Watch on YouTube
           <ArrowUpRight className="size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -125,7 +123,7 @@ export default async function VideoPage({ params }: Props) {
       {relatedVideos.length > 0 && (
         <section aria-label="More videos" className="mt-16 md:mt-20">
           <SectionHeading
-            eyebrow={primarySeries ? "Series" : "Watch next"}
+            eyebrow="Further Reading"
             title={
               primarySeries
                 ? `More from ${primarySeries.title}`

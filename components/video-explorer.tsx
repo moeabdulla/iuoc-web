@@ -56,34 +56,37 @@ export function VideoExplorer({
 
   return (
     <div>
-      <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-        <div className="relative w-full md:max-w-sm">
+      <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <label className="relative w-full md:max-w-sm">
+          <span className="mb-2 block text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-gold">
+            Search the shelves
+          </span>
           <Search
             aria-hidden
-            className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+            className="pointer-events-none absolute bottom-2.5 left-3 size-4 text-muted-foreground"
           />
           <Input
             type="search"
             value={searchInput}
             onChange={(event) => setSearchInput(event.target.value)}
-            placeholder="Search videos…"
+            placeholder="By title or subject…"
             aria-label="Search videos"
-            className="h-11 rounded-full border-border/70 bg-card/60 pl-9 pr-9 text-sm shadow-sm [&::-webkit-search-cancel-button]:hidden"
+            className="h-11 rounded-none border-x-0 border-t-0 border-b border-border bg-transparent px-9 text-sm shadow-none focus-visible:ring-0 focus-visible:border-primary [&::-webkit-search-cancel-button]:hidden"
           />
           {searchInput.length > 0 && (
             <button
               type="button"
               onClick={() => setSearchInput("")}
               aria-label="Clear search"
-              className="absolute right-3 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
+              className="absolute bottom-2 right-2 flex size-6 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
             >
               <X className="size-4" />
             </button>
           )}
-        </div>
+        </label>
 
         {tags.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <FilterChip
               active={activeTag === undefined}
               onClick={() => setActiveTag(undefined)}
@@ -115,7 +118,7 @@ export function VideoExplorer({
             <Button
               variant="outline"
               onClick={() => setSearchInput("")}
-              className="mt-6"
+              className="mt-6 rounded-none border-primary bg-transparent text-primary shadow-none hover:bg-primary/10 hover:text-primary"
             >
               Clear search
             </Button>
@@ -126,7 +129,11 @@ export function VideoExplorer({
           title="Content is on its way"
           body="New videos are being prepared. Follow along on YouTube to be the first to watch."
           action={
-            <Button asChild variant="outline" className="mt-6">
+            <Button
+              asChild
+              variant="outline"
+              className="mt-6 rounded-none border-primary bg-transparent text-primary shadow-none hover:bg-primary/10 hover:text-primary"
+            >
               <a
                 href={siteConfig.links.youtube}
                 target="_blank"
@@ -147,15 +154,14 @@ export function VideoExplorer({
 
           {canLoadMore && (
             <div className="mt-14 flex justify-center">
-              <Button
-                variant="outline"
-                size="lg"
+              <button
+                type="button"
                 onClick={() => paginated.loadMore(24)}
                 disabled={loadingMore}
-                className="h-12 min-w-44 gap-2 px-8"
+                className="font-serif text-base italic text-primary underline-offset-4 transition-colors hover:underline disabled:opacity-60"
               >
-                {loadingMore ? "Loading…" : "Load more"}
-              </Button>
+                {loadingMore ? "Loading…" : "— view more —"}
+              </button>
             </div>
           )}
         </>
@@ -179,10 +185,10 @@ function FilterChip({
       onClick={onClick}
       aria-pressed={active}
       className={
-        "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors " +
+        "border-b pb-0.5 text-xs uppercase tracking-[0.2em] transition-colors " +
         (active
-          ? "border-transparent bg-primary text-primary-foreground shadow-sm"
-          : "border-border/70 bg-card/60 text-muted-foreground hover:border-primary/50 hover:text-foreground")
+          ? "border-gold text-gold"
+          : "border-transparent text-muted-foreground hover:text-foreground")
       }
     >
       {children}
@@ -198,9 +204,11 @@ function VideoGridSkeleton() {
     >
       {Array.from({ length: 8 }).map((_, index) => (
         <div key={index} className="animate-pulse">
-          <div className="aspect-video rounded-lg bg-muted" />
-          <div className="mt-3 h-4 w-4/5 rounded bg-muted" />
-          <div className="mt-2 h-3 w-1/3 rounded bg-muted" />
+          <div className="border border-border bg-secondary p-1.5">
+            <div className="aspect-video border border-border/60 bg-muted" />
+          </div>
+          <div className="mx-auto mt-3 h-3 w-1/3 bg-muted" />
+          <div className="mx-auto mt-2 h-4 w-4/5 bg-muted" />
         </div>
       ))}
     </div>
@@ -217,12 +225,14 @@ function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/70 bg-card/30 px-6 py-20 text-center">
-      <span className="mb-4 flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-        <Search className="size-5" aria-hidden />
+    <div className="mx-auto flex max-w-xl flex-col items-center border border-border bg-secondary/50 px-6 py-20 text-center">
+      <span aria-hidden className="text-sm tracking-[0.5em] text-gold">
+        &#10087;
       </span>
-      <h3 className="font-serif text-2xl tracking-tight">{title}</h3>
-      <p className="mt-2 max-w-sm text-sm text-muted-foreground">{body}</p>
+      <h3 className="mt-4 font-serif text-2xl">{title}</h3>
+      <p className="mt-2 max-w-sm text-sm italic text-muted-foreground">
+        {body}
+      </p>
       {action}
     </div>
   );

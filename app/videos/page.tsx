@@ -31,23 +31,25 @@ export default async function VideosPage() {
 
   return (
     <div className="container space-y-20 pb-24 pt-14 md:space-y-28 md:pt-20">
-      <header className="max-w-2xl">
-        <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          <span aria-hidden className="h-px w-6 bg-primary/60" />
-          The library
+      <header className="mx-auto max-w-2xl border-b border-border pb-10 text-center md:pb-12">
+        <div aria-hidden className="text-sm tracking-[0.6em] text-gold">
+          &#10022; &#10022; &#10022;
+        </div>
+        <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
+          The Library
         </p>
-        <h1 className="font-serif text-4xl leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
-          Every video, in one place.
+        <h1 className="mt-3 font-serif text-4xl leading-[1.1] md:text-5xl">
+          Every lecture, gathered in one volume.
         </h1>
-        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-          Browse the full catalogue by series, or search and filter your way to
-          exactly what you want to learn next.
+        <p className="mx-auto mt-5 max-w-lg font-serif text-lg italic leading-relaxed text-muted-foreground">
+          Browse the full catalogue by series, or search the shelves for exactly
+          what you wish to learn next.
         </p>
       </header>
 
       {visibleSeries.length > 0 && (
         <section aria-label="Series" className="space-y-14 md:space-y-16">
-          <SectionHeading eyebrow="Curated paths" title="Browse by series" />
+          <SectionHeading eyebrow="Chapter the First" title="The Series" />
           {visibleSeries.map(({ playlist, videos }) => (
             <SeriesSection
               key={playlist.youtubeId}
@@ -59,7 +61,7 @@ export default async function VideosPage() {
       )}
 
       <section aria-label="All videos">
-        <SectionHeading eyebrow="The full catalogue" title="All videos" />
+        <SectionHeading eyebrow="Chapter the Second" title="The Full Catalogue" />
         <VideoExplorer initialVideos={initialVideos} tags={tags} />
       </section>
     </div>

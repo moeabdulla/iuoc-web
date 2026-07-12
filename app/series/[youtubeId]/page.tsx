@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { fetchQuery } from "convex/nextjs";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { siteConfig } from "@/lib/site";
 import { SeriesGrid } from "@/components/series-grid";
@@ -51,38 +51,39 @@ export default async function SeriesPage({ params }: Props) {
         Back to videos
       </Link>
 
-      <header className="max-w-2xl border-b border-border/60 pb-8 md:pb-10">
-        <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          <span aria-hidden className="h-px w-6 bg-primary/60" />
-          Series
+      <header className="mx-auto max-w-2xl border-b border-border pb-8 text-center md:pb-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold">
+          A Series
         </p>
-        <h1 className="font-serif text-4xl leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
+        <h1 className="mt-3 font-serif text-4xl leading-[1.1] md:text-5xl">
           {playlist.title}
         </h1>
         {playlist.description && (
-          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-xl font-serif text-base leading-relaxed text-foreground/80 md:text-lg">
             {playlist.description}
           </p>
         )}
-        <p className="mt-6 text-sm font-medium text-muted-foreground">
-          {total} video{total === 1 ? "" : "s"}
+        <p className="mt-6 font-serif text-sm italic text-muted-foreground">
+          {total} lecture{total === 1 ? "" : "s"}
         </p>
       </header>
 
       <div className="mt-12 md:mt-16">
         {total === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/70 bg-card/30 px-6 py-20 text-center">
-            <span className="mb-4 flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Sparkles className="size-5" aria-hidden />
+          <div className="mx-auto flex max-w-xl flex-col items-center border border-border bg-secondary/50 px-6 py-20 text-center">
+            <span aria-hidden className="text-sm tracking-[0.5em] text-gold">
+              &#10087;
             </span>
-            <h2 className="font-serif text-2xl tracking-tight">
-              No videos yet
-            </h2>
-            <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+            <h2 className="mt-4 font-serif text-2xl">No lectures yet</h2>
+            <p className="mt-2 max-w-sm text-sm italic text-muted-foreground">
               This series is being prepared. Follow along on YouTube to be the
               first to watch.
             </p>
-            <Button asChild variant="outline" className="mt-6">
+            <Button
+              asChild
+              variant="outline"
+              className="mt-6 rounded-none border-primary bg-transparent text-primary shadow-none hover:bg-primary/10 hover:text-primary"
+            >
               <a
                 href={siteConfig.links.youtube}
                 target="_blank"

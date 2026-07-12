@@ -19,7 +19,7 @@ export function VideoDescription({ description }: { description: string }) {
     <div>
       <p
         ref={paragraphRef}
-        className={`whitespace-pre-line text-base leading-relaxed text-foreground/80 ${
+        className={`whitespace-pre-line font-serif text-base leading-relaxed text-foreground/80 ${
           expanded ? "" : "line-clamp-4"
         }`}
       >
@@ -29,9 +29,9 @@ export function VideoDescription({ description }: { description: string }) {
         <button
           type="button"
           onClick={() => setExpanded((value) => !value)}
-          className="mt-3 text-sm font-semibold text-primary hover:underline"
+          className="mt-4 font-serif text-sm italic text-primary underline-offset-4 transition-colors hover:underline"
         >
-          {expanded ? "Show less" : "Show more"}
+          {expanded ? "— show less —" : "— continue reading —"}
         </button>
       )}
     </div>

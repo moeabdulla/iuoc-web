@@ -64,9 +64,11 @@ export function SeriesGrid({
         {loading &&
           Array.from({ length: 4 }).map((_, index) => (
             <div key={`skeleton-${index}`} aria-hidden className="animate-pulse">
-              <div className="aspect-video rounded-lg bg-muted" />
-              <div className="mt-3 h-4 w-4/5 rounded bg-muted" />
-              <div className="mt-2 h-3 w-1/3 rounded bg-muted" />
+              <div className="border border-border bg-secondary p-1.5">
+                <div className="aspect-video border border-border/60 bg-muted" />
+              </div>
+              <div className="mx-auto mt-3 h-3 w-1/3 bg-muted" />
+              <div className="mx-auto mt-2 h-4 w-4/5 bg-muted" />
             </div>
           ))}
       </div>
