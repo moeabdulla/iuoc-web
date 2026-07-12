@@ -54,11 +54,15 @@ export function VideoCard({ video, label, compact = false }: VideoCardProps) {
           bounds as the thumbnail) rather than as an independently-sized
           sibling — that mismatch was what left a hard seam before. */}
       <div className="absolute inset-y-0 right-0 w-[60%] overflow-hidden">
+        {/* object-cover scales the 16:9 source to the container's height, so the
+            drawn width is ~the full card width, not the container's 60% — the
+            sizes hint must match the drawn width or Next serves a soft variant */}
         <Image
           src={video.thumbnail}
           alt={video.title}
           fill
-          sizes="(max-width: 640px) 60vw, (max-width: 1024px) 30vw, 15vw"
+          quality={85}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           className="object-cover transition-transform group-hover:scale-105"
         />
         <div
@@ -79,6 +83,7 @@ export function VideoCard({ video, label, compact = false }: VideoCardProps) {
         src={video.thumbnail}
         alt={video.title}
         fill
+        quality={85}
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         className="object-cover transition-transform group-hover:scale-105"
       />
