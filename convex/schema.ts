@@ -14,6 +14,7 @@ export default defineSchema({
     tags: v.array(v.string()),
     featured: v.boolean(),
     searchText: v.string(),
+    isShort: v.optional(v.boolean()),
   })
     .index("by_youtubeId", ["youtubeId"])
     .index("by_slug", ["slug"])

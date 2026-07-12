@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 import { internal } from "./_generated/api";
-import { internalAction, internalMutation } from "./_generated/server";
+import { internalAction, internalMutation, internalQuery } from "./_generated/server";
 import {
   buildSearchText,
   chunk,
@@ -23,6 +23,7 @@ const videoValidator = v.object({
   tags: v.array(v.string()),
   featured: v.boolean(),
   searchText: v.string(),
+  isShort: v.optional(v.boolean()),
 });
 
 const playlistValidator = v.object({
@@ -118,6 +119,21 @@ function bestThumbnail(thumbnails: YtThumbnails | undefined): string {
   );
 }
 
+// YouTube redirects /shorts/{id} to the canonical /watch page (3xx) for
+// regular videos, but serves it directly (200) for actual Shorts.
+// Verified live against known short/regular video ids.
+async function probeIsShort(videoId: string): Promise<boolean | undefined> {
+  try {
+    const res = await fetch(`https://www.youtube.com/shorts/${videoId}`, {
+      method: "HEAD",
+      redirect: "manual",
+    });
+    return res.status === 200;
+  } catch {
+    return undefined;
+  }
+}
+
 export const run = internalAction({
   args: {},
   handler: async (ctx) => {
@@ -161,7 +177,7 @@ export const run = internalAction({
       }
     }
 
-    const videos = rawVideos.map((raw) => ({
+    const videosBase = rawVideos.map((raw) => ({
       youtubeId: raw.id,
       slug: makeSlug(raw.snippet.title, raw.id),
       title: raw.snippet.title as string,
@@ -178,6 +194,38 @@ export const run = internalAction({
       ),
     }));
 
+    // 4. Probe Shorts status only for videos we don't already know about,
+    // so re-ingests don't re-probe the whole channel every time.
+    const knownStatuses = await ctx.runQuery(internal.ingest.knownShortStatuses, {});
+    const knownMap = new Map(knownStatuses.map((k) => [k.youtubeId, k.isShort]));
+    const toProbe = videosBase.filter((video) => knownMap.get(video.youtubeId) === undefined);
+
+    const probedResults = new Map<string, boolean>();
+    let probedCount = 0;
+    for (const batch of chunk(toProbe, 10)) {
+      const results = await Promise.all(
+        batch.map(async (video) => ({
+          youtubeId: video.youtubeId,
+          isShort: await probeIsShort(video.youtubeId),
+        })),
+      );
+      for (const { youtubeId, isShort } of results) {
+        probedCount += 1;
+        if (isShort !== undefined) {
+          probedResults.set(youtubeId, isShort);
+        }
+      }
+    }
+    const shortsFound = [...probedResults.values()].filter(Boolean).length;
+    console.log(`Probed ${probedCount} videos for Shorts status; found ${shortsFound} shorts`);
+
+    const videos = videosBase.map((video) => ({
+      ...video,
+      isShort: probedResults.has(video.youtubeId)
+        ? probedResults.get(video.youtubeId)
+        : knownMap.get(video.youtubeId),
+    }));
+
     const playlists = rawPlaylists.map((p) => ({
       youtubeId: p.id as string,
       title: p.snippet.title as string,
@@ -192,6 +240,17 @@ export const run = internalAction({
     await ctx.runMutation(internal.ingest.upsertPlaylists, { playlists });
 
     console.log(`Ingested ${videos.length} videos, ${playlists.length} playlists`);
+  },
+});
+
+export const knownShortStatuses = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    const videos = await ctx.db.query("videos").collect();
+    return videos.map((video) => ({
+      youtubeId: video.youtubeId,
+      isShort: video.isShort,
+    }));
   },
 });
 

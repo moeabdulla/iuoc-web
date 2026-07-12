@@ -82,6 +82,30 @@ describe("mergeVideo", () => {
     expect(merged.featured).toBe(true);
     expect(merged.slug).toBe("old-slug");
   });
+
+  it("takes incoming.isShort when it is defined", () => {
+    const merged = mergeVideo(
+      { ...existing, isShort: false },
+      { ...incoming, isShort: true },
+    );
+    expect(merged.isShort).toBe(true);
+  });
+
+  it("preserves existing.isShort when incoming.isShort is undefined", () => {
+    const merged = mergeVideo(
+      { ...existing, isShort: true },
+      { ...incoming, isShort: undefined },
+    );
+    expect(merged.isShort).toBe(true);
+  });
+
+  it("leaves isShort undefined when both existing and incoming are undefined", () => {
+    const merged = mergeVideo(
+      { ...existing, isShort: undefined },
+      { ...incoming, isShort: undefined },
+    );
+    expect(merged.isShort).toBeUndefined();
+  });
 });
 
 describe("chunk", () => {

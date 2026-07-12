@@ -10,6 +10,7 @@ export type MergeableVideo = {
   tags: string[];
   featured: boolean;
   searchText: string;
+  isShort?: boolean;
 };
 
 export function parseIso8601Duration(iso: string): number {
@@ -45,6 +46,7 @@ export function mergeVideo(
     slug: existing.slug,
     tags: existing.tags,
     featured: existing.featured,
+    isShort: incoming.isShort !== undefined ? incoming.isShort : existing.isShort,
   };
 }
 
