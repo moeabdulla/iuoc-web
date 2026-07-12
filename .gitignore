@@ -42,3 +42,6 @@ next-env.d.ts
 
 # scratch / planning docs, not part of the shipped project
 .superpowers/
+
+# Playwright MCP verification artifacts
+.playwright-mcp/
