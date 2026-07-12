@@ -52,6 +52,30 @@ export const byPlaylist = query({
   },
 });
 
+export const byPlaylistPage = query({
+  args: {
+    playlistYoutubeId: v.string(),
+    offset: v.number(),
+    limit: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const all = await ctx.db
+      .query("videos")
+      .withIndex("by_publishedAt")
+      .order("desc")
+      .collect();
+    const matching = all.filter((video) =>
+      video.playlistIds.includes(args.playlistYoutubeId),
+    );
+    const limit = Math.min(Math.max(args.limit, 1), 48);
+    const offset = Math.max(args.offset, 0);
+    return {
+      videos: matching.slice(offset, offset + limit),
+      total: matching.length,
+    };
+  },
+});
+
 export const search = query({
   args: { query: v.string(), tag: v.optional(v.string()) },
   handler: async (ctx, args) => {

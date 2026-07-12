@@ -250,7 +250,7 @@ function FeaturedFilm({ video }: { video: Doc<"videos"> }) {
 function SeriesCard({ playlist }: { playlist: Doc<"playlists"> }) {
   return (
     <Link
-      href={`/videos#series-${playlist.youtubeId}`}
+      href={`/series/${playlist.youtubeId}`}
       className="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-xl border border-border/60"
     >
       <Image
