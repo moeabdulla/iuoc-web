@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { Instagram, Youtube } from "lucide-react";
+import {
+  InstagramIcon,
+  TikTokIcon,
+  YouTubeIcon,
+} from "@/components/social-icons";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -31,8 +35,9 @@ const donationCards = [
 ];
 
 const socialLinks = [
-  { href: siteConfig.links.youtube, label: "YouTube", icon: Youtube },
-  { href: siteConfig.links.instagram, label: "Instagram", icon: Instagram },
+  { href: siteConfig.links.youtube, label: "YouTube", icon: YouTubeIcon },
+  { href: siteConfig.links.instagram, label: "Instagram", icon: InstagramIcon },
+  { href: siteConfig.links.tiktok, label: "TikTok", icon: TikTokIcon },
 ];
 
 export default function SupportPage() {

@@ -6,6 +6,7 @@ export const siteConfig = {
   links: {
     youtube: "https://www.youtube.com/@ProjectIUoC",
     instagram: "https://www.instagram.com/projectiuoc/",
+    tiktok: "https://www.tiktok.com/@project_iuoc",
     patreon: "https://patreon.com/ProjectIUoC",
     gofundme: "https://gofund.me/6e6a068a",
     paypal: "https://www.paypal.com/donate/?hosted_button_id=ETKBVGRVFKXYE",

@@ -1,11 +1,16 @@
 import Link from "next/link";
-import { Instagram, Youtube } from "lucide-react";
 import { Logo } from "@/components/logo";
+import {
+  InstagramIcon,
+  TikTokIcon,
+  YouTubeIcon,
+} from "@/components/social-icons";
 import { siteConfig } from "@/lib/site";
 
 const socialLinks = [
-  { href: siteConfig.links.youtube, label: "YouTube", icon: Youtube },
-  { href: siteConfig.links.instagram, label: "Instagram", icon: Instagram },
+  { href: siteConfig.links.youtube, label: "YouTube", icon: YouTubeIcon },
+  { href: siteConfig.links.instagram, label: "Instagram", icon: InstagramIcon },
+  { href: siteConfig.links.tiktok, label: "TikTok", icon: TikTokIcon },
 ];
 
 const supportLinks = [
