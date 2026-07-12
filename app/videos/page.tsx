@@ -61,7 +61,11 @@ export default async function VideosPage() {
       )}
 
       <section aria-label="All videos">
-        <SectionHeading eyebrow="Chapter II" title="The Full Catalogue" />
+        <SectionHeading
+          eyebrow="Chapter II"
+          title="The Full Catalogue"
+          stars={2}
+        />
         <VideoExplorer initialVideos={initialVideos} tags={tags} />
       </section>
     </div>

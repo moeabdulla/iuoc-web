@@ -5,17 +5,24 @@ type SectionHeadingProps = {
   title: string;
   action?: { href: string; label: string };
   id?: string;
+  // The gold ornament renders this many ✦ glyphs so a chapter's stars count
+  // the chapter (Chapter I → one, Chapter II → two…). Defaults to one for
+  // non-chapter headings; clamped to 4 to keep the rule visually sane.
+  stars?: number;
 };
 
 // Chapter heading: a small-caps number line, a centered serif title, and a
 // gold ornament — the printed-book convention that replaces eyebrow chips.
-// API is unchanged; `eyebrow` now reads as the chapter/section line.
+// `eyebrow` reads as the chapter/section line.
 export function SectionHeading({
   eyebrow,
   title,
   action,
   id,
+  stars = 1,
 }: SectionHeadingProps) {
+  const starCount = Math.min(Math.max(Math.round(stars), 1), 4);
+
   return (
     <div className="mb-10 border-t border-border pt-8 text-center md:mb-12">
       {eyebrow && (
@@ -34,7 +41,11 @@ export function SectionHeading({
         className="mt-4 flex items-center justify-center gap-3 text-gold"
       >
         <span className="h-px w-8 bg-current opacity-70" />
-        <span className="text-xl leading-none">&#10022;</span>
+        <span className="flex items-center gap-2.5 text-xl leading-none">
+          {Array.from({ length: starCount }, (_, i) => (
+            <span key={i}>&#10022;</span>
+          ))}
+        </span>
         <span className="h-px w-8 bg-current opacity-70" />
       </div>
 

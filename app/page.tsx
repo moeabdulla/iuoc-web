@@ -94,6 +94,7 @@ export default async function HomePage() {
               id="series-heading"
               eyebrow="Chapter II"
               title="The Series"
+              stars={2}
             />
             <nav aria-label="Series" className="mx-auto max-w-3xl">
               <ol>
@@ -130,13 +131,20 @@ function Hero() {
       </div>
       <div className="container py-12 text-center md:py-20">
         <div className="mx-auto max-w-2xl">
-          <p
-            lang="ar"
-            dir="rtl"
-            className="mx-auto inline-block max-w-full font-arabic leading-none text-primary [font-size:clamp(1.75rem,8vw,3rem)]"
-          >
-            &#65021;
-          </p>
+          {/* The basmala ligature's advance is wider than the mobile column,
+              and dir=rtl pins an over-wide line to one edge — which reads as
+              off-centre. A flex row centres the glyph's box symmetrically
+              (overflow spills equally both sides), so the visible calligraphy
+              sits optically centred at every width without any body scroll. */}
+          <div className="flex justify-center">
+            <p
+              lang="ar"
+              dir="rtl"
+              className="w-max whitespace-nowrap font-arabic leading-none text-primary [font-size:clamp(1.75rem,8vw,3rem)]"
+            >
+              &#65021;
+            </p>
+          </div>
 
           <h1 className="mt-7 font-serif text-[2.1rem] font-medium italic leading-[1.2] sm:text-4xl md:text-5xl">
             <span className="text-gold">&ldquo;</span>
@@ -251,9 +259,9 @@ function TocRow({ playlist }: { playlist: Doc<"playlists"> }) {
         </span>
         <span
           aria-hidden
-          className="min-w-4 flex-1 self-end border-b border-dotted border-border pb-[0.55rem]"
+          className="min-w-4 flex-1 self-center border-b border-dotted border-border"
         />
-        <span className="shrink-0 whitespace-nowrap font-serif text-sm italic text-muted-foreground">
+        <span className="shrink-0 self-center whitespace-nowrap font-serif text-sm italic text-muted-foreground">
           {count}
         </span>
       </Link>
