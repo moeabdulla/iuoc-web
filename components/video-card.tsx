@@ -23,7 +23,7 @@ function formatDate(publishedAt: number): string {
 
 type VideoCardProps = {
   video: Doc<"videos">;
-  // Small-caps figure label above the title (e.g. "Plate I"). Defaults to the
+  // Small-caps figure label above the title (e.g. "Short"). Defaults to the
   // video's kind. Kept optional so every existing call site works unchanged.
   label?: string;
   // Tightens the caption for dense grids (smaller title, no date).

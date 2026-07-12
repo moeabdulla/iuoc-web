@@ -20,24 +20,6 @@ const supportOptions = [
   { href: siteConfig.links.paypal, label: "PayPal", note: "Direct" },
 ];
 
-const ROMAN = [
-  "",
-  "I",
-  "II",
-  "III",
-  "IV",
-  "V",
-  "VI",
-  "VII",
-  "VIII",
-  "IX",
-  "X",
-];
-
-function roman(n: number): string {
-  return ROMAN[n] ?? String(n);
-}
-
 export default async function HomePage() {
   const [featured, latest, playlists] = await Promise.all([
     fetchQuery(api.videos.featured, {}),
@@ -63,7 +45,7 @@ export default async function HomePage() {
             />
             <FeaturedPlate video={leadFeature} />
             {restFeatured.length > 0 && (
-              <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3">
+              <div className="mt-10 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3">
                 {restFeatured.map((video) => (
                   <VideoCard key={video._id} video={video} compact />
                 ))}
@@ -75,7 +57,7 @@ export default async function HomePage() {
         <section aria-labelledby="latest-heading">
           <SectionHeading
             id="latest-heading"
-            eyebrow="Chapter the First"
+            eyebrow="Chapter I"
             title="Latest Lectures"
           />
           {latest.length === 0 ? (
@@ -84,18 +66,13 @@ export default async function HomePage() {
             <>
               {leadLatest && (
                 <div className="mx-auto max-w-3xl">
-                  <VideoCard video={leadLatest} label={`Plate ${roman(1)}`} />
+                  <VideoCard video={leadLatest} />
                 </div>
               )}
               {compactLatest.length > 0 && (
-                <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-8 md:grid-cols-3">
-                  {compactLatest.map((video, index) => (
-                    <VideoCard
-                      key={video._id}
-                      video={video}
-                      label={`Plate ${roman(index + 2)}`}
-                      compact
-                    />
+                <div className="mt-10 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-5 md:grid-cols-3">
+                  {compactLatest.map((video) => (
+                    <VideoCard key={video._id} video={video} compact />
                   ))}
                 </div>
               )}
@@ -115,17 +92,13 @@ export default async function HomePage() {
           <section aria-labelledby="series-heading">
             <SectionHeading
               id="series-heading"
-              eyebrow="Chapter the Second"
+              eyebrow="Chapter II"
               title="The Series"
             />
             <nav aria-label="Series" className="mx-auto max-w-3xl">
               <ol>
-                {series.map((playlist, index) => (
-                  <TocRow
-                    key={playlist._id}
-                    marker={roman(index + 1).toLowerCase()}
-                    playlist={playlist}
-                  />
+                {series.map((playlist) => (
+                  <TocRow key={playlist._id} playlist={playlist} />
                 ))}
               </ol>
             </nav>
@@ -160,7 +133,7 @@ function Hero() {
           <p
             lang="ar"
             dir="rtl"
-            className="font-arabic text-4xl leading-none text-primary md:text-5xl"
+            className="mx-auto inline-block max-w-full font-arabic leading-none text-primary [font-size:clamp(1.75rem,8vw,3rem)]"
           >
             &#65021;
           </p>
@@ -252,13 +225,7 @@ function FeaturedPlate({ video }: { video: Doc<"videos"> }) {
   );
 }
 
-function TocRow({
-  marker,
-  playlist,
-}: {
-  marker: string;
-  playlist: Doc<"playlists">;
-}) {
+function TocRow({ playlist }: { playlist: Doc<"playlists"> }) {
   const count =
     playlist.itemCount > 0
       ? `${playlist.itemCount} lecture${playlist.itemCount === 1 ? "" : "s"}`
@@ -268,17 +235,23 @@ function TocRow({
     <li>
       <Link
         href={`/series/${playlist.youtubeId}`}
-        className="group flex items-baseline gap-3 border-b border-border py-3.5"
+        className="group flex items-center gap-3.5 border-b border-border py-3 md:gap-4"
       >
-        <span className="w-7 shrink-0 font-serif text-sm text-gold">
-          {marker}.
+        <span className="relative aspect-video w-16 shrink-0 overflow-hidden border border-foreground/60 bg-secondary sm:w-20">
+          <Image
+            src={playlist.thumbnail}
+            alt=""
+            fill
+            sizes="80px"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
         </span>
         <span className="min-w-0 shrink font-serif text-base font-medium transition-colors group-hover:text-primary md:text-lg">
           {playlist.title}
         </span>
         <span
           aria-hidden
-          className="min-w-4 flex-1 translate-y-[-0.3em] border-b border-dotted border-border"
+          className="min-w-4 flex-1 self-end border-b border-dotted border-border pb-[0.55rem]"
         />
         <span className="shrink-0 whitespace-nowrap font-serif text-sm italic text-muted-foreground">
           {count}

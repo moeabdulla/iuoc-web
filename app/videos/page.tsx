@@ -49,7 +49,7 @@ export default async function VideosPage() {
 
       {visibleSeries.length > 0 && (
         <section aria-label="Series" className="space-y-14 md:space-y-16">
-          <SectionHeading eyebrow="Chapter the First" title="The Series" />
+          <SectionHeading eyebrow="Chapter I" title="The Series" />
           {visibleSeries.map(({ playlist, videos }) => (
             <SeriesSection
               key={playlist.youtubeId}
@@ -61,7 +61,7 @@ export default async function VideosPage() {
       )}
 
       <section aria-label="All videos">
-        <SectionHeading eyebrow="Chapter the Second" title="The Full Catalogue" />
+        <SectionHeading eyebrow="Chapter II" title="The Full Catalogue" />
         <VideoExplorer initialVideos={initialVideos} tags={tags} />
       </section>
     </div>

@@ -31,9 +31,11 @@ export function SectionHeading({
       </h2>
       <div
         aria-hidden
-        className="mt-3 text-sm tracking-[0.5em] text-gold"
+        className="mt-4 flex items-center justify-center gap-3 text-gold"
       >
-        &#10087;
+        <span className="h-px w-8 bg-current opacity-70" />
+        <span className="text-xl leading-none">&#10022;</span>
+        <span className="h-px w-8 bg-current opacity-70" />
       </div>
 
       {action && (
