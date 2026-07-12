@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { fetchQuery } from "convex/nextjs";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { api } from "@/convex/_generated/api";
+import { siteConfig } from "@/lib/site";
 import { YouTubeEmbed } from "@/components/youtube-embed";
 import { VideoCard, formatDuration } from "@/components/video-card";
 import { VideoDescription } from "@/components/video-description";
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: video.title,
     description: video.description.slice(0, 160),
+    alternates: { canonical: `${siteConfig.url}/videos/${video.slug}` },
     openGraph: {
       title: video.title,
       description: video.description.slice(0, 160),
