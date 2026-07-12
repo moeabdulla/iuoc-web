@@ -43,7 +43,7 @@ export function MobileNav() {
       >
         <div className="border-b-[3px] border-double border-foreground/70 px-6 pb-6 pt-7">
           <div className="flex items-center gap-3.5">
-            <Logo className="h-16 w-16 shrink-0" />
+            <Logo className="h-20 w-20 shrink-0" />
             <span className="flex flex-col leading-none">
               <SheetTitle className="font-serif text-xl font-semibold tracking-tight text-foreground">
                 {siteConfig.name}

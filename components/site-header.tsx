@@ -18,7 +18,7 @@ export function SiteHeader() {
   return (
     <header
       className={
-        "sticky top-0 z-50 border-b-[3px] border-double border-foreground/70 bg-background/85 backdrop-blur-md transition-transform [transition-duration:250ms] ease-out supports-[backdrop-filter]:bg-background/70 " +
+        "sticky top-0 z-50 border-b-[3px] border-double border-foreground/70 bg-background transition-transform [transition-duration:250ms] ease-out " +
         (hidden ? "-translate-y-full" : "translate-y-0")
       }
     >
@@ -28,7 +28,7 @@ export function SiteHeader() {
           className="group flex items-center gap-3"
           aria-label={`${siteConfig.name} home`}
         >
-          <Logo className="h-[4.5rem] w-[4.5rem] transition-transform duration-300 ease-out group-hover:-rotate-6 md:h-20 md:w-20" />
+          <Logo className="h-20 w-20 transition-transform duration-300 ease-out group-hover:-rotate-6 md:h-24 md:w-24" />
           <span className="flex flex-col leading-none">
             <span className="font-serif text-lg font-semibold tracking-tight">
               {siteConfig.name}

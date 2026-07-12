@@ -49,20 +49,24 @@ export function VideoCard({ video, label, compact = false }: VideoCardProps) {
   // palette so it harmonizes inside the plate frame.
   const media = video.isShort ? (
     <div className="relative aspect-video overflow-hidden bg-foreground text-background dark:bg-[hsl(146_18%_5%)] dark:text-foreground">
-      <div className="absolute inset-y-0 right-0 w-[55%] overflow-hidden">
+      {/* The image container's own left edge is where the panel color must
+          continue unbroken, so the fade lives inside it (clipped to the same
+          bounds as the thumbnail) rather than as an independently-sized
+          sibling — that mismatch was what left a hard seam before. */}
+      <div className="absolute inset-y-0 right-0 w-[60%] overflow-hidden">
         <Image
           src={video.thumbnail}
           alt={video.title}
           fill
-          sizes="(max-width: 640px) 55vw, (max-width: 1024px) 28vw, 14vw"
+          sizes="(max-width: 640px) 60vw, (max-width: 1024px) 30vw, 15vw"
           className="object-cover transition-transform group-hover:scale-105"
         />
+        <div
+          aria-hidden
+          className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-foreground to-transparent dark:from-[hsl(146_18%_5%)]"
+        />
       </div>
-      <div
-        aria-hidden
-        className="absolute inset-y-0 left-0 w-[80%] bg-gradient-to-r from-foreground via-foreground/90 to-transparent dark:from-[hsl(146_18%_5%)] dark:via-[hsl(146_18%_5%)]/90"
-      />
-      <div className="relative flex h-full w-[72%] flex-col justify-center p-2.5 sm:p-3.5">
+      <div className="relative flex h-full w-[68%] flex-col justify-center p-2.5 sm:p-3.5">
         <h3 className="line-clamp-4 font-serif text-lg font-medium leading-[1.15] sm:text-xl">
           {stripHashtags(video.title)}
         </h3>

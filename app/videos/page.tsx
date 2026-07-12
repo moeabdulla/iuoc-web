@@ -31,7 +31,10 @@ export default async function VideosPage() {
 
   return (
     <div className="container space-y-20 pb-24 pt-14 md:space-y-28 md:pt-20">
-      <header className="mx-auto max-w-2xl border-b border-border pb-10 text-center md:pb-12">
+      {/* No border-b here: SectionHeading's own border-t is the single
+          hairline that separates this intro from "Chapter I" — adding one
+          here too produced a doubled rule with a dead band between them. */}
+      <header className="mx-auto max-w-2xl pb-10 text-center md:pb-12">
         <div aria-hidden className="text-sm tracking-[0.6em] text-gold">
           &#10022; &#10022; &#10022;
         </div>
