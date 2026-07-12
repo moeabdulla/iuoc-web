@@ -1,0 +1,189 @@
+<!-- MOCKUP · Direction 1 · Manuscript / Illuminated Print -->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #2a2620; padding: 24px 0; font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .meta-note { color: #b8ab92; font: 13px/1.5 -apple-system, sans-serif; max-width: 390px; padding: 0 16px; }
+  .meta-note b { color: #e8dcc0; }
+  .phone { width: 390px; background: #f5efe1; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,.5); }
+
+  /* ink + palette */
+  .phone { --ink: #22301f; --green: #14563a; --gold: #a87d2a; --red: #96382b; --paper: #f5efe1; --paper2: #efe7d2; color: var(--ink); }
+
+  /* ══ masthead — like a book's title page ══ */
+  header { padding: 18px 20px 14px; border-bottom: 3px double var(--ink); display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .crest { width: 54px; height: 54px; border: 1.5px solid var(--ink); border-radius: 50%; display: grid; place-items: center; background: var(--paper2); font-size: 26px; color: var(--green); position: relative; }
+  .crest::after { content: ""; position: absolute; inset: 3px; border: 1px solid var(--gold); border-radius: 50%; }
+  .brand-name { font-size: 21px; letter-spacing: .02em; font-weight: 600; }
+  .brand-sub { font-size: 10.5px; letter-spacing: .28em; text-transform: uppercase; color: var(--green); margin-top: 3px; }
+  .burger { font-size: 22px; color: var(--ink); }
+
+  .rule-orn { text-align: center; color: var(--gold); font-size: 13px; letter-spacing: .6em; padding: 10px 0 0; }
+
+  /* ══ hero — title page with the channel's own tagline (a hadith) ══ */
+  .hero { padding: 34px 26px 30px; text-align: center; }
+  .hero .arabic { font-size: 30px; color: var(--green); margin-bottom: 18px; }
+  .hero h1 { font-size: 34px; line-height: 1.18; font-weight: 500; font-style: italic; }
+  .hero h1 .q { color: var(--gold); }
+
+  /* ── the "illumination": a sheen sweeps the quote once, key words settle into glowing gold ── */
+  .hero h1 .sheen {
+    background: linear-gradient(100deg, var(--ink) 42%, #e9c36a 50%, var(--ink) 58%);
+    background-size: 300% 100%; background-position: 100% 0;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: sweep 2.6s ease-in-out .6s 1 forwards;
+  }
+  @keyframes sweep { to { background-position: 0% 0; } }
+  .hero h1 .lit {
+    color: var(--ink); font-style: italic;
+    animation: illuminate 1.6s ease .9s 1 forwards;
+  }
+  .hero h1 .lit:last-of-type { animation-delay: 1.7s; }
+  @keyframes illuminate {
+    60%  { color: #d9a94e; text-shadow: 0 0 22px rgba(217,169,78,.85), 0 0 6px rgba(217,169,78,.6); }
+    100% { color: var(--gold); text-shadow: 0 0 14px rgba(217,169,78,.45); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero h1 .sheen { animation: none; color: var(--ink); }
+    .hero h1 .lit { animation: none; color: var(--gold); text-shadow: none; }
+  }
+  .hero .attrib { margin-top: 14px; font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: #6c6350; }
+  .hero .attrib b { color: var(--green); font-weight: 600; }
+  .hero p.lede { margin: 22px auto 0; max-width: 300px; font-size: 15.5px; line-height: 1.65; color: #4a4436; }
+  .hero .cta-row { margin-top: 24px; display: flex; gap: 12px; justify-content: center; }
+  .btn { font-family: inherit; font-size: 14.5px; padding: 12px 22px; border: 1.5px solid var(--green); color: var(--paper); background: var(--green); letter-spacing: .04em; }
+  .btn.ghost { background: transparent; color: var(--green); }
+
+  /* ══ section heading — numbered like chapters ══ */
+  .chapter { margin: 8px 20px 0; padding: 26px 0 16px; border-top: 1px solid #cdbfa0; }
+  .chapter .no { font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); text-align: center; }
+  .chapter h2 { text-align: center; font-size: 26px; font-weight: 500; margin-top: 6px; }
+  .chapter .orn { text-align: center; color: var(--gold); margin-top: 8px; font-size: 11px; letter-spacing: .5em; }
+
+  /* ══ video plate — framed like a figure in a printed book ══ */
+  .plate { margin: 14px 20px 26px; }
+  .plate .frame { border: 1.5px solid var(--ink); padding: 6px; background: var(--paper2); }
+  .plate .frame-inner { border: 1px solid var(--gold); aspect-ratio: 16/9; background: linear-gradient(135deg, #37503f, #1c3328); display: grid; place-items: center; position: relative; }
+  .thumb-hint { color: #cfc5a8; font: 11px/1.4 -apple-system, sans-serif; text-align: center; opacity: .75; }
+  .dur { position: absolute; right: 8px; bottom: 8px; background: var(--paper); color: var(--ink); font-size: 11.5px; padding: 2px 7px; border: 1px solid var(--ink); }
+  .plate figcaption { margin-top: 12px; text-align: center; }
+  .plate .fig-no { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--red); }
+  .plate .fig-title { font-size: 18.5px; line-height: 1.35; margin-top: 5px; font-weight: 500; }
+  .plate .fig-date { font-size: 13px; font-style: italic; color: #6c6350; margin-top: 5px; }
+
+  .plate.small .frame-inner { aspect-ratio: 16/9; }
+  .two-col { display: flex; gap: 14px; margin: 0 20px 8px; }
+  .two-col .plate { margin: 0; flex: 1; }
+  .two-col .fig-title { font-size: 14.5px; }
+
+  /* ══ series — table of contents ══ */
+  .toc { margin: 6px 20px 10px; }
+  .toc-row { display: flex; align-items: baseline; gap: 10px; padding: 13px 2px; border-bottom: 1px solid #cdbfa0; }
+  .toc-row .n { font-size: 13px; color: var(--gold); width: 26px; }
+  .toc-row .t { font-size: 17px; font-weight: 500; flex: 1; }
+  .toc-row .pg { font-size: 13px; font-style: italic; color: #6c6350; white-space: nowrap; }
+  .toc-row .dots { flex: 1; border-bottom: 1.5px dotted #a99a78; transform: translateY(-4px); min-width: 20px; }
+  .toc-more { text-align: center; padding: 16px 0 4px; font-size: 13.5px; font-style: italic; color: var(--green); }
+
+  /* ══ support — colophon style ══ */
+  .colophon { margin: 26px 20px 0; border: 1.5px solid var(--ink); padding: 24px 20px 22px; text-align: center; background: var(--paper2); position: relative; }
+  .colophon::before { content: "✦"; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--paper); padding: 0 12px; color: var(--gold); }
+  .colophon h3 { font-size: 21px; font-weight: 500; }
+  .colophon p { font-size: 14px; line-height: 1.6; color: #4a4436; margin-top: 10px; }
+  .colophon .don { display: flex; gap: 10px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+  .don a { font-size: 13.5px; border: 1px solid var(--green); color: var(--green); padding: 9px 16px; text-decoration: none; }
+  .don a.primary { background: var(--green); color: var(--paper); }
+  .sadaqah { margin-top: 14px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+
+  footer { margin-top: 26px; border-top: 3px double var(--ink); padding: 18px 20px 26px; text-align: center; font-size: 12.5px; color: #6c6350; font-style: italic; }
+</style>
+
+<div class="meta-note"><b>MOCKUP 1 of 3 — “Manuscript / Illuminated Print.”</b> Drawn from Islamic book arts: a title-page hero using the channel's own tagline (the hadith), chapters instead of sections, videos framed as numbered plates, series as a table of contents, support as a colophon. Real fonts would be a proper book serif (this preview uses your device's serif).</div>
+
+<div class="phone">
+  <header>
+    <div class="brand">
+      <div class="crest">☾</div>
+      <div>
+        <div class="brand-name">Project IUoC</div>
+        <div class="brand-sub">Knowledge for Everyone</div>
+      </div>
+    </div>
+    <div class="burger">☰</div>
+  </header>
+
+  <div class="rule-orn">✦ ✦ ✦</div>
+
+  <section class="hero">
+    <div class="arabic">﷽</div>
+    <h1><span class="q">“</span><span class="sheen"><span class="lit">Convey</span> from me,<br/>even <span class="lit">a single verse</span>.</span><span class="q">”</span></h1>
+    <div class="attrib">— The Prophet Muhammad <b>ﷺ</b></div>
+    <p class="lede">Free, high-quality Islamic education — from Quran &amp; Science to Philosophy and Psychology — for everyone, worldwide.</p>
+    <div class="cta-row">
+      <a class="btn">Browse the library</a>
+      <a class="btn ghost">Support us</a>
+    </div>
+  </section>
+
+  <section class="chapter">
+    <div class="no">Chapter the First</div>
+    <h2>Latest Lectures</h2>
+    <div class="orn">❧</div>
+  </section>
+
+  <figure class="plate">
+    <div class="frame"><div class="frame-inner">
+      <div class="thumb-hint">(real video thumbnail here)</div>
+      <span class="dur">9:51</span>
+    </div></div>
+    <figcaption>
+      <div class="fig-no">Plate I</div>
+      <div class="fig-title">The Major and Minor Sins in Islam</div>
+      <div class="fig-date">Eleventh of February, 2025</div>
+    </figcaption>
+  </figure>
+
+  <div class="two-col">
+    <figure class="plate small">
+      <div class="frame"><div class="frame-inner"><span class="dur">1:06</span></div></div>
+      <figcaption>
+        <div class="fig-no">Plate II</div>
+        <div class="fig-title">Why Does Allah Allow Evil to Exist — Pt. 6</div>
+      </figcaption>
+    </figure>
+    <figure class="plate small">
+      <div class="frame"><div class="frame-inner"><span class="dur">1:25</span></div></div>
+      <figcaption>
+        <div class="fig-no">Plate III</div>
+        <div class="fig-title">Allah is the Most Appreciative</div>
+      </figcaption>
+    </figure>
+  </div>
+
+  <section class="chapter">
+    <div class="no">Chapter the Second</div>
+    <h2>The Series</h2>
+    <div class="orn">❧</div>
+  </section>
+
+  <nav class="toc">
+    <div class="toc-row"><span class="n">i.</span><span class="t">The Seerah of the Prophet ﷺ</span><span class="dots"></span><span class="pg">40 lectures</span></div>
+    <div class="toc-row"><span class="n">ii.</span><span class="t">Learn to Read the Quran</span><span class="dots"></span><span class="pg">12 lessons</span></div>
+    <div class="toc-row"><span class="n">iii.</span><span class="t">Scientific Miracles of the Quran</span><span class="dots"></span><span class="pg">10 essays</span></div>
+    <div class="toc-row"><span class="n">iv.</span><span class="t">Learn Tajweed</span><span class="dots"></span><span class="pg">7 lessons</span></div>
+    <div class="toc-more">— view the full table of contents —</div>
+  </nav>
+
+  <section class="colophon">
+    <h3>Keep this knowledge free.</h3>
+    <p>Every lecture, reminder, and animation is produced at no cost to the viewer. Your support carries this work forward — a charity that keeps giving.</p>
+    <div class="don">
+      <a class="primary">Patreon — monthly</a>
+      <a>GoFundMe</a>
+      <a>PayPal</a>
+    </div>
+    <div class="sadaqah">Sadaqah Jariyah</div>
+  </section>
+
+  <footer>Project IUoC · est. 2019 · made in Canada 🍁<br/>“…may Allah accept from us all.”</footer>
+</div>
