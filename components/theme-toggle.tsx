@@ -7,11 +7,14 @@ import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
+  // Client-only mount check without a state-setting effect: subscribes to
+  // nothing, so getSnapshot's value flips from false (server) to true
+  // (client) on the first client render without triggering a second commit.
+  const mounted = React.useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   if (!mounted) {
     // Placeholder keeps layout stable and avoids a hydration mismatch,

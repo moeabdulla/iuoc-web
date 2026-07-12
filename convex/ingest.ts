@@ -33,10 +33,52 @@ const playlistValidator = v.object({
   itemCount: v.number(),
 });
 
-async function ytFetch(
+interface YtThumbnail {
+  url: string;
+}
+
+interface YtThumbnails {
+  default?: YtThumbnail;
+  medium?: YtThumbnail;
+  high?: YtThumbnail;
+  standard?: YtThumbnail;
+  maxres?: YtThumbnail;
+}
+
+interface YtApiPage<T> {
+  items?: T[];
+  nextPageToken?: string;
+}
+
+interface YtPlaylistItem {
+  contentDetails?: { videoId?: string };
+}
+
+interface YtVideoItem {
+  id: string;
+  snippet: {
+    title: string;
+    description?: string;
+    publishedAt: string;
+    thumbnails?: YtThumbnails;
+  };
+  contentDetails?: { duration?: string };
+}
+
+interface YtPlaylist {
+  id: string;
+  snippet: {
+    title: string;
+    description?: string;
+    thumbnails?: YtThumbnails;
+  };
+  contentDetails?: { itemCount?: number };
+}
+
+async function ytFetch<T>(
   path: string,
   params: Record<string, string>,
-): Promise<any> {
+): Promise<YtApiPage<T>> {
   const key = process.env.YOUTUBE_API_KEY;
   if (!key) throw new Error("YOUTUBE_API_KEY is not set");
   const qs = new URLSearchParams({ ...params, key });
@@ -47,14 +89,14 @@ async function ytFetch(
   return await res.json();
 }
 
-async function listAll(
+async function listAll<T>(
   path: string,
   params: Record<string, string>,
-): Promise<any[]> {
-  const items: any[] = [];
+): Promise<T[]> {
+  const items: T[] = [];
   let pageToken: string | undefined;
   do {
-    const page = await ytFetch(path, {
+    const page = await ytFetch<T>(path, {
       ...params,
       maxResults: "50",
       ...(pageToken ? { pageToken } : {}),
@@ -65,7 +107,7 @@ async function listAll(
   return items;
 }
 
-function bestThumbnail(thumbnails: any): string {
+function bestThumbnail(thumbnails: YtThumbnails | undefined): string {
   return (
     thumbnails?.maxres?.url ??
     thumbnails?.standard?.url ??
@@ -83,7 +125,7 @@ export const run = internalAction({
     const uploadsId = process.env.YOUTUBE_UPLOADS_PLAYLIST_ID!;
 
     // 1. All uploaded video ids
-    const uploadItems = await listAll("playlistItems", {
+    const uploadItems = await listAll<YtPlaylistItem>("playlistItems", {
       part: "contentDetails",
       playlistId: uploadsId,
     });
@@ -92,9 +134,9 @@ export const run = internalAction({
       .filter((id): id is string => typeof id === "string");
 
     // 2. Canonical video metadata in batches of 50
-    const rawVideos: any[] = [];
+    const rawVideos: YtVideoItem[] = [];
     for (const ids of chunk(videoIds, 50)) {
-      const page = await ytFetch("videos", {
+      const page = await ytFetch<YtVideoItem>("videos", {
         part: "snippet,contentDetails",
         id: ids.join(","),
       });
@@ -102,13 +144,13 @@ export const run = internalAction({
     }
 
     // 3. Playlists and their membership
-    const rawPlaylists = await listAll("playlists", {
+    const rawPlaylists = await listAll<YtPlaylist>("playlists", {
       part: "snippet,contentDetails",
       channelId,
     });
     const membership = new Map<string, string[]>();
     for (const p of rawPlaylists) {
-      const items = await listAll("playlistItems", {
+      const items = await listAll<YtPlaylistItem>("playlistItems", {
         part: "contentDetails",
         playlistId: p.id,
       });
