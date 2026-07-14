@@ -323,7 +323,7 @@ function ComingSoon() {
   return (
     <div className="mx-auto max-w-xl border border-border bg-secondary/50 px-6 py-16 text-center">
       <div aria-hidden className="text-sm tracking-[0.5em] text-gold">
-        &#10087;
+        &#10022;
       </div>
       <h3 className="mt-4 font-serif text-2xl">Content is on its way</h3>
       <p className="mx-auto mt-2 max-w-sm text-sm italic text-muted-foreground">

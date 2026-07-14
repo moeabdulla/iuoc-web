@@ -72,7 +72,7 @@ export default async function SeriesPage({ params }: Props) {
         {total === 0 ? (
           <div className="mx-auto flex max-w-xl flex-col items-center border border-border bg-secondary/50 px-6 py-20 text-center">
             <span aria-hidden className="text-sm tracking-[0.5em] text-gold">
-              &#10087;
+              &#10022;
             </span>
             <h2 className="mt-4 font-serif text-2xl">No lectures yet</h2>
             <p className="mt-2 max-w-sm text-sm italic text-muted-foreground">

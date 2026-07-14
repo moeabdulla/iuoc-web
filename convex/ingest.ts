@@ -127,6 +127,7 @@ async function probeIsShort(videoId: string): Promise<boolean | undefined> {
     const res = await fetch(`https://www.youtube.com/shorts/${videoId}`, {
       method: "HEAD",
       redirect: "manual",
+      signal: AbortSignal.timeout(5000),
     });
     return res.status === 200;
   } catch {
