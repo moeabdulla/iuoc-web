@@ -5,6 +5,7 @@ import {
   makeSlug,
   mergeVideo,
   parseIso8601Duration,
+  staleYoutubeIds,
   type MergeableVideo,
 } from "./youtube";
 
@@ -111,5 +112,17 @@ describe("mergeVideo", () => {
 describe("chunk", () => {
   it("splits into fixed-size groups", () => {
     expect(chunk([1, 2, 3, 4, 5], 2)).toEqual([[1, 2], [3, 4], [5]]);
+  });
+});
+
+describe("staleYoutubeIds", () => {
+  it("returns ids no longer present in the current fetch", () => {
+    expect(staleYoutubeIds(["a", "b", "c"], ["a", "c"])).toEqual(["b"]);
+  });
+  it("returns nothing when everything is still current", () => {
+    expect(staleYoutubeIds(["a", "b"], ["a", "b"])).toEqual([]);
+  });
+  it("returns everything when the current fetch is empty", () => {
+    expect(staleYoutubeIds(["a", "b"], [])).toEqual(["a", "b"]);
   });
 });

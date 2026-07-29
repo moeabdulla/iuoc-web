@@ -7,6 +7,7 @@ import {
   makeSlug,
   mergeVideo,
   parseIso8601Duration,
+  staleYoutubeIds,
 } from "./lib/youtube";
 
 const API = "https://www.googleapis.com/youtube/v3";
@@ -240,7 +241,13 @@ export const run = internalAction({
     }
     await ctx.runMutation(internal.ingest.upsertPlaylists, { playlists });
 
-    console.log(`Ingested ${videos.length} videos, ${playlists.length} playlists`);
+    const removedCount = await ctx.runMutation(internal.ingest.removeStaleVideos, {
+      currentYoutubeIds: videos.map((video) => video.youtubeId),
+    });
+
+    console.log(
+      `Ingested ${videos.length} videos, ${playlists.length} playlists; removed ${removedCount} stale videos`,
+    );
   },
 });
 
@@ -269,6 +276,35 @@ export const upsertVideos = internalMutation({
         await ctx.db.patch(existing._id, mergeVideo(existing, video));
       }
     }
+  },
+});
+
+export const removeStaleVideos = internalMutation({
+  args: { currentYoutubeIds: v.array(v.string()) },
+  handler: async (ctx, args) => {
+    // A genuinely empty result means the upstream fetch broke (bad env var,
+    // API outage, etc.), not that every video vanished from YouTube -
+    // refuse to wipe the catalog in that case.
+    if (args.currentYoutubeIds.length === 0) {
+      throw new Error(
+        "removeStaleVideos: current fetch returned zero videos, refusing to delete the whole catalog",
+      );
+    }
+
+    const existing = await ctx.db.query("videos").collect();
+    const staleIds = staleYoutubeIds(
+      existing.map((video) => video.youtubeId),
+      args.currentYoutubeIds,
+    );
+    const staleSet = new Set(staleIds);
+    const stale = existing.filter((video) => staleSet.has(video.youtubeId));
+
+    for (const video of stale) {
+      console.log(`Removing stale video: ${video.title} (${video.youtubeId})`);
+      await ctx.db.delete(video._id);
+    }
+
+    return stale.length;
   },
 });
 

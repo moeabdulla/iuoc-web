@@ -55,3 +55,13 @@ export function chunk<T>(arr: T[], size: number): T[][] {
   for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
   return out;
 }
+
+// A video is stale once YouTube stops serving it (privated, deleted, etc.)
+// and it drops out of the current fetch's results.
+export function staleYoutubeIds(
+  existingYoutubeIds: string[],
+  currentYoutubeIds: string[],
+): string[] {
+  const current = new Set(currentYoutubeIds);
+  return existingYoutubeIds.filter((id) => !current.has(id));
+}
