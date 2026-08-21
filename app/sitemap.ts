@@ -10,7 +10,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     fetchQuery(api.videos.allSlugs, {}),
     fetchQuery(api.playlists.listVisible, {}),
   ]);
-  const staticPages = ["", "/videos", "/about", "/support"].map((path) => ({
+  const staticPages = [
+    "",
+    "/videos",
+    "/about",
+    "/support",
+    "/app/privacy",
+  ].map((path) => ({
     url: `${siteConfig.url}${path}`,
     changeFrequency: "weekly" as const,
     priority: path === "" ? 1 : 0.8,
