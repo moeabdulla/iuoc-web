@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SectionHeading } from "@/components/section-heading";
 
 export const metadata: Metadata = {
-  title: "IUoC app — Privacy Policy",
+  title: "Privacy Policy — IUoC app",
   description:
     "The IUoC mobile app collects nothing. No accounts, no analytics, no servers.",
 };
@@ -62,9 +62,20 @@ export default function AppPrivacyPage() {
         <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
           IUoC for iPhone &amp; Android
         </p>
+        {/* The page must SAY "Privacy Policy", in the body, prominently.
+            Google Play removed the app on 23 August 2026 for exactly this:
+            "Your privacy policy does not include an explicit label identifying
+            it as a 'Privacy policy'." The words were only ever in the <title>
+            metadata, and the one visible mention lower down refers to Apple's
+            and Google's policies rather than this one — worse than silence to
+            anything scanning for a label. The old h1 keeps its place as the
+            thesis directly beneath. */}
         <h1 className="mt-3 font-serif text-4xl leading-[1.1] md:text-5xl">
-          The app collects nothing.
+          Privacy Policy
         </h1>
+        <p className="mt-4 font-serif text-2xl leading-tight text-foreground/90 md:text-3xl">
+          The app collects nothing.
+        </p>
         <p className="mx-auto mt-6 max-w-xl font-serif text-lg leading-relaxed text-foreground/80">
           No account, no analytics, no servers. Everything you do in the app
           stays on your phone. This page explains what that means in detail,
