@@ -12,6 +12,7 @@ export const siteConfig = {
     paypal: "https://www.paypal.com/donate/?hosted_button_id=ETKBVGRVFKXYE",
   },
   nav: [
+    { href: "/app", label: "App" },
     { href: "/videos", label: "Videos" },
     { href: "/about", label: "About" },
     { href: "/support", label: "Support" },
