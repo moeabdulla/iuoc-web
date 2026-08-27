@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 export const metadata: Metadata = {
   title: "The App",
   description:
-    "IUoC is a free Quran reader, prayer times, qibla compass and Hijri calendar, with Project IUoC's lessons and a question each day. No account, no ads, works offline.",
+    "Project IUoC's whole library in one app \u2014 lessons, series and short reminders \u2014 with the Quran, prayer times, the qibla and a question each day. Free, no account, works offline.",
 };
 
 const APP_STORE = "https://apps.apple.com/app/id6803721415";
@@ -31,18 +31,18 @@ const PLAY_STORE =
 const IOS_LIVE = false;
 
 const shots = [
-  { src: "/app/prayer.png", alt: "Prayer times for the day, with the next prayer and a sound chosen per prayer", caption: "Prayer times" },
-  { src: "/app/verse.png", alt: "The home screen, with the day's verse in Arabic and English", caption: "A verse each day" },
-  { src: "/app/reader.png", alt: "The Quran reader with tajweed colouring and the end-of-ayah marks", caption: "The Quran, with tajweed" },
+  { src: "/app/library.png", alt: "The IUoC library, with the newest reminder and recent lectures", caption: "The library" },
   { src: "/app/question.png", alt: "The daily question, answered, showing the verse it came from", caption: "A question each day" },
+  { src: "/app/reader.png", alt: "The Quran reader with tajweed colouring and the end-of-ayah marks", caption: "The Quran, with tajweed" },
+  { src: "/app/prayer.png", alt: "Prayer times for the day, with a sound chosen per prayer", caption: "Prayer times" },
 ];
 
 const features = [
+  { icon: PlayCircle, title: "Lessons and series", body: "Project IUoC's whole library inside the app: lecture-style deep dives, short reminders and animated series, grouped into series like the Seerah, the 99 Names, Intro to Islam and Tajweed. Turn on alerts to hear when something new is posted." },
+  { icon: Puzzle, title: "A question each day", body: "One question a day, the same one for everyone, drawn from the Quran and from the videos. A wrong answer explains itself and points at the verse it came from, instead of marking you down." },
   { icon: BookOpen, title: "The whole Quran", body: "The Uthmani text from the Tanzil Project with six English translations, optional tajweed colouring, and search in either language." },
-  { icon: Clock, title: "Prayer times", body: "The five prayers wherever you are, with the method your community follows — including Ja'fari with the Tehran or Leva Institute (Qom) angles — and a different sound for each prayer." },
+  { icon: Clock, title: "Prayer times", body: "The five prayers wherever you are, with the method your community follows \u2014 including Ja'fari with the Tehran or Leva Institute (Qom) angles \u2014 and a different sound for each prayer." },
   { icon: Compass, title: "Qibla", body: "The direction of the Kaaba worked out on your device from true north, not magnetic north, which is off by as much as twenty degrees." },
-  { icon: PlayCircle, title: "Lessons and series", body: "Project IUoC's library inside the app, grouped into series, with an alert when something new is posted." },
-  { icon: Puzzle, title: "A question each day", body: "One question a day, the same one for everyone. A wrong answer explains itself instead of marking you down." },
   { icon: CalendarDays, title: "Hijri calendar", body: "Today on the Umm al-Qura calendar, with both calendars in every cell and an offset if your community begins the month a day apart." },
 ];
 
@@ -57,11 +57,13 @@ export default function AppPage() {
           The IUoC App
         </p>
         <h1 className="mt-3 font-serif text-4xl leading-[1.1] md:text-5xl">
-          The Quran, your prayer times, and a question each day.
+          Everything IUoC teaches, in one app.
         </h1>
         <p className="mt-6 text-lg text-muted-foreground">
-          Free, with no account, no ads and nothing sent anywhere. Everything
-          ships inside the app, so it all works in airplane mode.
+          The whole library &mdash; lectures, short reminders and animated
+          series &mdash; with the Quran, your prayer times and the qibla
+          alongside it, so there is a reason to open it every day. Free, no
+          account, and it all works offline.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -111,7 +113,7 @@ export default function AppPage() {
       </section>
 
       <section>
-        <SectionHeading eyebrow="Everything In It" title="Built to stay out of the way" stars={2} />
+        <SectionHeading eyebrow="Everything In It" title="Teaching first, and the things you open daily" stars={2} />
         <ul className="grid gap-8 md:grid-cols-2 md:gap-10">
           {features.map(({ icon: Icon, title, body }) => (
             <li key={title} className="flex gap-4">
