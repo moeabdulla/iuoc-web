@@ -13,6 +13,27 @@ import {
 import { SectionHeading } from "@/components/section-heading";
 import { Button } from "@/components/ui/button";
 
+// Drawn inline rather than pulled from a CDN, so the page has no external
+// dependency and the marks inherit the button's text colour. Both are the
+// store glyphs only — the full "Download on the App Store" lockups are brand
+// artwork with their own placement rules, and a button that already says the
+// words does not need them.
+function AppleMark(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden {...props}>
+      <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
+    </svg>
+  );
+}
+
+function GooglePlayMark(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087zm12.207 10.065l3.258-3.238L2.99.14a1.474 1.474 0 0 0-.936-.14zm0 2.067L2.054 24.04c.302.036.615-.16.913-.169l14.046-7.954z" />
+    </svg>
+  );
+}
+
 export const metadata: Metadata = {
   title: "The App",
   description:
@@ -24,11 +45,12 @@ const PLAY_STORE =
   "https://play.google.com/store/apps/details?id=com.iuoc.app";
 
 /**
- * The App Store listing 404s until Apple approves the first release, and a
- * button that leads nowhere is worse than one that says "soon". Flip this to
- * true the day it goes live — that is the only change needed.
+ * Set true by the owner ahead of approval. At the time of writing Apple still
+ * reports 1.0.0 as WAITING_FOR_REVIEW and `itunes.apple.com/lookup` returns no
+ * result, so the App Store link 404s until the release goes live. Flip back to
+ * false to show "On the App Store soon" instead.
  */
-const IOS_LIVE = false;
+const IOS_LIVE = true;
 
 const shots = [
   { src: "/app/library.png", alt: "The IUoC library, with the newest reminder and recent lectures", caption: "The library" },
@@ -67,25 +89,28 @@ export default function AppPage() {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="lg">
-            <a href={PLAY_STORE} target="_blank" rel="noreferrer">
-              Get it on Google Play
-            </a>
-          </Button>
           {IOS_LIVE ? (
-            <Button asChild size="lg" variant="outline">
+            <Button asChild size="lg">
               <a href={APP_STORE} target="_blank" rel="noreferrer">
+                <AppleMark />
                 Download on the App Store
               </a>
             </Button>
           ) : (
-            <Button size="lg" variant="outline" disabled>
+            <Button size="lg" disabled>
+              <AppleMark />
               On the App Store soon
             </Button>
           )}
+          <Button asChild size="lg" variant="outline">
+            <a href={PLAY_STORE} target="_blank" rel="noreferrer">
+              <GooglePlayMark />
+              Get it on Google Play
+            </a>
+          </Button>
         </div>
         <p className="mt-4 text-xs text-muted-foreground">
-          Android now. iPhone and iPad are with Apple for review.
+          Free on iPhone, iPad and Android.
         </p>
       </header>
 
