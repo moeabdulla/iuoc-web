@@ -88,21 +88,21 @@ export default function AppPage() {
           account, and it all works offline.
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
           {IOS_LIVE ? (
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="w-full sm:w-auto sm:min-w-[17rem]">
               <a href={APP_STORE} target="_blank" rel="noreferrer">
                 <AppleMark />
                 Download on the App Store
               </a>
             </Button>
           ) : (
-            <Button size="lg" disabled>
+            <Button size="lg" disabled className="w-full sm:w-auto sm:min-w-[17rem]">
               <AppleMark />
               On the App Store soon
             </Button>
           )}
-          <Button asChild size="lg" variant="outline">
+          <Button asChild size="lg" variant="outline" className="w-full sm:w-auto sm:min-w-[17rem]">
             <a href={PLAY_STORE} target="_blank" rel="noreferrer">
               <GooglePlayMark />
               Get it on Google Play
