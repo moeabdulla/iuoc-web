@@ -1,0 +1,1254 @@
+{
+  "version": 1,
+  "curatedBy": "assistant, 2026-08-22 (expanded same day)",
+  "reviewedBy": null,
+  "scholarReviewedBy": null,
+  "notes": [
+    "Every quran-* question cites the ayah its answer comes from, and the answer is EXPLICIT in that ayah — not inferred, not tafsir. verify-quiz.ts fails the build if a citation does not resolve.",
+    "Every seerah question carries a `basis`. Where the basis is an IUoC episode title, the fact is IUoC's own assertion and needs no outside source.",
+    "Deliberately excluded, because a single 'correct' answer would take a sectarian side: who the first Muslim was, any ranking or evaluation of the Sahabah, the succession, Aisha's age, the enumeration of the pillars (5 pillars is Sunni framing; Twelver Shia use 5 usul + 10 furu), and all fiqh rulings.",
+    "Troop counts and precise dates are avoided even where a figure is commonly quoted, because the reports vary and a quiz cannot show that variance.",
+    "tajweed questions are held back — they require reading Arabic script and would wall off readers who cannot."
+  ],
+  "questions": [
+    {
+      "id": "q-yusuf-dream",
+      "category": "quran-story",
+      "prompt": "In Yusuf's dream, what did he see prostrating to him?",
+      "options": [
+        "Eleven stars, the sun and the moon",
+        "Seven cows and seven ears of grain",
+        "Twelve rivers flowing from a mountain",
+        "A flock of birds circling a well"
+      ],
+      "answer": 0,
+      "hint": "He described it to his father before anyone else.",
+      "sura": 12,
+      "aya": 4
+    },
+    {
+      "id": "q-cave-years",
+      "category": "quran-story",
+      "prompt": "How long did the People of the Cave remain in their cave?",
+      "options": [
+        "309 years",
+        "40 years",
+        "99 years",
+        "700 years"
+      ],
+      "answer": 0,
+      "hint": "The Quran gives a round number, then adds to it.",
+      "sura": 18,
+      "aya": 25
+    },
+    {
+      "id": "q-ant-warning",
+      "category": "quran-story",
+      "prompt": "Which creature warned its community to take shelter so Sulayman's army would not crush them?",
+      "options": [
+        "An ant",
+        "A hoopoe bird",
+        "A spider",
+        "A gazelle"
+      ],
+      "answer": 0,
+      "hint": "A whole surah is named after it.",
+      "sura": 27,
+      "aya": 18
+    },
+    {
+      "id": "q-hoopoe-sheba",
+      "category": "quran-story",
+      "prompt": "Which bird brought Sulayman news from Sheba?",
+      "options": [
+        "The hoopoe",
+        "The raven",
+        "The dove",
+        "The falcon"
+      ],
+      "answer": 0,
+      "hint": "It claimed to know something Sulayman did not.",
+      "sura": 27,
+      "aya": 22
+    },
+    {
+      "id": "q-sheba-ruler",
+      "category": "quran-story",
+      "prompt": "What did the bird report about who ruled Sheba?",
+      "options": [
+        "A woman ruled them, with a great throne",
+        "Two brothers ruled together",
+        "A council of elders ruled",
+        "The land had no ruler at all"
+      ],
+      "answer": 0,
+      "hint": "The report mentions a great throne.",
+      "sura": 27,
+      "aya": 23
+    },
+    {
+      "id": "q-dawud-jalut",
+      "category": "quran-story",
+      "prompt": "According to the Quran, who killed Jalut (Goliath)?",
+      "options": [
+        "Dawud",
+        "Talut",
+        "Yusha",
+        "Harun"
+      ],
+      "answer": 0,
+      "hint": "Allah then gave him kingship and wisdom.",
+      "sura": 2,
+      "aya": 251
+    },
+    {
+      "id": "q-ibrahim-fire",
+      "category": "quran-story",
+      "prompt": "What did Allah command the fire to be for Ibrahim?",
+      "options": [
+        "Coolness and safety",
+        "A light guiding him out",
+        "A wall between him and his people",
+        "A wind carrying him away"
+      ],
+      "answer": 0,
+      "hint": "The command is addressed to the fire itself.",
+      "sura": 21,
+      "aya": 69
+    },
+    {
+      "id": "q-yunus-fish",
+      "category": "quran-story",
+      "prompt": "What happened to Yunus after he left his people?",
+      "options": [
+        "A fish swallowed him",
+        "A storm carried him to an island",
+        "He was taken captive by traders",
+        "He wandered the desert for forty days"
+      ],
+      "answer": 0,
+      "hint": "It happened at sea.",
+      "sura": 37,
+      "aya": 142
+    },
+    {
+      "id": "q-maryam-palm",
+      "category": "quran-story",
+      "prompt": "What was Maryam told to shake toward herself during her labour?",
+      "options": [
+        "The trunk of a palm tree",
+        "A branch of an olive tree",
+        "A vine heavy with grapes",
+        "A fig tree beside the spring"
+      ],
+      "answer": 0,
+      "hint": "Ripe, fresh dates dropped from it.",
+      "sura": 19,
+      "aya": 25
+    },
+    {
+      "id": "q-isa-cradle",
+      "category": "quran-story",
+      "prompt": "What were the first words Isa spoke as an infant?",
+      "options": [
+        "That he is the servant of Allah",
+        "That he is the son of Maryam",
+        "That his people should follow him",
+        "That the Scripture had been lost"
+      ],
+      "answer": 0,
+      "hint": "He identified himself before anything else.",
+      "sura": 19,
+      "aya": 30
+    },
+    {
+      "id": "q-iblees-refused",
+      "category": "quran-story",
+      "prompt": "When the angels were told to prostrate before Adam, who refused?",
+      "options": [
+        "Iblees",
+        "Harut",
+        "Marut",
+        "None of them refused"
+      ],
+      "answer": 0,
+      "hint": "The Quran says he was arrogant.",
+      "sura": 2,
+      "aya": 34
+    },
+    {
+      "id": "q-nuh-ship",
+      "category": "quran-story",
+      "prompt": "What was Nuh commanded to construct?",
+      "options": [
+        "A ship",
+        "A city wall",
+        "A well",
+        "A place of worship"
+      ],
+      "answer": 0,
+      "hint": "He was told to build it under Allah's observation.",
+      "sura": 11,
+      "aya": 37
+    },
+    {
+      "id": "q-musa-staff-uses",
+      "category": "quran-story",
+      "prompt": "When asked what was in his right hand, what did Musa say he used his staff for?",
+      "options": [
+        "Leaning on it and bringing down leaves for his sheep",
+        "Marking the boundaries of his land",
+        "Drawing water from a deep well",
+        "Defending his flock from wolves"
+      ],
+      "answer": 0,
+      "hint": "He was a shepherd at the time.",
+      "sura": 20,
+      "aya": 18
+    },
+    {
+      "id": "q-musa-sea",
+      "category": "quran-story",
+      "prompt": "What was Musa inspired to do at the sea?",
+      "options": [
+        "Strike it with his staff",
+        "Walk into it without looking back",
+        "Call out three times",
+        "Wait until dawn"
+      ],
+      "answer": 0,
+      "hint": "Each parted portion was like a great towering mountain.",
+      "sura": 26,
+      "aya": 63
+    },
+    {
+      "id": "q-dhul-qarnayn",
+      "category": "quran-story",
+      "prompt": "Which surah answers a question people asked the Prophet about Dhul-Qarnayn?",
+      "options": [
+        "Al-Kahf",
+        "Al-Anbiya",
+        "An-Naml",
+        "Ar-Rum"
+      ],
+      "answer": 0,
+      "hint": "The same surah tells of the People of the Cave.",
+      "sura": 18,
+      "aya": 83
+    },
+    {
+      "id": "q-elephant",
+      "category": "quran-story",
+      "prompt": "Surah Al-Fil asks the reader to consider how Allah dealt with whom?",
+      "options": [
+        "The companions of the elephant",
+        "The people of Thamud",
+        "The army of Pharaoh",
+        "The builders of the tower"
+      ],
+      "answer": 0,
+      "hint": "The surah is named after the animal.",
+      "sura": 105,
+      "aya": 1
+    },
+    {
+      "id": "q-first-revelation",
+      "category": "quran-story",
+      "prompt": "What was the first word revealed to the Prophet?",
+      "options": [
+        "Recite",
+        "Believe",
+        "Rise",
+        "Listen"
+      ],
+      "answer": 0,
+      "hint": "It opens Surah Al-Alaq.",
+      "sura": 96,
+      "aya": 1
+    },
+    {
+      "id": "q-parents",
+      "category": "quran-teaching",
+      "prompt": "Alongside worshipping Him alone, what has your Lord decreed regarding parents?",
+      "options": [
+        "Good treatment",
+        "Obedience in all matters",
+        "Financial support only",
+        "Visiting them each month"
+      ],
+      "answer": 0,
+      "hint": "The verse goes on to address their old age.",
+      "sura": 17,
+      "aya": 23
+    },
+    {
+      "id": "q-charity-secret",
+      "category": "quran-teaching",
+      "prompt": "The Quran says disclosing your charity is good — but what is better?",
+      "options": [
+        "Concealing it and giving it to the poor",
+        "Giving it at the mosque",
+        "Giving it before sunrise",
+        "Giving it only to relatives"
+      ],
+      "answer": 0,
+      "hint": "It involves who sees it.",
+      "sura": 2,
+      "aya": 271
+    },
+    {
+      "id": "q-luqman-son",
+      "category": "quran-teaching",
+      "prompt": "What was the first thing Luqman instructed his son?",
+      "options": [
+        "Do not associate anything with Allah",
+        "Always speak the truth",
+        "Honour your mother above all",
+        "Seek knowledge in distant lands"
+      ],
+      "answer": 0,
+      "hint": "He called it a great injustice.",
+      "sura": 31,
+      "aya": 13
+    },
+    {
+      "id": "q-tribes-know",
+      "category": "quran-teaching",
+      "prompt": "Why does the Quran say Allah made mankind into peoples and tribes?",
+      "options": [
+        "That they may know one another",
+        "That they may compete in trade",
+        "That they may settle different lands",
+        "That they may speak different tongues"
+      ],
+      "answer": 0,
+      "hint": "The verse then says the most noble is the most righteous.",
+      "sura": 49,
+      "aya": 13
+    },
+    {
+      "id": "q-capacity",
+      "category": "quran-teaching",
+      "prompt": "What does the Quran say about the burden Allah places on a soul?",
+      "options": [
+        "He does not charge it beyond its capacity",
+        "He charges it according to its wealth",
+        "He charges it according to its age",
+        "He charges it only in times of ease"
+      ],
+      "answer": 0,
+      "hint": "It closes the longest surah.",
+      "sura": 2,
+      "aya": 286
+    },
+    {
+      "id": "q-hardship-ease",
+      "category": "quran-teaching",
+      "prompt": "Complete the verse: \"Indeed, with hardship...\"",
+      "options": [
+        "will be ease",
+        "comes patience",
+        "comes reward",
+        "will be trial"
+      ],
+      "answer": 0,
+      "hint": "The surah says it twice in a row.",
+      "sura": 94,
+      "aya": 6
+    },
+    {
+      "id": "q-hearts-assured",
+      "category": "quran-teaching",
+      "prompt": "By what does the Quran say hearts are assured?",
+      "options": [
+        "The remembrance of Allah",
+        "The company of the righteous",
+        "The giving of charity",
+        "The passing of time"
+      ],
+      "answer": 0,
+      "hint": "The verse states it, then repeats it for emphasis.",
+      "sura": 13,
+      "aya": 28
+    },
+    {
+      "id": "s-birth-city",
+      "category": "seerah",
+      "prompt": "In which city was the Prophet Muhammad born?",
+      "options": [
+        "Mecca",
+        "Madinah",
+        "Ta'if",
+        "Sana'a"
+      ],
+      "answer": 0,
+      "hint": "He later emigrated away from it.",
+      "video": "MAcSIlWHZFg",
+      "basis": "IUoC Seerah Episode 3, 'The Birth of Prophet Muhammad (PBUH)'. Uncontested across all traditions."
+    },
+    {
+      "id": "s-first-revelation-place",
+      "category": "seerah",
+      "prompt": "Where did the Prophet receive the first revelation?",
+      "options": [
+        "The cave of Hira",
+        "The Kaaba",
+        "On the road to Ta'if",
+        "The valley of Mina"
+      ],
+      "answer": 0,
+      "hint": "He used to retreat there alone.",
+      "video": "jUPOgeAyHzI",
+      "basis": "IUoC Seerah Episode 7, 'The Beginning of Revelation'. Uncontested."
+    },
+    {
+      "id": "s-abyssinia",
+      "category": "seerah",
+      "prompt": "To which land did the persecuted Muslims first emigrate?",
+      "options": [
+        "Abyssinia",
+        "Yemen",
+        "Syria",
+        "Egypt"
+      ],
+      "answer": 0,
+      "hint": "Its ruler was known as the Negus.",
+      "video": "0BVALm2IudQ",
+      "basis": "IUoC Seerah Episode 13 is titled 'The First Emigration to Abyssinia'."
+    },
+    {
+      "id": "s-year-of-sorrow",
+      "category": "seerah",
+      "prompt": "What is the year in which the Prophet lost both Khadijah and Abu Talib known as?",
+      "options": [
+        "The Year of Sorrow",
+        "The Year of the Elephant",
+        "The Year of the Delegation",
+        "The Year of Drought"
+      ],
+      "answer": 0,
+      "hint": "It followed the boycott.",
+      "video": "FtL6VijYWe8",
+      "basis": "IUoC Seerah Episode 16 is titled 'The Boycott and the Year of Sorrow'."
+    },
+    {
+      "id": "s-taif",
+      "category": "seerah",
+      "prompt": "Which city did the Prophet visit seeking support, where he was driven out and injured?",
+      "options": [
+        "Ta'if",
+        "Khaybar",
+        "Najran",
+        "Busra"
+      ],
+      "answer": 0,
+      "hint": "An entire Seerah episode is named after the incident.",
+      "video": "447s_wHwKKA",
+      "basis": "IUoC Seerah Episode 17 is titled 'Incident of Ta'if'."
+    },
+    {
+      "id": "s-isra-miraj",
+      "category": "seerah",
+      "prompt": "What is the night journey and ascension known as?",
+      "options": [
+        "Al-Isra' wal-Mi'raj",
+        "Laylat al-Qadr",
+        "Al-Hijrah",
+        "Laylat al-Bara'ah"
+      ],
+      "answer": 0,
+      "hint": "Two words: the journey, then the ascent.",
+      "video": "-FbkPXt5ZzI",
+      "basis": "IUoC Seerah Episode 18 is titled 'Al Isra' wal Miraj'. Both traditions affirm the event."
+    },
+    {
+      "id": "s-yathrib",
+      "category": "seerah",
+      "prompt": "By what name was Madinah known before the Prophet's emigration?",
+      "options": [
+        "Yathrib",
+        "Khaybar",
+        "Tabuk",
+        "Hunayn"
+      ],
+      "answer": 0,
+      "hint": "An episode is titled 'The Spread of Islam to ___'.",
+      "video": "EM055Ibwfb4",
+      "basis": "IUoC Seerah Episode 19 is titled 'The Spread of Islam to Yathrib'."
+    },
+    {
+      "id": "s-aqaba",
+      "category": "seerah",
+      "prompt": "What were the pledges made to the Prophet by the people of Yathrib called?",
+      "options": [
+        "The Covenants of Aqaba",
+        "The Pact of Hudaybiyyah",
+        "The Oath of Ridwan",
+        "The Charter of Quba"
+      ],
+      "answer": 0,
+      "hint": "There were two of them, first and second.",
+      "video": "QtmOidfIw44",
+      "basis": "IUoC Seerah Episode 20 is titled 'The First & Second Covenant of Aqaba'."
+    },
+    {
+      "id": "s-hijrah",
+      "category": "seerah",
+      "prompt": "What is the Prophet's emigration to Madinah called?",
+      "options": [
+        "The Hijrah",
+        "The Fath",
+        "The Isra'",
+        "The Bay'ah"
+      ],
+      "answer": 0,
+      "hint": "The Islamic calendar counts from it.",
+      "video": "uhEYZ-MjzXI",
+      "basis": "IUoC Seerah Episode 22 is titled 'The Hijrah (Emigration to Madinah)'."
+    },
+    {
+      "id": "s-muakha",
+      "category": "seerah",
+      "prompt": "What was the system pairing the emigrants from Mecca with the helpers of Madinah?",
+      "options": [
+        "The Muakha, or brotherhood",
+        "The Shura, or consultation",
+        "The Zakat register",
+        "The Diwan of stipends"
+      ],
+      "answer": 0,
+      "hint": "The word means brotherhood.",
+      "video": "wfr8tXNP0oU",
+      "basis": "IUoC Seerah Episode 27 is titled 'The Muakha System'."
+    },
+    {
+      "id": "s-constitution",
+      "category": "seerah",
+      "prompt": "What agreement set out the rights and duties of Madinah's communities?",
+      "options": [
+        "The Constitution of Madinah",
+        "The Treaty of Hudaybiyyah",
+        "The Covenant of Aqaba",
+        "The Pledge of Ridwan"
+      ],
+      "answer": 0,
+      "hint": "It is named after the city itself.",
+      "video": "SvctywL_gWw",
+      "basis": "IUoC Seerah Episode 28 is titled 'The Treaty and Constitution of Madinah'."
+    },
+    {
+      "id": "s-qibla",
+      "category": "seerah",
+      "prompt": "What changed for the Muslims of Madinah in the event known as the Change of the Qibla?",
+      "options": [
+        "The direction they faced in prayer",
+        "The number of daily prayers",
+        "The day of congregational prayer",
+        "The time fasting begins"
+      ],
+      "answer": 0,
+      "hint": "Qibla means direction.",
+      "video": "cbxcJDf9TG8",
+      "basis": "IUoC Seerah Episode 29 is titled 'Change of the Qibla'. The Quran refers to the turning at 2:144."
+    },
+    {
+      "id": "s-badr",
+      "category": "seerah",
+      "prompt": "Which was the first major battle fought by the Muslims of Madinah?",
+      "options": [
+        "Badr",
+        "Uhud",
+        "Khandaq",
+        "Khaybar"
+      ],
+      "answer": 0,
+      "hint": "Four Seerah episodes are devoted to it.",
+      "video": "L4uoi-zG8WI",
+      "basis": "IUoC Seerah Episodes 30-35 cover the preparation, the battle and its aftermath, and no earlier battle appears in the series."
+    },
+    {
+      "id": "s-uhud-order",
+      "category": "seerah",
+      "prompt": "Which battle followed Badr?",
+      "options": [
+        "Uhud",
+        "Khaybar",
+        "Hunayn",
+        "Tabuk"
+      ],
+      "answer": 0,
+      "hint": "An episode covers the events between the two.",
+      "video": "vL5FYGY7nkI",
+      "basis": "IUoC Seerah Episode 36 is titled 'Events Between Badr and Uhud'."
+    },
+    {
+      "id": "s-first-mosque",
+      "category": "seerah",
+      "prompt": "What did the Prophet build first upon arriving in Madinah?",
+      "options": [
+        "A mosque",
+        "A marketplace",
+        "A defensive wall",
+        "A well"
+      ],
+      "answer": 0,
+      "hint": "Two episodes are devoted to its building.",
+      "video": "lH6RJVQvY80",
+      "basis": "IUoC Seerah Episodes 25-26, 'Building of the First Mosque in Islam'."
+    },
+    {
+      "id": "s-hamza-umar",
+      "category": "seerah",
+      "prompt": "Whose conversions does the Seerah series mark as a turning point for the early Muslims?",
+      "options": [
+        "Hamza and Umar",
+        "Bilal and Suhayb",
+        "Salman and Ammar",
+        "Zayd and Ja'far"
+      ],
+      "answer": 0,
+      "hint": "An episode is named for the two of them together.",
+      "video": "nqbE2EMm-3k",
+      "basis": "IUoC Seerah Episode 15 is titled 'The Conversion of Hamza and Umar (R.A)'."
+    },
+    {
+      "id": "q-backbiting",
+      "category": "quran-teaching",
+      "prompt": "What does the Quran compare backbiting to?",
+      "options": [
+        "Eating the flesh of your dead brother",
+        "Carrying a stone uphill",
+        "Drinking from a dry well",
+        "Building on sand"
+      ],
+      "answer": 0,
+      "hint": "The comparison is deliberately hard to sit with.",
+      "sura": 49,
+      "aya": 12,
+      "video": "q8ycj1icjp8"
+    },
+    {
+      "id": "q-asr-loss",
+      "category": "quran-teaching",
+      "prompt": "Surah Al-Asr says mankind is in loss, except those who do what?",
+      "options": [
+        "Believe, do righteous deeds, and advise each other to truth and patience",
+        "Fast every month of the year",
+        "Give away half their wealth",
+        "Travel in search of knowledge"
+      ],
+      "answer": 0,
+      "hint": "Four things, and two of them are about advising others.",
+      "sura": 103,
+      "aya": 3,
+      "video": "96uH_xNT__8"
+    },
+    {
+      "id": "q-no-despair",
+      "category": "quran-teaching",
+      "prompt": "What does Allah say to those who have transgressed against themselves?",
+      "options": [
+        "Do not despair of the mercy of Allah",
+        "Do not speak of it to anyone",
+        "Do not return to your people",
+        "Do not delay your repentance until morning"
+      ],
+      "answer": 0,
+      "hint": "The verse goes on to say He forgives all sins.",
+      "sura": 39,
+      "aya": 53,
+      "video": "QVfSNZBENvQ"
+    },
+    {
+      "id": "q-riba",
+      "category": "quran-teaching",
+      "prompt": "How does the Quran describe those who consume interest on the Day of Resurrection?",
+      "options": [
+        "Standing as one beaten by Satan into insanity",
+        "Walking without shadows",
+        "Unable to find their records",
+        "Silent before the scales"
+      ],
+      "answer": 0,
+      "hint": "It is a description of how they stand.",
+      "sura": 2,
+      "aya": 275,
+      "video": "T_SOFlaOy5Q"
+    },
+    {
+      "id": "q-excess",
+      "category": "quran-teaching",
+      "prompt": "What does the Quran instruct about eating and drinking?",
+      "options": [
+        "Eat and drink, but be not excessive",
+        "Eat only after sunset",
+        "Eat only what you have grown",
+        "Eat in silence"
+      ],
+      "answer": 0,
+      "hint": "The verse says He does not like those who commit that act.",
+      "sura": 7,
+      "aya": 31,
+      "video": "eOv2TBuT60U"
+    },
+    {
+      "id": "q-restrain-anger",
+      "category": "quran-teaching",
+      "prompt": "Among the qualities of the doers of good, what do they do with anger?",
+      "options": [
+        "They restrain it",
+        "They speak it plainly",
+        "They fast until it passes",
+        "They walk away for three days"
+      ],
+      "answer": 0,
+      "hint": "The same verse pairs it with pardoning people.",
+      "sura": 3,
+      "aya": 134,
+      "video": "Mi76gH_olc0"
+    },
+    {
+      "id": "q-istighfar-rain",
+      "category": "quran-teaching",
+      "prompt": "What did Nuh tell his people to do, describing his Lord as a Perpetual Forgiver?",
+      "options": [
+        "Ask forgiveness of your Lord",
+        "Build a place of worship",
+        "Leave the city before dawn",
+        "Free those they had enslaved"
+      ],
+      "answer": 0,
+      "hint": "One action, and the verse names the reward that follows.",
+      "sura": 71,
+      "aya": 10,
+      "video": "Uu4Tn5F2pE4"
+    },
+    {
+      "id": "q-remember-me",
+      "category": "quran-teaching",
+      "prompt": "Complete the verse: \"So remember Me...\"",
+      "options": [
+        "I will remember you",
+        "and I will provide for you",
+        "and fear none besides Me",
+        "and your burden will be lifted"
+      ],
+      "answer": 0,
+      "hint": "The response mirrors the action exactly.",
+      "sura": 2,
+      "aya": 152,
+      "video": "9926pTLAXeY"
+    },
+    {
+      "id": "q-change-condition",
+      "category": "quran-teaching",
+      "prompt": "Allah will not change the condition of a people until they do what?",
+      "options": [
+        "Change what is in themselves",
+        "Ask Him three times",
+        "Return to their homeland",
+        "Forgive one another"
+      ],
+      "answer": 0,
+      "hint": "The change has to happen somewhere before it happens outside.",
+      "sura": 13,
+      "aya": 11,
+      "video": "CDyd3r4FtH8"
+    },
+    {
+      "id": "q-own-burden",
+      "category": "quran-teaching",
+      "prompt": "What does the Quran say about bearing the burden of another?",
+      "options": [
+        "No bearer of burdens will bear the burden of another",
+        "A father may carry his child’s burden",
+        "The burden is shared by the whole community",
+        "The burden passes to the eldest"
+      ],
+      "answer": 0,
+      "hint": "It is stated as an absolute.",
+      "sura": 6,
+      "aya": 164,
+      "video": "kf5EwDfVbEE"
+    },
+    {
+      "id": "q-calamity",
+      "category": "quran-teaching",
+      "prompt": "What do the patient say when disaster strikes them?",
+      "options": [
+        "Indeed we belong to Allah, and indeed to Him we will return",
+        "Allah is sufficient for us",
+        "There is no power except by Allah",
+        "Praise be to Allah in all circumstances"
+      ],
+      "answer": 0,
+      "hint": "It names where they came from and where they are going.",
+      "sura": 2,
+      "aya": 156,
+      "video": "Hk_p7RxfwKM"
+    },
+    {
+      "id": "q-preservation",
+      "category": "quran-teaching",
+      "prompt": "What does Allah say about the Quran after sending it down?",
+      "options": [
+        "We will be its guardian",
+        "We will send another after it",
+        "We will explain it in time",
+        "We will entrust it to the righteous"
+      ],
+      "answer": 0,
+      "hint": "A promise about the message itself, not its readers.",
+      "sura": 15,
+      "aya": 9,
+      "video": "Nq32AkMd2bc"
+    },
+    {
+      "id": "q-tawakkul",
+      "category": "quran-teaching",
+      "prompt": "What does the Quran say about whoever relies upon Allah?",
+      "options": [
+        "He is sufficient for him",
+        "He will never be tested",
+        "He will be given authority",
+        "His prayers are answered at once"
+      ],
+      "answer": 0,
+      "hint": "The same verse mentions provision from where he does not expect.",
+      "sura": 65,
+      "aya": 3,
+      "video": "-sPLZHkkXcw"
+    },
+    {
+      "id": "q-dua-near",
+      "category": "quran-teaching",
+      "prompt": "How does Allah answer when His servants ask about Him?",
+      "options": [
+        "Indeed I am near, and I respond to the supplicant who calls upon Me",
+        "Indeed I am above all comprehension",
+        "Indeed I have written what will be",
+        "Indeed I have sent you a messenger"
+      ],
+      "answer": 0,
+      "hint": "The answer is about closeness.",
+      "sura": 2,
+      "aya": 186,
+      "video": "LomJnB3P-a0"
+    },
+    {
+      "id": "q-charity-seed",
+      "category": "quran-teaching",
+      "prompt": "What is spending wealth in the way of Allah compared to?",
+      "options": [
+        "A seed growing seven spikes, each with a hundred grains",
+        "A spring that never runs dry",
+        "A lamp lit from another lamp",
+        "A debt repaid twice over"
+      ],
+      "answer": 0,
+      "hint": "The comparison is agricultural, and the arithmetic is in the verse.",
+      "sura": 2,
+      "aya": 261,
+      "video": "BuVHK15QTmk"
+    },
+    {
+      "id": "q-good-word",
+      "category": "quran-teaching",
+      "prompt": "In the Quran, a good word is compared to what?",
+      "options": [
+        "A good tree, its root firm and its branches in the sky",
+        "A clear spring in a valley",
+        "A lamp in a niche",
+        "A garment that never wears out"
+      ],
+      "answer": 0,
+      "hint": "The image has roots and branches.",
+      "sura": 14,
+      "aya": 24,
+      "video": "b6Ua2R_TFw0"
+    },
+    {
+      "id": "q-reward-good",
+      "category": "quran-teaching",
+      "prompt": "Complete: \"Is the reward for good anything but...\"",
+      "options": [
+        "good",
+        "patience",
+        "Paradise",
+        "forgiveness"
+      ],
+      "answer": 0,
+      "hint": "The answer is the same word as the question.",
+      "sura": 55,
+      "aya": 60,
+      "video": "P-_mZcuk2gI"
+    },
+    {
+      "id": "q-fasting-before",
+      "category": "quran-teaching",
+      "prompt": "Fasting was decreed upon the believers as it was decreed upon whom?",
+      "options": [
+        "Those before them",
+        "The people of Madinah only",
+        "The prophets alone",
+        "Those who could afford it"
+      ],
+      "answer": 0,
+      "hint": "It points backwards in time.",
+      "sura": 2,
+      "aya": 183,
+      "video": "ndGUbtxnQ7s"
+    },
+    {
+      "id": "q-mercy-life",
+      "category": "quran-teaching",
+      "prompt": "According to the Quran, saving one life is as if one had done what?",
+      "options": [
+        "Saved all of mankind",
+        "Freed a hundred captives",
+        "Built a place of worship",
+        "Fasted a whole year"
+      ],
+      "answer": 0,
+      "hint": "The scale of the comparison is total.",
+      "sura": 5,
+      "aya": 32,
+      "video": "0v9L1j2Q_CE"
+    },
+    {
+      "id": "q-repel-better",
+      "category": "quran-teaching",
+      "prompt": "How does the Quran say to repel evil?",
+      "options": [
+        "By that deed which is better",
+        "By turning away in silence",
+        "By seeking judgement",
+        "By leaving the place"
+      ],
+      "answer": 0,
+      "hint": "The one you had enmity with becomes like a devoted friend.",
+      "sura": 41,
+      "aya": 34,
+      "video": "hhlatSujojo"
+    },
+    {
+      "id": "q-walk-humbly",
+      "category": "quran-teaching",
+      "prompt": "How do the servants of the Most Merciful walk upon the earth?",
+      "options": [
+        "Easily, and they answer the ignorant with peace",
+        "Quickly, and they answer with proof",
+        "Only at night, and in groups",
+        "Barefoot, in remembrance"
+      ],
+      "answer": 0,
+      "hint": "Both their pace and their reply are in the verse.",
+      "sura": 25,
+      "aya": 63
+    },
+    {
+      "id": "q-lower-voice",
+      "category": "quran-teaching",
+      "prompt": "What did Luqman advise about pace and voice?",
+      "options": [
+        "Be moderate in pace and lower your voice",
+        "Walk ahead and speak first",
+        "Match the pace of your companion",
+        "Speak only when asked"
+      ],
+      "answer": 0,
+      "hint": "The verse ends with a comparison to an animal.",
+      "sura": 31,
+      "aya": 19
+    },
+    {
+      "id": "q-not-arrogant",
+      "category": "quran-teaching",
+      "prompt": "Why does the Quran say not to walk upon the earth exultantly?",
+      "options": [
+        "You will never tear the earth apart nor reach the mountains in height",
+        "The earth records every step",
+        "The angels record your intention",
+        "It wakes those who are sleeping"
+      ],
+      "answer": 0,
+      "hint": "Two impossibilities are named.",
+      "sura": 17,
+      "aya": 37
+    },
+    {
+      "id": "q-ayyub",
+      "category": "quran-story",
+      "prompt": "What did Ayyub say when he called upon his Lord?",
+      "options": [
+        "Adversity has touched me, and You are the most merciful of the merciful",
+        "Take my soul while I am submitting",
+        "Give me a kingdom after me",
+        "Show me how You give life"
+      ],
+      "answer": 0,
+      "hint": "He states his condition, then describes his Lord.",
+      "sura": 21,
+      "aya": 83,
+      "video": "m4pB0Q8ND4Q"
+    },
+    {
+      "id": "q-yunus-title",
+      "category": "quran-story",
+      "prompt": "By what description does the Quran refer to Yunus?",
+      "options": [
+        "The man of the fish",
+        "The companion of the cave",
+        "The rider of the wind",
+        "The keeper of the ark"
+      ],
+      "answer": 0,
+      "hint": "It names him by what happened to him.",
+      "sura": 21,
+      "aya": 87,
+      "video": "-aT2uOmf9lU"
+    },
+    {
+      "id": "q-sulayman-birds",
+      "category": "quran-story",
+      "prompt": "What did Sulayman say he and Dawud had been taught?",
+      "options": [
+        "The language of birds",
+        "The reading of the stars",
+        "The working of glass",
+        "The names of the winds"
+      ],
+      "answer": 0,
+      "hint": "It explains how a later conversation was possible.",
+      "sura": 27,
+      "aya": 16,
+      "video": "wapW2KgOPMM"
+    },
+    {
+      "id": "q-zakariya",
+      "category": "quran-story",
+      "prompt": "How did Zakariya describe himself when he called upon his Lord?",
+      "options": [
+        "His bones had weakened and his head had filled with white",
+        "He had travelled far and found no rest",
+        "He had been driven from his people",
+        "He had lost his sight from weeping"
+      ],
+      "answer": 0,
+      "hint": "He describes age.",
+      "sura": 19,
+      "aya": 4,
+      "video": "Pg9ReRpA6f8"
+    },
+    {
+      "id": "q-isra-masjid",
+      "category": "quran-story",
+      "prompt": "In Surah Al-Isra, between which two places was the Prophet taken by night?",
+      "options": [
+        "Al-Masjid al-Haram to al-Masjid al-Aqsa",
+        "Mecca to Ta’if",
+        "Madinah to Jerusalem",
+        "Al-Masjid al-Aqsa to the Kaaba"
+      ],
+      "answer": 0,
+      "hint": "Both are named as masjids in the verse.",
+      "sura": 17,
+      "aya": 1
+    },
+    {
+      "id": "q-adam-names",
+      "category": "quran-story",
+      "prompt": "What did Allah teach Adam that the angels did not know?",
+      "options": [
+        "The names, all of them",
+        "The path to the garden",
+        "The count of the stars",
+        "The words of repentance"
+      ],
+      "answer": 0,
+      "hint": "He then asked the angels to inform Him of them.",
+      "sura": 2,
+      "aya": 31
+    },
+    {
+      "id": "q-kaaba-builders",
+      "category": "quran-story",
+      "prompt": "Who raised the foundations of the House together with Ibrahim?",
+      "options": [
+        "Ismail",
+        "Ishaq",
+        "Lut",
+        "Yaqub"
+      ],
+      "answer": 0,
+      "hint": "They made a supplication as they built.",
+      "sura": 2,
+      "aya": 127
+    },
+    {
+      "id": "q-bee",
+      "category": "quran-story",
+      "prompt": "To which creature did Allah inspire to take houses among the mountains and trees?",
+      "options": [
+        "The bee",
+        "The ant",
+        "The swallow",
+        "The spider"
+      ],
+      "answer": 0,
+      "hint": "A surah is named after it.",
+      "sura": 16,
+      "aya": 68
+    },
+    {
+      "id": "q-spider",
+      "category": "quran-story",
+      "prompt": "What are those who take allies besides Allah compared to?",
+      "options": [
+        "The spider, whose home is the weakest of homes",
+        "The bird that builds on a cliff edge",
+        "The traveller without provision",
+        "The farmer who sows on rock"
+      ],
+      "answer": 0,
+      "hint": "The comparison names the weakest of its kind.",
+      "sura": 29,
+      "aya": 41
+    },
+    {
+      "id": "q-kawthar",
+      "category": "quran-story",
+      "prompt": "What does Allah say He has granted the Prophet in Surah Al-Kawthar?",
+      "options": [
+        "Al-Kawthar",
+        "The Furqan",
+        "The night journey",
+        "The opening of Mecca"
+      ],
+      "answer": 0,
+      "hint": "The surah is named after it.",
+      "sura": 108,
+      "aya": 1
+    },
+    {
+      "id": "q-salih-thamud",
+      "category": "quran-story",
+      "prompt": "Which prophet was sent to the people of Thamud?",
+      "options": [
+        "Salih",
+        "Hud",
+        "Shu’ayb",
+        "Lut"
+      ],
+      "answer": 0,
+      "hint": "The Quran calls him their brother.",
+      "sura": 7,
+      "aya": 73
+    },
+    {
+      "id": "q-cow",
+      "category": "quran-story",
+      "prompt": "What did Musa tell his people Allah commanded them to slaughter?",
+      "options": [
+        "A cow",
+        "A ram",
+        "A camel",
+        "A bird"
+      ],
+      "answer": 0,
+      "hint": "The longest surah is named after it.",
+      "sura": 2,
+      "aya": 67
+    },
+    {
+      "id": "q-talut-river",
+      "category": "quran-story",
+      "prompt": "With what did Allah test Talut’s soldiers?",
+      "options": [
+        "A river",
+        "A mountain pass",
+        "A night march",
+        "A famine"
+      ],
+      "answer": 0,
+      "hint": "Whoever drank from it was not of him.",
+      "sura": 2,
+      "aya": 249
+    },
+    {
+      "id": "q-qarun",
+      "category": "quran-story",
+      "prompt": "Who was from the people of Musa, given treasures whose keys would burden a band of strong men?",
+      "options": [
+        "Qarun",
+        "Haman",
+        "Samiri",
+        "Abu Lahab"
+      ],
+      "answer": 0,
+      "hint": "The Quran says he tyrannized them.",
+      "sura": 28,
+      "aya": 76
+    },
+    {
+      "id": "q-alaq-taught",
+      "category": "quran-story",
+      "prompt": "Surah Al-Alaq says Allah taught man what?",
+      "options": [
+        "That which he knew not",
+        "To read the stars",
+        "To speak in many tongues",
+        "To build and to plant"
+      ],
+      "answer": 0,
+      "hint": "It follows the mention of the pen.",
+      "sura": 96,
+      "aya": 5
+    },
+    {
+      "id": "q-dawud-mountains",
+      "category": "quran-story",
+      "prompt": "What were the mountains and the birds commanded to do with Dawud?",
+      "options": [
+        "Repeat Allah’s praises with him",
+        "Shelter him from his enemies",
+        "Lead him to water",
+        "Carry his message"
+      ],
+      "answer": 0,
+      "hint": "The same verse mentions iron being made pliable for him.",
+      "sura": 34,
+      "aya": 10
+    },
+    {
+      "id": "q-khidr",
+      "category": "quran-story",
+      "prompt": "In Surah Al-Kahf, whom did Musa find, a servant given mercy and knowledge from Allah?",
+      "options": [
+        "Al-Khidr",
+        "Yusha",
+        "Harun",
+        "Dhul-Qarnayn"
+      ],
+      "answer": 0,
+      "hint": "He is described as a servant from among Allah’s servants.",
+      "sura": 18,
+      "aya": 65
+    },
+    {
+      "id": "s-last-sermon",
+      "category": "seerah",
+      "prompt": "What is the Prophet’s final address to the Muslims known as?",
+      "options": [
+        "The Last Sermon",
+        "The Covenant of Aqaba",
+        "The Constitution of Madinah",
+        "The Treaty of Hudaybiyyah"
+      ],
+      "answer": 0,
+      "hint": "It was his final advice.",
+      "video": "UvbFzrDQF_0",
+      "basis": "IUoC video 'The Prophet's (P.B.U.H) Last Sermon | His Final Advice for Us'."
+    }
+  ]
+}

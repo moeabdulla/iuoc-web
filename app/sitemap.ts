@@ -13,6 +13,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = [
     "",
     "/videos",
+    "/daily-question",
+    "/daily-quote",
+    "/quran",
+    "/prayer-times",
     "/about",
     "/support",
     "/app/privacy",

@@ -1,136 +1,52 @@
+import { Brand } from "@/components/courtyard/brand";
 import Link from "next/link";
-import { Logo } from "@/components/logo";
-import {
-  InstagramIcon,
-  TikTokIcon,
-  YouTubeIcon,
-} from "@/components/social-icons";
+import { CourtyardPreferences } from "@/components/courtyard/preferences";
 import { siteConfig } from "@/lib/site";
 
-const socialLinks = [
-  { href: siteConfig.links.youtube, label: "YouTube", icon: YouTubeIcon },
-  { href: siteConfig.links.instagram, label: "Instagram", icon: InstagramIcon },
-  { href: siteConfig.links.tiktok, label: "TikTok", icon: TikTokIcon },
+const pages = [
+  ["About", "/about"],
+  ["Library", "/videos"],
+  ["Quran", "/quran"],
+  ["Prayer times", "/prayer-times"],
+  ["Daily question", "/daily-question"],
+  ["Daily quote", "/daily-quote"],
+  ["Support", "/support"],
+  ["App", "/app"],
+  ["Privacy", "/app/privacy"],
 ];
-
-const supportLinks = [
-  { href: siteConfig.links.patreon, label: "Patreon" },
-  { href: siteConfig.links.gofundme, label: "GoFundMe" },
-  { href: siteConfig.links.paypal, label: "PayPal" },
-];
-
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t-[3px] border-double border-foreground/70 bg-secondary/50">
-      <div className="container grid gap-12 py-16 md:grid-cols-[1.6fr_1fr_1fr_1fr] md:gap-8">
-        <div className="max-w-sm">
-          <Link href="/" className="flex items-center gap-3">
-            <Logo className="h-11 w-11" />
-            <span className="font-serif text-xl font-semibold tracking-tight">
-              {siteConfig.name}
-            </span>
-          </Link>
-          <p className="mt-5 text-sm italic leading-relaxed text-muted-foreground">
-            {siteConfig.description}
-          </p>
-          <div className="mt-6 flex items-center gap-3">
-            {socialLinks.map(({ href, label, icon: Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="flex size-9 items-center justify-center rounded-none border border-foreground/60 text-foreground/70 transition-colors hover:border-primary hover:text-primary"
-              >
-                <Icon className="size-[1.1rem]" />
+    <footer className="courtyard-footer">
+      <div className="courtyard-footer-main">
+        <Link className="courtyard-footer-brand" href="/">
+          <Brand />
+        </Link>
+        <nav aria-label="Footer">
+          <div>
+            {pages.map(([name, href]) => (
+              <Link href={href} key={href}>
+                {name}
+              </Link>
+            ))}
+          </div>
+          <div>
+            {[
+              ["YouTube", siteConfig.links.youtube],
+              ["Instagram", siteConfig.links.instagram],
+              ["TikTok", siteConfig.links.tiktok],
+            ].map(([name, href]) => (
+              <a key={name} href={href} target="_blank" rel="noreferrer">
+                {name}
               </a>
             ))}
           </div>
-        </div>
-
-        <FooterColumn title="Explore">
-          {siteConfig.nav.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </FooterColumn>
-
-        <FooterColumn title="Support the mission">
-          {supportLinks.map((item) => (
-            <li key={item.label}>
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </FooterColumn>
-
-        <FooterColumn title="Follow">
-          {socialLinks.map(({ href, label }) => (
-            <li key={label}>
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {label}
-              </a>
-            </li>
-          ))}
-        </FooterColumn>
+        </nav>
+        <CourtyardPreferences />
       </div>
-
-      <div className="border-t border-border">
-        <p className="container py-6 text-center font-serif text-sm italic text-muted-foreground">
-          &ldquo;&hellip;may Allah accept from us all.&rdquo;
-        </p>
-      </div>
-
-      <div className="border-t border-border">
-        <div className="container flex flex-col items-center justify-between gap-3 py-6 text-xs text-muted-foreground sm:flex-row">
-          <p>
-            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights
-            reserved.
-          </p>
-          <p className="flex items-center gap-1.5">
-            Sadaqah jariyah
-            <span className="text-gold" aria-hidden>
-              &#10022;
-            </span>
-            made in Canada
-          </p>
-        </div>
+      <div className="courtyard-footer-note">
+        <span>© {new Date().getFullYear()} Project IUoC</span>
+        <span>“…may Allah accept from us all.”</span>
       </div>
     </footer>
-  );
-}
-
-function FooterColumn({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <h2 className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">
-        {title}
-      </h2>
-      <ul className="mt-4 space-y-3 text-sm">{children}</ul>
-    </div>
   );
 }

@@ -1,0 +1,953 @@
+/* Emerald courtyard. Art remains independent of semantic content and controls. */
+.courtyard-home {
+  --ivory: #fff4de;
+  --courtyard-ink: #163c30;
+  --courtyard-gold: #d8b06b;
+  position: relative;
+  isolation: isolate;
+  color: var(--courtyard-ink);
+}
+.courtyard-background {
+  overflow: clip;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #c8ae80;
+  pointer-events: none;
+}
+.courtyard-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.entrance-section {
+  position: relative;
+  height: 195svh;
+  background: transparent;
+}
+.entrance-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 600px;
+  overflow: clip;
+  background: transparent;
+  isolation: isolate;
+}
+.entrance-clip-defs {
+  position: absolute;
+  pointer-events: none;
+}
+.courtyard-room-image {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+  transform-origin: 0 0;
+}
+.entrance-curtain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.facade-plane {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  aspect-ratio: 2;
+}
+.facade-plane picture,
+.facade-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.facade-doors {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.facade-doors img {
+  position: absolute;
+  top: 31%;
+  height: 50.5%;
+  width: 5.6%;
+  object-fit: fill;
+}
+/* Align the visible hinge pins, accounting for transparent padding in each leaf.
+   The facade opening begins at 53.83% and ends at 79.03% of its width. */
+.facade-doors .door-left {
+  left: 53.05%;
+}
+.facade-doors .door-right {
+  right: 20.25%;
+}
+.facade-ambient-light {
+  position: absolute;
+  left: 0;
+  top: 10%;
+  width: 49%;
+  height: 75%;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(ellipse at 70% 30%, #ffdf9b55, transparent 65%);
+  animation: courtyard-light 22s ease-in-out infinite alternate;
+}
+.entrance-copy {
+  position: absolute;
+  left: 6.3%;
+  top: clamp(155px, 16.5vw, 36svh);
+  z-index: 6;
+  color: var(--ivory);
+  max-width: 49%;
+}
+.courtyard-kicker {
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: #d9b773;
+  margin-bottom: 24px;
+}
+.entrance-copy h1 {
+  font-size: clamp(34px, 3.05vw, 68px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  text-shadow: 0 2px 18px #001b1599;
+  margin: 0 0 30px;
+}
+.entrance-copy h1 span {
+  display: block;
+  white-space: nowrap;
+}
+.entrance-copy h1 em {
+  font-style: normal;
+  color: #e1bb70;
+}
+.courtyard-button,
+.daily-action {
+  display: inline-flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 12px 25px;
+  color: #fff8e8;
+  background: linear-gradient(110deg, #ce9f4b, #ae7726);
+  border: 1px solid #e7c786;
+  box-shadow:
+    inset 0 1px #f7e5b677,
+    0 4px 16px #001c2533;
+  font-size: clamp(17px, 1.5vw, 25px);
+  transition:
+    filter 0.2s,
+    box-shadow 0.2s;
+}
+.courtyard-button:hover,
+.daily-action:hover {
+  filter: brightness(1.1);
+  box-shadow:
+    inset 0 1px #f7e5b677,
+    0 5px 22px #001c2555;
+}
+.courtyard-button svg,
+.courtyard-text-link svg {
+  transition: transform 0.2s;
+}
+.courtyard-button:hover svg,
+.courtyard-text-link:hover svg {
+  transform: translateX(4px);
+}
+.entrance-foliage {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+}
+.entrance-foliage-left {
+  left: -4%;
+  bottom: -11%;
+  width: min(32vw, 55svh);
+  max-width: 680px;
+}
+.entrance-foliage-right {
+  right: -1.5%;
+  bottom: 1%;
+  width: 18%;
+  max-width: 390px;
+}
+.entrance-foliage img {
+  width: 100%;
+  height: auto;
+}
+.foliage-sway {
+  transform-origin: 20% 100%;
+  animation: courtyard-sway 17s ease-in-out infinite alternate;
+}
+.entrance-foliage-right .foliage-sway {
+  animation: none;
+}
+.entrance-cue {
+  position: absolute;
+  left: 34%;
+  bottom: 7%;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #fff0d6;
+  border-radius: 50%;
+  color: #fff0d6;
+  background: #08372b44;
+  transition: background 0.2s;
+}
+.entrance-cue:hover {
+  background: #0a322bd9;
+}
+.courtyard-library {
+  position: relative;
+  margin-top: var(--library-overlap, -15svh);
+  padding: 8px 0 48px;
+  z-index: 6;
+}
+.courtyard-paper {
+  position: relative;
+  max-width: 1280px;
+  width: 78%;
+  margin: 0 auto;
+  background: #fbf5e7;
+  color: var(--courtyard-ink);
+  padding: 36px;
+  box-shadow:
+    0 8px 40px #2419003b,
+    inset 0 0 0 1px #c6a36b77;
+}
+.courtyard-paper::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  border: 1px solid #b7914e33;
+  background: url("/courtyard/quiet-wall-pattern.svg") 0 0 / 380px;
+  opacity: 0.3;
+}
+.courtyard-paper > * {
+  position: relative;
+}
+.courtyard-section-title h2 {
+  font-size: clamp(38px, 4.2vw, 64px);
+  line-height: 1.05;
+  margin: 0 0 30px;
+  letter-spacing: -0.035em;
+}
+.courtyard-section-title .courtyard-kicker {
+  margin-bottom: 16px;
+}
+.courtyard-tools {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 10px 0 26px;
+  border-bottom: 1px solid #c9ab76;
+  scroll-margin-top: 100px;
+}
+.courtyard-tools a {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 14px;
+  padding: 8px 12px;
+  color: #173b2f;
+  font-size: clamp(18px, 1.7vw, 26px);
+  text-align: center;
+}
+.courtyard-tools a + a {
+  border-left: 1px solid #c9ab7688;
+}
+.courtyard-tools img {
+  height: 88px;
+  width: 66px;
+  transition: transform 0.3s;
+}
+.courtyard-tools a:hover img {
+  transform: translateY(-4px);
+}
+.courtyard-tools a > svg {
+  display: none;
+}
+.courtyard-feature-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 30px;
+  padding-top: 24px;
+}
+.courtyard-subheading {
+  font-size: clamp(23px, 2.1vw, 32px);
+  margin: 0 0 18px;
+  letter-spacing: -0.02em;
+}
+.courtyard-video {
+  display: block;
+  min-width: 0;
+}
+.courtyard-video-image {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #174837;
+  box-shadow: 0 1px 0 #a77a35;
+}
+.courtyard-video-image img {
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+.courtyard-video:hover .courtyard-video-image img {
+  transform: scale(1.025);
+}
+.courtyard-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  border: 1px solid #fff5de;
+  border-radius: 50%;
+  background: #1e261b77;
+  color: #fff5de;
+}
+.courtyard-video-lead .courtyard-play {
+  width: 60px;
+  height: 60px;
+}
+.courtyard-duration {
+  position: absolute;
+  bottom: 5px;
+  right: 6px;
+  padding: 1px 5px;
+  color: white;
+  background: #101e17c9;
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+}
+.courtyard-video-caption {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+.courtyard-video-caption h3 {
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.courtyard-video-lead .courtyard-video-caption h3 {
+  font-size: clamp(23px, 2.25vw, 33px);
+}
+.courtyard-video-caption svg {
+  flex-shrink: 0;
+  color: #9a6926;
+  margin-top: 3px;
+}
+.courtyard-latest-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px 16px;
+}
+.courtyard-latest-grid .courtyard-video-caption h3 {
+  font-size: 15px;
+}
+.courtyard-row-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+.courtyard-row-heading > a {
+  color: var(--reading-gold);
+}
+.courtyard-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  color: #8b5b20;
+  font-size: 18px;
+}
+.courtyard-text-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+.courtyard-library-intro > .courtyard-text-link {
+  margin-top: 28px;
+}
+.courtyard-series {
+  margin-top: 28px;
+}
+.courtyard-series h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+.courtyard-series-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px 22px;
+}
+.courtyard-series-image {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.courtyard-series-image img {
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.courtyard-series-grid a:hover img {
+  transform: scale(1.03);
+}
+.courtyard-series-grid a > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 21px;
+  line-height: 1.2;
+}
+.courtyard-series-grid svg {
+  flex-shrink: 0;
+  color: #9a6926;
+}
+.courtyard-close {
+  max-width: 1280px;
+  width: 78%;
+  margin: 28px auto 0;
+  background: #123a2f url("/courtyard/quiet-wall-pattern.svg");
+  color: #fff4de;
+  border: 1px solid #cba25f;
+  padding: 34px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  box-shadow: 0 7px 30px #2419004d;
+}
+.courtyard-close > article {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 0 25px;
+}
+.courtyard-close > article + article {
+  border-left: 1px solid #b88d49;
+}
+.courtyard-close img {
+  width: 65px;
+  height: 88px;
+}
+.courtyard-close h2 {
+  font-size: 28px;
+}
+.courtyard-close p {
+  font-size: 16px;
+  line-height: 1.45;
+  margin: 8px 0 15px;
+  max-width: 270px;
+}
+.courtyard-close .courtyard-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff8e8;
+  font-size: 17px;
+  min-height: 44px;
+  padding: 9px 18px;
+}
+.courtyard-source-note {
+  text-align: center;
+  padding: 28px 15px 0;
+  color: #fcf2de;
+  text-shadow: 0 1px 7px #001b16;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+}
+.courtyard-source-note a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.courtyard-motion-control {
+  position: relative;
+  z-index: 7;
+  text-align: center;
+  padding: 0 0 32px;
+}
+.courtyard-motion-control button {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  padding: 9px 15px;
+  background: #f8f0e2;
+  color: #254e3c;
+  border: 1px solid #ad8b53;
+  font:
+    13px system-ui,
+    sans-serif;
+}
+.courtyard-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: #082f26d6;
+  color: #fff1d6;
+  border-bottom: 1px solid #ba9558;
+  backdrop-filter: blur(8px);
+}
+.courtyard-header-inner {
+  position: fixed;
+  background: #082f26d6;
+}
+.courtyard-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  height: 72px;
+  padding: 0 5%;
+  max-width: 2000px;
+  margin: auto;
+}
+.courtyard-wordmark {
+  font-size: clamp(24px, 2.2vw, 34px);
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.courtyard-desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  margin-left: auto;
+  font-size: 18px;
+}
+.courtyard-desktop-nav a {
+  text-decoration-color: #e1bd78;
+  text-underline-offset: 8px;
+}
+.courtyard-desktop-nav a:hover,
+.courtyard-desktop-nav a[aria-current] {
+  text-decoration: underline;
+}
+.courtyard-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.courtyard-header-actions > a,
+.courtyard-header-actions > button {
+  display: grid;
+  place-items: center;
+  min-width: 40px;
+  min-height: 44px;
+}
+.courtyard-menu {
+  background: var(--reading-paper);
+  color: var(--reading-ink);
+  border-color: var(--reading-rule);
+}
+.courtyard-menu nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 25px 0;
+}
+.courtyard-menu nav a {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--reading-rule);
+  font-size: 24px;
+}
+.courtyard-home a:focus-visible,
+.courtyard-home button:focus-visible,
+.courtyard-header a:focus-visible,
+.courtyard-header button:focus-visible {
+  outline: 2px solid #f2cb7e;
+  outline-offset: 5px;
+}
+.courtyard-home[data-reduced="true"] .entrance-section {
+  height: auto;
+}
+.courtyard-home[data-reduced="true"] .courtyard-library {
+  margin-top: 0;
+  padding-top: 45px;
+}
+.courtyard-home[data-reduced="true"] .foliage-sway,
+.courtyard-home[data-reduced="true"] .facade-ambient-light {
+  animation: none;
+}
+.courtyard-home[data-active="false"] .foliage-sway,
+.courtyard-home[data-active="false"] .facade-ambient-light {
+  animation-play-state: paused;
+}
+@keyframes courtyard-sway {
+  from {
+    transform: rotate(-0.15deg);
+  }
+  to {
+    transform: rotate(0.15deg);
+  }
+}
+@keyframes courtyard-light {
+  from {
+    opacity: 0.12;
+    transform: translateX(-3px);
+  }
+  to {
+    opacity: 0.32;
+    transform: translateX(3px);
+  }
+}
+@media (min-width: 2000px) {
+  .entrance-copy {
+    left: 8%;
+    top: 30svh;
+  }
+}
+@media (max-width: 1000px) and (min-width: 701px) {
+  .entrance-copy {
+    top: 24vw;
+    left: 4%;
+  }
+  .entrance-copy h1 {
+    font-size: 3.2vw;
+  }
+  .courtyard-paper,
+  .courtyard-close {
+    width: 90%;
+  }
+  .courtyard-header-bar {
+    padding: 0 4%;
+  }
+  .courtyard-desktop-nav {
+    gap: 18px;
+    font-size: 16px;
+  }
+  .courtyard-feature-grid {
+    gap: 20px;
+  }
+}
+@media (max-width: 700px), (max-aspect-ratio: 4/5) {
+  .entrance-stage {
+    min-height: 680px;
+  }
+  .entrance-section {
+    height: 215svh;
+  }
+  .facade-plane {
+    aspect-ratio: 2/3;
+  }
+  .entrance-copy {
+    left: 6%;
+    right: 6%;
+    max-width: none;
+    top: clamp(87px, 11.5svh, 120px);
+  }
+  .entrance-copy .courtyard-kicker {
+    display: none;
+  }
+  .entrance-copy h1 {
+    font-size: clamp(24px, min(7.7vw, 4.1svh), 44px);
+    line-height: 1.13;
+    letter-spacing: -0.04em;
+    margin-bottom: 20px;
+  }
+  .courtyard-button {
+    font-size: 17px;
+    min-height: 46px;
+    padding: 10px 18px;
+    gap: 19px;
+  }
+  .entrance-foliage-left {
+    width: 53%;
+    bottom: -9%;
+    left: -12%;
+  }
+  .entrance-foliage-right {
+    width: 30%;
+    bottom: 0;
+    right: -5%;
+  }
+  .entrance-cue {
+    left: calc(50% - 22px);
+    bottom: 4%;
+  }
+  .facade-doors img {
+    top: 45%;
+    height: 35%;
+    width: 8%;
+  }
+  .facade-doors .door-left {
+    left: 31%;
+  }
+  .facade-doors .door-right {
+    right: 23%;
+  }
+  .courtyard-library {
+    margin-top: var(--library-overlap, -15svh);
+    padding-top: 0;
+  }
+  .courtyard-paper {
+    width: 90%;
+    padding: 25px 22px;
+  }
+  .courtyard-section-title h2 {
+    font-size: 39px;
+    margin-bottom: 21px;
+  }
+  .courtyard-section-title .courtyard-kicker {
+    width: 35px;
+    margin-bottom: 12px;
+  }
+  .courtyard-tools {
+    grid-template-columns: 1fr;
+    padding: 0;
+    border-top: 1px solid #c9ab7688;
+  }
+  .courtyard-tools a {
+    flex-direction: row;
+    gap: 15px;
+    padding: 15px 0;
+    font-size: 21px;
+    text-align: left;
+  }
+  .courtyard-tools a + a {
+    border-left: 0;
+    border-top: 1px solid #c9ab7688;
+  }
+  .courtyard-tools img {
+    width: 37px;
+    height: 50px;
+  }
+  .courtyard-tools a > svg {
+    display: block;
+    margin-left: auto;
+    color: #936225;
+  }
+  .courtyard-feature-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-top: 23px;
+  }
+  .courtyard-subheading {
+    font-size: 25px;
+    margin-bottom: 15px;
+  }
+  .courtyard-video-lead .courtyard-video-caption h3 {
+    font-size: 25px;
+  }
+  .courtyard-latest-grid {
+    gap: 20px 15px;
+  }
+  .courtyard-latest-grid .courtyard-video-caption h3 {
+    font-size: 17px;
+  }
+  .courtyard-latest-grid .courtyard-play {
+    width: 32px;
+    height: 32px;
+  }
+  .courtyard-video-caption > svg {
+    display: none;
+  }
+  .courtyard-series {
+    margin-top: 22px;
+  }
+  .courtyard-series h2 {
+    font-size: 32px;
+  }
+  .courtyard-series-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .courtyard-series-grid > a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .courtyard-series-image {
+    width: 40%;
+    flex-shrink: 0;
+  }
+  .courtyard-series-grid a > span {
+    font-size: 20px;
+    margin-top: 0;
+    align-items: center;
+    width: 100%;
+  }
+  .courtyard-close {
+    width: 90%;
+    padding: 25px 22px;
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .courtyard-close > article {
+    padding: 0;
+    gap: 20px;
+  }
+  .courtyard-close > article + article {
+    border-left: 0;
+    border-top: 1px solid #b88d4977;
+    padding-top: 25px;
+  }
+  .courtyard-close h2 {
+    font-size: 26px;
+  }
+  .courtyard-close img {
+    width: 50px;
+    height: 67px;
+  }
+  .courtyard-header-bar {
+    height: 64px;
+    padding: 0 6%;
+    gap: 10px;
+  }
+  .courtyard-wordmark {
+    font-size: 26px;
+  }
+  .courtyard-desktop-nav {
+    display: none;
+  }
+  .courtyard-header-actions {
+    gap: 1px;
+  }
+  .courtyard-source-note {
+    font-size: 14px;
+    gap: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .courtyard-home .entrance-section {
+    height: auto;
+  }
+  .courtyard-home .courtyard-library {
+    margin-top: 0;
+    padding-top: 40px;
+  }
+  .foliage-sway,
+  .facade-ambient-light {
+    animation: none;
+  }
+  .courtyard-home * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+/* Let the shared footer meet the courtyard without an unrelated white gap. */
+body:has(.courtyard-home) footer,
+body:has(.daily-page) footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+  background: #f5eedf;
+  color: #183c30;
+  border-color: #ad8a4f;
+}
+body:has(.courtyard-home) footer .text-muted-foreground,
+body:has(.daily-page) footer .text-muted-foreground {
+  color: #59634f;
+}
+
+body:has(.courtyard-home) footer .relative.inline-block > img:first-child,
+body:has(.daily-page) footer .relative.inline-block > img:first-child {
+  display: block;
+}
+body:has(.courtyard-home) footer .relative.inline-block > img:last-child,
+body:has(.daily-page) footer .relative.inline-block > img:last-child {
+  display: none;
+}
+.courtyard-home h2,
+.courtyard-home h3 {
+  font-weight: 400;
+}
+
+@media (max-width: 700px) and (max-height: 740px) and (orientation: portrait) {
+  .entrance-copy {
+    top: 80px;
+  }
+  .entrance-copy h1 {
+    font-size: 7.3vw;
+    margin-bottom: 14px;
+  }
+  .courtyard-button {
+    min-height: 42px;
+    padding: 8px 16px;
+  }
+}
+@media (max-width: 700px) and (orientation: landscape) {
+  .entrance-copy {
+    top: 85px;
+    left: 5%;
+    max-width: 45%;
+  }
+  .entrance-copy h1 {
+    font-size: 3.8vw;
+    margin-bottom: 16px;
+  }
+  .entrance-copy .courtyard-kicker {
+    display: none;
+  }
+  .courtyard-button {
+    font-size: 15px;
+    min-height: 40px;
+    padding: 8px 14px;
+  }
+}
+
+/* Decorative scenery cannot be selected or dragged; article text stays selectable. */
+.courtyard-home img,
+.entrance-curtain,
+.entrance-foliage,
+.courtyard-background {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+.courtyard-home img {
+  pointer-events: none;
+}
+.courtyard-close > article > div {
+  min-width: 0;
+  flex: 1;
+}
+.courtyard-close img {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.courtyard-close {
+  position: relative;
+  background-size: 420px;
+}
+.courtyard-close::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid #c9a46455;
+  pointer-events: none;
+}
+.courtyard-close > article {
+  position: relative;
+}
+.courtyard-series {
+  background: #fbf5e7;
+}
+
+.courtyard-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #eee3cf;
+  opacity: var(--reading-haze, 0);
+  pointer-events: none;
+}

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { Doc } from "@/convex/_generated/dataModel";
-import { VideoCard } from "@/components/video-card";
+import { CourtyardVideo } from "@/components/courtyard/cards";
 
 const PAGE_SIZE = 24;
 
@@ -57,13 +57,17 @@ export function SeriesGrid({
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="courtyard-lesson-grid">
         {videos.map((video) => (
-          <VideoCard key={video._id} video={video} />
+          <CourtyardVideo key={video._id} video={video} />
         ))}
         {loading &&
           Array.from({ length: 4 }).map((_, index) => (
-            <div key={`skeleton-${index}`} aria-hidden className="animate-pulse">
+            <div
+              key={`skeleton-${index}`}
+              aria-hidden
+              className="animate-pulse"
+            >
               <div className="border border-border bg-secondary p-1.5">
                 <div className="aspect-video border border-border/60 bg-muted" />
               </div>

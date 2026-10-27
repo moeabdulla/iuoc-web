@@ -45,3 +45,7 @@ next-env.d.ts
 
 # Playwright MCP verification artifacts
 .playwright-mcp/
+
+# Local visual exploration, source masters and browser proof captures
+/design/
+/docs/research/

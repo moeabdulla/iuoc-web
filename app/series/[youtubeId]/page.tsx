@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { siteConfig } from "@/lib/site";
 import { SeriesGrid } from "@/components/series-grid";
+import { ReadingShell } from "@/components/courtyard/reading-shell";
 import { Button } from "@/components/ui/button";
 
 export const revalidate = 3600;
@@ -42,7 +43,7 @@ export default async function SeriesPage({ params }: Props) {
   });
 
   return (
-    <div className="container pb-24 pt-14 md:pt-20">
+    <ReadingShell className="series-page">
       <Link
         href="/videos"
         className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary md:mb-10"
@@ -101,6 +102,6 @@ export default async function SeriesPage({ params }: Props) {
           />
         )}
       </div>
-    </div>
+    </ReadingShell>
   );
 }

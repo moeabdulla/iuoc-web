@@ -7,9 +7,10 @@ import { api } from "@/convex/_generated/api";
 import { siteConfig } from "@/lib/site";
 import { stripHashtags } from "@/lib/strip-hashtags";
 import { YouTubeEmbed } from "@/components/youtube-embed";
-import { VideoCard, formatDuration } from "@/components/video-card";
+import { formatDuration } from "@/components/video-card";
+import { CourtyardVideo, SeriesCards } from "@/components/courtyard/cards";
+import { ReadingShell } from "@/components/courtyard/reading-shell";
 import { VideoDescription } from "@/components/video-description";
-import { SectionHeading } from "@/components/section-heading";
 
 export const revalidate = 3600;
 
@@ -64,84 +65,69 @@ export default async function VideoPage({ params }: Props) {
   );
 
   return (
-    <article className="container max-w-4xl pb-24 pt-10 md:pb-32 md:pt-14">
-      <Link
-        href="/videos"
-        className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary md:mb-10"
-      >
-        <ArrowLeft className="size-4" aria-hidden />
-        Back to videos
-      </Link>
-
-      <div className="mt-8 md:mt-10">
-        <YouTubeEmbed youtubeId={video.youtubeId} title={video.title} />
-      </div>
-
-      <div className="mt-8 md:mt-10">
-        <h1 className="font-serif text-3xl leading-[1.12] md:text-4xl lg:text-5xl">
-          {stripHashtags(video.title)}
-        </h1>
-
-        <p className="mt-4 font-serif text-sm italic text-muted-foreground">
-          <time dateTime={new Date(video.publishedAt).toISOString()}>
-            {publishedDate}
-          </time>
-          {video.durationSeconds > 0 && (
-            <> &middot; {formatDuration(video.durationSeconds)}</>
-          )}
-        </p>
-
-        {series.length > 0 && (
-          <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs uppercase tracking-[0.2em]">
-            {series.map((playlist) => (
-              <Link
-                key={playlist.youtubeId}
-                href={`/series/${playlist.youtubeId}`}
-                className="text-gold transition-colors hover:text-primary"
-              >
-                {playlist.title}
-              </Link>
-            ))}
+    <ReadingShell className="watch-page">
+      <nav className="watch-breadcrumb" aria-label="Breadcrumb">
+        <span>
+          <Link href="/videos">Library</Link>
+          <span aria-hidden="true">/</span>Watch
+        </span>
+        <Link href="/videos">
+          <ArrowLeft size={16} aria-hidden="true" />
+          Back to library
+        </Link>
+      </nav>
+      <div className="watch-layout">
+        <article className="watch-main">
+          <YouTubeEmbed youtubeId={video.youtubeId} title={video.title} />
+          <h1>{stripHashtags(video.title)}</h1>
+          <p className="watch-meta">
+            <time dateTime={new Date(video.publishedAt).toISOString()}>
+              {publishedDate}
+            </time>
+            {video.durationSeconds > 0 && (
+              <> · {formatDuration(video.durationSeconds)}</>
+            )}
           </p>
-        )}
+          <section
+            className="watch-description"
+            aria-label="Lesson information"
+          >
+            {video.description && <h2 id="about-lesson">About this lesson</h2>}
+            <VideoDescription description={video.description} />
+            <a
+              className="courtyard-text-link"
+              href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ArrowUpRight size={17} aria-hidden="true" />
+              Watch on YouTube
+            </a>
+          </section>
+        </article>
+        <aside className="watch-sidebar" aria-label="More to explore">
+          {relatedVideos.length > 0 && (
+            <section aria-labelledby="related-title">
+              <h2 id="related-title">
+                {primarySeries
+                  ? `More from ${primarySeries.title}`
+                  : "More lessons"}
+              </h2>
+              <div className="watch-related">
+                {relatedVideos.slice(0, 3).map((v) => (
+                  <CourtyardVideo video={v} compact key={v._id} />
+                ))}
+              </div>
+            </section>
+          )}
+          {series.length > 0 && (
+            <section aria-labelledby="watch-series-title">
+              <h2 id="watch-series-title">Series</h2>
+              <SeriesCards series={series} />
+            </section>
+          )}
+        </aside>
       </div>
-
-      <div className="mt-6 border-t border-border pt-6 md:mt-8 md:pt-8">
-        <VideoDescription description={video.description} />
-
-        <a
-          href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group mt-8 inline-flex items-center gap-2 rounded-none border border-primary bg-transparent px-5 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
-        >
-          Watch on YouTube
-          <ArrowUpRight className="size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-        </a>
-      </div>
-
-      {relatedVideos.length > 0 && (
-        <section aria-label="More videos" className="mt-16 md:mt-20">
-          <SectionHeading
-            eyebrow="Further Reading"
-            title={
-              primarySeries
-                ? `More from ${primarySeries.title}`
-                : "More from the catalogue"
-            }
-          />
-          <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-pl-4 px-4 pb-4 [scrollbar-width:thin] md:-mx-6 md:scroll-pl-6 md:px-6">
-            {relatedVideos.map((relatedVideo) => (
-              <li
-                key={relatedVideo._id}
-                className="w-60 shrink-0 snap-start sm:w-64 md:w-72"
-              >
-                <VideoCard video={relatedVideo} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-    </article>
+    </ReadingShell>
   );
 }

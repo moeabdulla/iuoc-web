@@ -7,7 +7,7 @@ type SectionHeadingProps = {
   id?: string;
   // The gold ornament renders this many ✦ glyphs so a chapter's stars count
   // the chapter (Chapter I → one, Chapter II → two…). Defaults to one for
-  // non-chapter headings; clamped to 4 to keep the rule visually sane.
+  // non-chapter headings; clamped to 5 to keep the rule visually sane.
   stars?: number;
 };
 
@@ -21,7 +21,7 @@ export function SectionHeading({
   id,
   stars = 1,
 }: SectionHeadingProps) {
-  const starCount = Math.min(Math.max(Math.round(stars), 1), 4);
+  const starCount = Math.min(Math.max(Math.round(stars), 1), 5);
 
   return (
     <div className="mb-10 border-t border-border pt-8 text-center md:mb-12">

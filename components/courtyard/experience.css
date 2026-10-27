@@ -1,0 +1,423 @@
+/* Approved connected-journey reading material and one shared spatial backdrop. */
+:root {
+  --reading-paper: #fff9ed;
+  --reading-ink: #182e25;
+  --reading-rule: #b8935059;
+  --reading-gold: #8b581e;
+  --reading-control: #fffaf0;
+  --reading-hover: #f1e7d0;
+}
+.dark {
+  --reading-paper: #103b2d;
+  --reading-muted: #d1c3a3;
+  --reading-control: #174937;
+  --reading-hover: #215640;
+  --reading-ink: #f5ecda;
+  --reading-rule: #b8935077;
+  --reading-gold: #e0b974;
+}
+.courtyard-arrival,
+.courtyard-paper,
+.reading-sheet {
+  width: 64%;
+  max-width: 1120px;
+}
+.courtyard-arrival .courtyard-paper {
+  width: 100%;
+}
+.courtyard-paper,
+.reading-sheet {
+  padding: 30px;
+  border: 1px solid #b38c4d99;
+  border-radius: 6px;
+  box-shadow:
+    0 9px 24px #2d1d0d30,
+    inset 0 0 0 4px #b4945c0b;
+}
+.courtyard-paper::before {
+  opacity: 0.055;
+  inset: 8px;
+  border: 0;
+}
+.courtyard-paper::after,
+.reading-sheet::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  border: 1px solid var(--reading-rule);
+  border-radius: 5px;
+  mask:
+    linear-gradient(#000 0 0) 0 0/25px 25px no-repeat,
+    linear-gradient(#000 0 0) 100% 0/25px 25px no-repeat,
+    linear-gradient(#000 0 0) 0 100%/25px 25px no-repeat,
+    linear-gradient(#000 0 0) 100% 100%/25px 25px no-repeat;
+}
+.courtyard-section-title h2,
+.reading-sheet h1 {
+  font-size: clamp(34px, 2.8vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+  margin-bottom: 24px;
+}
+.courtyard-section-title .courtyard-kicker {
+  display: none;
+}
+#library-heading {
+  scroll-margin-top: 108px;
+}
+.courtyard-tools {
+  padding: 0 0 22px;
+}
+.courtyard-tools img {
+  width: 48px;
+  height: 64px;
+}
+.courtyard-tools a {
+  padding: 4px 10px;
+  font-size: 19px;
+  gap: 10px;
+}
+.courtyard-feature-section {
+  padding-top: 22px;
+}
+.courtyard-row-heading h2 {
+  font-size: 28px;
+}
+.courtyard-featured {
+  grid-template-columns: 1.12fr 1fr;
+  gap: 28px;
+}
+.courtyard-featured-copy h3 {
+  font-size: clamp(24px, 1.9vw, 31px);
+  margin-bottom: 22px;
+}
+.courtyard-featured-copy .courtyard-button {
+  font-size: 17px;
+}
+.courtyard-featured .courtyard-play {
+  width: 48px;
+  height: 48px;
+}
+.courtyard-video-caption h3 {
+  font-size: 20px;
+}
+.courtyard-series-grid a > span {
+  font-size: 21px;
+}
+.reading-scene-home {
+  padding: 0;
+  background: none;
+}
+.courtyard-reading-panels .courtyard-paper + .courtyard-paper {
+  margin-top: 28px;
+}
+.courtyard-closing-scene {
+  background: transparent;
+  aspect-ratio: auto;
+  min-height: 0;
+  padding: 40px 0 90px;
+}
+.courtyard-closing-scene::before {
+  display: none;
+}
+.courtyard-closing-scene .courtyard-close {
+  position: relative;
+  width: 64%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 42px 30px;
+  border: 1px solid #b38c4daa;
+  border-radius: 6px;
+  background: #123a2f url("/courtyard/quiet-wall-pattern.svg");
+  box-shadow: 0 9px 24px #2d1d0d30;
+  color: #fff4de;
+}
+.courtyard-closing-scene .courtyard-close h2 {
+  font-size: 30px;
+}
+.courtyard-closing-scene .courtyard-close p {
+  font-size: 18px;
+}
+.courtyard-close > article > div {
+  min-width: 0;
+}
+.courtyard-background::after {
+  display: none;
+}
+@media (max-width: 1100px) {
+  .courtyard-arrival,
+  .courtyard-paper,
+  .reading-sheet {
+    width: 80%;
+  }
+  .courtyard-tools a {
+    font-size: 17px;
+  }
+  .courtyard-closing-scene .courtyard-close {
+    width: 76%;
+  }
+}
+@media (max-width: 700px) {
+  .courtyard-arrival,
+  .courtyard-paper,
+  .reading-sheet {
+    width: 88%;
+  }
+  .courtyard-arrival .courtyard-paper {
+    width: 100%;
+  }
+  .courtyard-paper,
+  .reading-sheet {
+    padding: 25px 20px;
+  }
+  .courtyard-section-title h2,
+  .reading-sheet h1 {
+    font-size: 34px;
+  }
+  .courtyard-tools img {
+    width: 39px;
+    height: 52px;
+  }
+  .courtyard-tools a {
+    font-size: 14px;
+    padding: 4px 4px;
+  }
+  .courtyard-featured {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .courtyard-featured-copy h3 {
+    font-size: 26px;
+  }
+  .courtyard-row-heading h2 {
+    font-size: 26px;
+  }
+  .courtyard-video-caption h3 {
+    font-size: 21px;
+  }
+  .courtyard-closing-scene {
+    min-height: 0;
+    padding: 28px 0 55px;
+  }
+  .courtyard-closing-scene .courtyard-close {
+    width: 88%;
+    padding: 28px 20px;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .courtyard-closing-scene .courtyard-close > article {
+    padding: 0;
+    gap: 16px;
+  }
+  .courtyard-closing-scene .courtyard-close h2 {
+    font-size: 25px;
+  }
+  .courtyard-closing-scene .courtyard-close p {
+    font-size: 16px;
+  }
+  .courtyard-closing-scene .courtyard-close img {
+    width: 42px;
+    height: 57px;
+  }
+}
+
+/* One architectural photograph remains in the same CSS/sRGB path throughout. */
+.reading-scene-home {
+  padding-top: 36px;
+}
+.interior-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: clip;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.courtyard-home[data-interior="true"] .interior-atmosphere {
+  opacity: 1;
+}
+.interior-sunlight {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 18%,
+    #ffe6a00a 30%,
+    transparent 43%
+  );
+  mix-blend-mode: soft-light;
+  animation: interior-sunlight 26s ease-in-out infinite alternate;
+}
+@keyframes interior-sunlight {
+  to {
+    transform: translateX(1.2%);
+    opacity: 0.5;
+  }
+}
+.interior-atmosphere[data-active="false"] *,
+.courtyard-home[data-reduced="true"] .interior-atmosphere * {
+  animation-play-state: paused;
+}
+.courtyard-home[data-reduced="true"] .interior-atmosphere {
+  transition: none;
+}
+@media (max-width: 700px) {
+  .reading-scene-home {
+    padding-top: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .interior-atmosphere * {
+    animation: none;
+  }
+}
+
+.reading-info .reading-sheet {
+  padding: clamp(28px, 3.6vw, 52px);
+}
+.reading-info .reading-sheet > div {
+  width: 100%;
+  padding: 0;
+}
+.reading-info .reading-sheet h1 {
+  max-width: 20ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.reading-info .reading-sheet section + section {
+  scroll-margin-top: 100px;
+}
+.reading-info .reading-sheet .border-foreground {
+  border-color: var(--reading-rule);
+}
+.reading-info .reading-sheet .bg-secondary {
+  background: var(--reading-control);
+}
+@media (max-width: 700px) {
+  .reading-info .reading-sheet {
+    padding: 28px 20px;
+  }
+}
+
+.reading-info {
+  --primary: 35 64% 34%;
+  --primary-foreground: 43 70% 96%;
+}
+.dark .reading-info {
+  --primary: 39 60% 61%;
+  --primary-foreground: 158 54% 12%;
+}
+
+.courtyard-menu button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* A single fixed navigation treatment, with document space on inner pages. */
+.iuoc-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.iuoc-brand-mark {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+.iuoc-brand-mark img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.iuoc-logo-dark {
+  display: none;
+}
+.dark .iuoc-logo-light,
+.courtyard-header .iuoc-logo-light {
+  display: none;
+}
+.dark .iuoc-logo-dark,
+.courtyard-header .iuoc-logo-dark {
+  display: block;
+}
+.courtyard-menu > button {
+  display: grid;
+  place-items: center;
+}
+.courtyard-menu > button:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+html {
+  overscroll-behavior-y: none;
+}
+body {
+  overscroll-behavior-y: none;
+}
+/* The fixed hall continues behind the end of the document; the footer itself
+   is ordinary flow and has no parallax, sticky positioning or transforms. */
+.courtyard-footer {
+  isolation: isolate;
+}
+/* Subtle geometric inlay, visible in both materials without affecting text. */
+.courtyard-paper,
+.reading-sheet,
+.courtyard-menu,
+.courtyard-footer {
+  background-image:
+    linear-gradient(135deg, #d6b77608, transparent 50%, #00000006),
+    url("/courtyard/reading-inlay.svg");
+  background-size:
+    auto,
+    240px 240px;
+}
+.courtyard-paper::before {
+  background: none;
+}
+@media (max-width: 700px) {
+  .iuoc-brand-mark {
+    width: 29px;
+    height: 29px;
+  }
+  .iuoc-brand {
+    gap: 8px;
+  }
+  .courtyard-header-bar {
+    gap: 12px;
+  }
+  .courtyard-footer-brand {
+    font-size: 25px;
+  }
+}
+
+/* Legible geometric inlay on the reading material, quiet beneath the text. */
+.entrance-copy {transform-origin:0 0;}
+.entrance-copy h1 {text-shadow:0 1px 1px #06221999,0 -1px 0 #dfebc522;}
+.courtyard-footer {background-image:linear-gradient(135deg,#d6b77608,transparent 50%,#00000006),url('/courtyard/reading-inlay.svg') !important;}
+
+/* Retire low-resolution alpha previews; leaving them under transparent leaves
+   produces a soft duplicate silhouette even after the sharp asset has loaded. */
+.entrance-foliage .foliage-sway:has(> img[data-loaded="true"]),
+.facade-plane picture:has(> img[data-loaded="true"]),
+.facade-doors img[data-loaded="true"] {background-image:none;}
+
+/* Original transparent emblem-only asset; compensate for its Android safe area
+   without redrawing, cropping or adding a second miniature wordmark. */
+.iuoc-brand-mark .iuoc-emblem {width:161%;height:161%;inset:-30.5%;max-width:none;display:block;}
+
+/* Explicit diagnostic URL only: compare the same scene without header blur. */
+body:has(.courtyard-home[data-no-header-blur="true"]) .courtyard-header {
+  backdrop-filter: none;
+}
+
+/* Keep source images in layout for responsive selection and exact geometry.
+   One clipped, viewport-sized canvas owns paint, including history restores. */
+.courtyard-scene-canvas { display: none; position: absolute; inset: 0; width: 100%; height: 100%; }
+.courtyard-home[data-scene-painted="true"] .courtyard-scene-canvas { display: block; }
+.courtyard-home[data-scene-painted="true"] :is(.courtyard-room-image, .facade-plane, .entrance-foliage) { opacity: 0; }

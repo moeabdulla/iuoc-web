@@ -1,0 +1,322 @@
+.verse-share-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: #001b19b8;
+  backdrop-filter: blur(5px);
+}
+.verse-share-dialog {
+  position: fixed;
+  z-index: 91;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(620px, calc(100vw - 24px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  border: 1px solid #b18a41;
+  border-radius: 7px;
+  background: #fff8eb;
+  color: #163c30;
+  box-shadow: 0 20px 80px #001b1977;
+  font-family: var(--font-serif), serif;
+}
+.verse-share-dialog > header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 22px;
+  background: #fff8eb;
+  border-bottom: 1px solid #b18a4140;
+}
+.verse-share-dialog h2 {
+  font-size: 26px;
+  line-height: 1.2;
+}
+.verse-share-dialog header p {
+  margin-top: 5px;
+  color: #6c6b52;
+}
+.verse-share-dialog header button {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+.verse-share-body {
+  padding: 16px 22px;
+}
+.verse-share-style {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.verse-share-style button {
+  padding: 7px 20px;
+  min-height: 44px;
+  border: 1px solid #b18a4160;
+  border-radius: 3px;
+}
+.verse-share-style button[aria-pressed="true"] {
+  background: #123b2d;
+  color: #fff4de;
+}
+.verse-share-preview {
+  display: flex;
+  justify-content: center;
+}
+.verse-image-card {
+  width: 360px;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex: 0 1 360px;
+  padding: 30px 26px 22px;
+  background: #fff8eb;
+  color: #163c30;
+  border: 1px solid #b18a4180;
+  text-align: center;
+  font-family: var(--font-serif), serif;
+}
+.verse-image-card[data-appearance="dark"] {
+  background: #103b2d;
+  color: #fff4de;
+}
+.verse-image-ornament {
+  color: #b38632;
+  margin-bottom: 18px;
+  font-size: 22px;
+}
+.verse-image-arabic {
+  font-family: var(--font-arabic), serif;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 2.1;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+.verse-image-translation {
+  margin-top: 20px;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.verse-image-reference {
+  margin-top: 20px;
+  color: #a57927;
+  font-size: 13px;
+}
+.verse-image-card[data-appearance="dark"] .verse-image-reference {
+  color: #dfbd77;
+}
+.verse-image-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  border-top: 1px solid #b18a4160;
+  padding-top: 15px;
+  margin-top: 22px;
+}
+.verse-image-brand img {
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
+}
+.verse-share-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 20px;
+}
+.verse-share-actions :is(button, a) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 46px;
+  padding: 9px;
+  border: 1px solid #b18a4160;
+  border-radius: 3px;
+  font-size: 15px;
+}
+.verse-share-actions button:first-child {
+  background: #123b2d;
+  color: #fff4de;
+}
+.verse-share-actions :disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.verse-share-actions > span {
+  align-self: center;
+  font-size: 14px;
+}
+.verse-share-link {
+  display: block;
+  margin-top: 18px;
+  font-size: 14px;
+}
+.verse-share-link input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 9px;
+  border: 1px solid #b18a4160;
+  background: transparent;
+  font-size: 13px;
+}
+.verse-share-status {
+  min-height: 24px;
+  font-size: 14px;
+  margin-top: 9px;
+}
+.verse-share-dialog :is(button, a, input):focus-visible {
+  outline: 2px solid #a57927;
+  outline-offset: 2px;
+}
+.daily-verse-card {
+  margin-top: 24px;
+  border-top: 1px solid var(--reading-border, #b18a4160);
+  padding-top: 24px;
+}
+.daily-verse-card h2 {
+  font-size: clamp(24px, 2.2vw, 32px);
+}
+.daily-verse-card blockquote {
+  margin: 20px 0;
+}
+.daily-verse-arabic {
+  font-family: var(--font-arabic), serif;
+  font-size: clamp(27px, 2.4vw, 36px);
+  line-height: 2.1;
+  text-align: right;
+}
+.daily-verse-translation {
+  font-size: clamp(18px, 1.5vw, 23px);
+  line-height: 1.7;
+  margin-top: 16px;
+}
+.daily-verse-reference {
+  color: var(--reading-gold, #b18a41);
+  margin-top: 15px;
+  font-size: 16px;
+}
+.daily-verse-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 16px;
+  color: var(--reading-gold, #b18a41);
+}
+.daily-verse-actions :is(a, button) {
+  min-height: 44px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+.quran-verse-actions {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px 18px;
+}
+.quran-verse-actions > span {
+  margin-right: auto;
+}
+.quran-ayah:target,
+.quran-ayah[data-selected="true"] {
+  background: var(--reading-gold-soft, #b18a4115);
+  box-shadow: inset 3px 0 var(--reading-gold, #b18a41);
+}
+@media (max-width: 400px) {
+  .verse-share-body {
+    padding: 14px;
+  }
+  .verse-share-dialog > header {
+    padding: 14px;
+  }
+  .verse-share-actions {
+    gap: 6px;
+  }
+}
+@media (min-width: 700px) {
+  .verse-share-dialog {
+    width: min(800px, calc(100vw - 48px));
+  }
+  .verse-share-body {
+    display: grid;
+    grid-template-columns: 360px minmax(0, 1fr);
+    column-gap: 24px;
+    align-items: start;
+  }
+  .verse-share-style {
+    grid-column: 1 / -1;
+  }
+  .verse-share-preview {
+    grid-column: 1;
+    grid-row: 2 / 5;
+  }
+  .verse-share-actions {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+  }
+  .verse-share-link {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  .verse-share-status {
+    grid-column: 2;
+    grid-row: 4;
+  }
+}
+
+.verse-share-preview {
+  max-height: min(520px, 65dvh);
+  overflow: auto;
+  align-items: flex-start;
+}
+
+.verse-share-export {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 360px;
+  pointer-events: none;
+}
+.verse-share-export .verse-image-card {
+  max-width: none;
+}
+.daily-verse-card[data-standalone="true"] {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.verse-share-credits {
+  font-size: 12px;
+  color: #6c6b52;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+.verse-share-credits summary {
+  cursor: pointer;
+}
+.verse-share-credits a {
+  text-decoration: underline;
+}
+@media (min-width: 700px) {
+  .verse-share-credits {
+    grid-column: 2;
+    grid-row: 4;
+  }
+  .verse-share-status {
+    grid-row: 5;
+  }
+}

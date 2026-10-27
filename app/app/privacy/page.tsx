@@ -1,3 +1,4 @@
+import { ReadingShell } from "@/components/courtyard/reading-shell";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SectionHeading } from "@/components/section-heading";
@@ -54,15 +55,16 @@ const onDevice = [
 
 export default function AppPrivacyPage() {
   return (
-    <div className="container space-y-20 pb-24 pt-14 md:space-y-28 md:pt-20">
-      <header className="mx-auto max-w-2xl text-center">
-        <div aria-hidden className="text-sm tracking-[0.6em] text-gold">
-          &#10022; &#10022; &#10022;
-        </div>
-        <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
-          IUoC for iPhone &amp; Android
-        </p>
-        {/* The page must SAY "Privacy Policy", in the body, prominently.
+    <ReadingShell className="reading-info">
+      <div className="space-y-14 md:space-y-20">
+        <header className="mx-auto max-w-2xl text-center">
+          <div aria-hidden className="text-sm tracking-[0.6em] text-gold">
+            &#10022; &#10022; &#10022;
+          </div>
+          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
+            IUoC for iPhone &amp; Android
+          </p>
+          {/* The page must SAY "Privacy Policy", in the body, prominently.
             Google Play removed the app on 23 August 2026 for exactly this:
             "Your privacy policy does not include an explicit label identifying
             it as a 'Privacy policy'." The words were only ever in the <title>
@@ -70,121 +72,122 @@ export default function AppPrivacyPage() {
             and Google's policies rather than this one — worse than silence to
             anything scanning for a label. The old h1 keeps its place as the
             thesis directly beneath. */}
-        <h1 className="mt-3 font-serif text-4xl leading-[1.1] md:text-5xl">
-          Privacy Policy
-        </h1>
-        <p className="mt-4 font-serif text-2xl leading-tight text-foreground/90 md:text-3xl">
-          The app collects nothing.
-        </p>
-        <p className="mx-auto mt-6 max-w-xl font-serif text-lg leading-relaxed text-foreground/80">
-          No account, no analytics, no servers. Everything you do in the app
-          stays on your phone. This page explains what that means in detail,
-          and it is short because there is little to say.
-        </p>
-        <p className="mt-4 text-xs uppercase tracking-[0.2em] text-foreground/50">
-          Last updated {LAST_UPDATED}
-        </p>
-      </header>
+          <h1 className="mt-3 font-serif text-4xl leading-[1.1] md:text-5xl">
+            Privacy Policy
+          </h1>
+          <p className="mt-4 font-serif text-2xl leading-tight text-foreground/90 md:text-3xl">
+            The app collects nothing.
+          </p>
+          <p className="mx-auto mt-6 max-w-xl font-serif text-lg leading-relaxed text-foreground/80">
+            No account, no analytics, no servers. Everything you do in the app
+            stays on your phone. This page explains what that means in detail,
+            and it is short because there is little to say.
+          </p>
+          <p className="mt-4 text-xs uppercase tracking-[0.2em] text-foreground/50">
+            Last updated {LAST_UPDATED}
+          </p>
+        </header>
 
-      <section className="mx-auto max-w-2xl">
-        <SectionHeading eyebrow="Chapter I" title="What we do not collect" />
-        <dl className="space-y-8">
-          {collected.map((item) => (
-            <div key={item.title}>
-              <dt className="font-serif text-xl">{item.title}</dt>
-              <dd className="mt-2 leading-relaxed text-foreground/80">
-                {item.body}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+        <section className="mx-auto max-w-2xl">
+          <SectionHeading eyebrow="Chapter I" title="What we do not collect" />
+          <dl className="space-y-8">
+            {collected.map((item) => (
+              <div key={item.title}>
+                <dt className="font-serif text-xl">{item.title}</dt>
+                <dd className="mt-2 leading-relaxed text-foreground/80">
+                  {item.body}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
 
-      <section className="mx-auto max-w-2xl">
-        <SectionHeading
-          eyebrow="Chapter II"
-          title="What stays on your device"
-          stars={2}
-        />
-        <dl className="space-y-8">
-          {onDevice.map((item) => (
-            <div key={item.title}>
-              <dt className="font-serif text-xl">{item.title}</dt>
-              <dd className="mt-2 leading-relaxed text-foreground/80">
-                {item.body}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+        <section className="mx-auto max-w-2xl">
+          <SectionHeading
+            eyebrow="Chapter II"
+            title="What stays on your device"
+            stars={2}
+          />
+          <dl className="space-y-8">
+            {onDevice.map((item) => (
+              <div key={item.title}>
+                <dt className="font-serif text-xl">{item.title}</dt>
+                <dd className="mt-2 leading-relaxed text-foreground/80">
+                  {item.body}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
 
-      <section className="mx-auto max-w-2xl">
-        <SectionHeading
-          eyebrow="Chapter III"
-          title="Backup, if you turn it on"
-          stars={3}
-        />
-        <div className="space-y-4 leading-relaxed text-foreground/80">
-          <p>
-            The app can back up your bookmarks and settings to{" "}
-            <strong className="font-semibold text-foreground">
-              your own iCloud or Google Drive
-            </strong>
-            . That backup goes from your device to your cloud account. It does
-            not pass through us, and we cannot read it.
-          </p>
-          <p>
-            Backup is optional and off until you enable it. Whatever it writes
-            is governed by Apple&rsquo;s or Google&rsquo;s privacy policy, since
-            it lives in their storage under your account. Delete it the way you
-            delete anything else in your own cloud storage.
-          </p>
-        </div>
-      </section>
+        <section className="mx-auto max-w-2xl">
+          <SectionHeading
+            eyebrow="Chapter III"
+            title="Backup, if you turn it on"
+            stars={3}
+          />
+          <div className="space-y-4 leading-relaxed text-foreground/80">
+            <p>
+              The app can back up your bookmarks and settings to{" "}
+              <strong className="font-semibold text-foreground">
+                your own iCloud or Google Drive
+              </strong>
+              . That backup goes from your device to your cloud account. It does
+              not pass through us, and we cannot read it.
+            </p>
+            <p>
+              Backup is optional and off until you enable it. Whatever it writes
+              is governed by Apple&rsquo;s or Google&rsquo;s privacy policy,
+              since it lives in their storage under your account. Delete it the
+              way you delete anything else in your own cloud storage.
+            </p>
+          </div>
+        </section>
 
-      <section className="mx-auto max-w-2xl">
-        <SectionHeading
-          eyebrow="Chapter IV"
-          title="Children, and everyone else"
-          stars={4}
-        />
-        <div className="space-y-4 leading-relaxed text-foreground/80">
-          <p>
-            The app is suitable for all ages. Because it collects no personal
-            information from anyone, it collects none from children either, and
-            there is no mechanism by which it could.
-          </p>
-          <p>
-            There are no ads, no in-app purchases and no third-party content
-            loaded from the internet.
-          </p>
-        </div>
-      </section>
+        <section className="mx-auto max-w-2xl">
+          <SectionHeading
+            eyebrow="Chapter IV"
+            title="Children, and everyone else"
+            stars={4}
+          />
+          <div className="space-y-4 leading-relaxed text-foreground/80">
+            <p>
+              The app is suitable for all ages. Because it collects no personal
+              information from anyone, it collects none from children either,
+              and there is no mechanism by which it could.
+            </p>
+            <p>
+              There are no ads, no in-app purchases and no third-party content
+              loaded from the internet.
+            </p>
+          </div>
+        </section>
 
-      <section className="mx-auto max-w-2xl">
-        <SectionHeading
-          eyebrow="Chapter V"
-          title="Changes, and how to reach us"
-          stars={4}
-        />
-        <div className="space-y-4 leading-relaxed text-foreground/80">
-          <p>
-            If a future version of the app collects anything at all, this page
-            will say so before that version ships, and the date above will
-            change.
-          </p>
-          <p>
-            Questions about this policy can go through the{" "}
-            <Link
-              className="underline underline-offset-4 hover:text-gold"
-              href="/support"
-            >
-              contact details on our support page
-            </Link>
-            .
-          </p>
-        </div>
-      </section>
-    </div>
+        <section className="mx-auto max-w-2xl">
+          <SectionHeading
+            eyebrow="Chapter V"
+            title="Changes, and how to reach us"
+            stars={5}
+          />
+          <div className="space-y-4 leading-relaxed text-foreground/80">
+            <p>
+              If a future version of the app collects anything at all, this page
+              will say so before that version ships, and the date above will
+              change.
+            </p>
+            <p>
+              Questions about this policy can go through the{" "}
+              <Link
+                className="underline underline-offset-4 hover:text-gold"
+                href="/support"
+              >
+                contact details on our support page
+              </Link>
+              .
+            </p>
+          </div>
+        </section>
+      </div>
+    </ReadingShell>
   );
 }

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: { default: siteConfig.name, template: `%s | ${siteConfig.name}` },
   description: siteConfig.description,
-  icons: { icon: "/brand/iuoc-logo-light@3x.png" },
+  icons: { icon: "/brand/iuoc-emblem.png" },
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
@@ -50,7 +50,7 @@ export default function RootLayout({
       <body
         className={`${sourceSerif.variable} ${amiri.variable} flex min-h-dvh flex-col font-serif antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <ConvexClientProvider>
             <SiteHeader />
             <main className="flex-1">{children}</main>

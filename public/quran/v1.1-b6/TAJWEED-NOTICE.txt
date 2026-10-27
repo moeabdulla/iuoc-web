@@ -1,0 +1,13 @@
+Tajweed annotations adapted from cpfair/quran-tajweed
+https://github.com/cpfair/quran-tajweed
+Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+
+Changes: the IUoC app regenerated the classifier annotations against its exact
+Tanzil Uthmani v1.1 text, mapping offsets back from the classification copy
+onto the full, unchanged display text. The website exports those annotations
+from the app database and splits them by chapter alongside the same text.
+
+These are algorithmic annotations, not scholar-verified. Colouring is an
+optional reading aid, not part of the Quran text. Colours and grouping are
+shared with the IUoC app; preferences are stored in this browser only.
