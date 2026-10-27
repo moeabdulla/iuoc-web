@@ -74,6 +74,11 @@
     @apply border-border;
   }
 
+  /* Safari uses the root canvas behind its browser controls and safe areas. */
+  html {
+    background-color: #082f26;
+  }
+
   body {
     @apply bg-background text-foreground;
     /* Flat paper. Character comes from rules, ornaments and gold — not washes. */

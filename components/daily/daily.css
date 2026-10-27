@@ -160,7 +160,7 @@
 .quran-ayah {
   padding: 30px 0;
   border-bottom: 1px solid var(--reading-rule);
-  scroll-margin-top: 90px;
+  scroll-margin-top: calc(90px + env(safe-area-inset-top, 0px));
 }
 .quran-arabic {
   font-family: var(--font-arabic), serif;

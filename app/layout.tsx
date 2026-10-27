@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Source_Serif_4, Amiri } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
@@ -36,6 +36,13 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#082f26",
 };
 
 export default function RootLayout({

@@ -98,7 +98,7 @@ it("keeps the buffer stable through changing browser-toolbar heights without mea
       height = n;
       allocations++;
     },
-    getContext: () => context,
+    getContext: (kind: string) => (kind === "2d" ? context : null),
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
   };

@@ -437,3 +437,29 @@ body:has(.courtyard-home[data-no-header-blur="true"]) .courtyard-header {
 /* The photograph already contains the sunlight. Avoid a second animated,
    full-screen blend surface on touch devices while the camera is moving. */
 .courtyard-home[data-stable-viewport="true"] .interior-atmosphere { display: none; }
+
+/* Full-bleed Safari chrome, with controls kept below the notch. A solid mobile
+   header also avoids filtering a moving full-screen canvas underneath it. */
+.courtyard-header { padding-top: env(safe-area-inset-top, 0px); }
+.courtyard-header-bar {
+  padding-left: max(5%, env(safe-area-inset-left, 0px));
+  padding-right: max(5%, env(safe-area-inset-right, 0px));
+}
+.courtyard-footer { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.reading-page { padding-top: calc(110px + env(safe-area-inset-top, 0px)); }
+@media (max-width: 700px) {
+  .reading-page { padding-top: calc(88px + env(safe-area-inset-top, 0px)); }
+}
+@media (max-width: 700px), (max-aspect-ratio: 4/5) {
+  .entrance-copy { top: calc(clamp(87px, 11.5svh, 120px) + env(safe-area-inset-top, 0px)); }
+}
+@media (hover: none) and (pointer: coarse) {
+  body { background-color: #082f26; }
+  .courtyard-header,
+  .courtyard-header-inner {
+    background: #082f26;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .entrance-copy h1 { text-shadow: none; }
+}

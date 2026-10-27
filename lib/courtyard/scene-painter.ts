@@ -1,4 +1,6 @@
 import type { Rect } from "./entrance-scene";
+import { visibleImageCrop } from "./scene-image";
+import { createGPUScenePainter } from "./gpu-scene-painter";
 
 /** Paint a source crop directly from the camera's geometry. No layout/style
  * reads, or transformed DOM surfaces, are needed to produce a scroll frame. */
@@ -10,32 +12,27 @@ export function drawVisibleImage(
   viewportHeight: number,
   cover = false,
 ) {
-  if (!bitmap.width || !box.width || !box.height) return;
-  let { x, y, width, height } = box;
-  if (cover) {
-    const scale = Math.max(width / bitmap.width, height / bitmap.height);
-    width = bitmap.width * scale;
-    height = bitmap.height * scale;
-    x += (box.width - width) / 2;
-    y += (box.height - height) / 2;
-  }
-  const left = Math.max(0, box.x, x);
-  const top = Math.max(0, box.y, y);
-  const right = Math.min(viewportWidth, box.x + box.width, x + width);
-  const bottom = Math.min(viewportHeight, box.y + box.height, y + height);
-  if (right <= left || bottom <= top) return;
-  const sx = bitmap.width / width,
-    sy = bitmap.height / height;
+  const crop = visibleImageCrop(
+    bitmap.width,
+    bitmap.height,
+    box,
+    viewportWidth,
+    viewportHeight,
+    cover,
+  );
+  if (!crop) return;
+  const [sx, sy, sw, sh] = crop.source;
+  const [x, y, width, height] = crop.destination;
   context.drawImage(
     bitmap,
-    (left - x) * sx,
-    (top - y) * sy,
-    (right - left) * sx,
-    (bottom - top) * sy,
-    left,
-    top,
-    right - left,
-    bottom - top,
+    sx * bitmap.width,
+    sy * bitmap.height,
+    sw * bitmap.width,
+    sh * bitmap.height,
+    x,
+    y,
+    width,
+    height,
   );
 }
 export function scenePixelRatio(
@@ -64,6 +61,18 @@ export type SceneFrame = {
 };
 
 export function createScenePainter(home: HTMLElement, repaint: () => void) {
+  const touch = matchMedia("(pointer:coarse)").matches;
+  const gpu =
+    touch || home.dataset.stableViewport === "true"
+      ? createGPUScenePainter(home, repaint, (width, height) =>
+          scenePixelRatio(width, height, devicePixelRatio, true),
+        )
+      : null;
+  if (gpu) {
+    home.dataset.sceneSurface = "webgl";
+    return gpu;
+  }
+  home.dataset.sceneSurface = "2d";
   const canvas = home.querySelector<HTMLCanvasElement>(
     ".courtyard-scene-canvas",
   )!;
@@ -84,7 +93,6 @@ export function createScenePainter(home: HTMLElement, repaint: () => void) {
     { src: string; bitmap: ImageBitmap }
   >();
   const pending = new Map<HTMLImageElement, string>();
-  const touch = matchMedia("(pointer:coarse)").matches;
   let disposed = false,
     lost = false;
   function prepare() {
