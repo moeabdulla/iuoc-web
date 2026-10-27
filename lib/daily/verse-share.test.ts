@@ -18,6 +18,9 @@ describe("daily verse parity and source integrity", () => {
       dailyVerseIndex(new Date(2026, 9, 27, 23, 59), 109),
     );
   });
+  it("uses the app’s default Rowwad translation", () => {
+    expect(quotes.translationKey).toBe("english_rwwad");
+  });
   it("keeps every curated Arabic verse and translation identical to the shipped corpus", () => {
     for (const verse of quotes.verses) {
       const chapter = JSON.parse(
@@ -31,7 +34,7 @@ describe("daily verse parity and source integrity", () => {
       );
       const translation = JSON.parse(
         readFileSync(
-          `public/quran/v1.1-b6/english_saheeh/${verse.surah}.json`,
+          `public/quran/v1.1-b6/${quotes.translationKey}/${verse.surah}.json`,
           "utf8",
         ),
       );
@@ -43,13 +46,18 @@ describe("daily verse parity and source integrity", () => {
   });
 });
 describe("ayah sharing", () => {
+  it("omits Rowwad from default and explicitly default share links", () => {
+    const expected = "https://iuoc.ca/quran?surah=3#ayah-200";
+    expect(verseLink("https://iuoc.ca", { surah: 3, ayah: 200 })).toBe(
+      expected,
+    );
+    expect(
+      verseLink("https://iuoc.ca", { surah: 3, ayah: 200 }, "english_rwwad"),
+    ).toBe(expected);
+  });
   it("produces a link that retains the surah, translation and exact ayah", () => {
     const url = new URL(
-      verseLink(
-        "https://iuoc.ca",
-        { surah: 2, ayah: 255 },
-        "en_pickthall",
-      ),
+      verseLink("https://iuoc.ca", { surah: 2, ayah: 255 }, "en_pickthall"),
     );
     expect(url.pathname).toBe("/quran");
     expect(url.searchParams.get("surah")).toBe("2");

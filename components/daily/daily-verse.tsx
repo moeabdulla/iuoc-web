@@ -3,7 +3,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Share2 } from "lucide-react";
 import verses from "@/data/verses/daily.json";
-import { dailyVerseIndex, shareTranslation } from "@/lib/daily/verse-share";
+import {
+  dailyVerseIndex,
+  quranPath,
+  shareTranslation,
+} from "@/lib/daily/verse-share";
 import { useLocalDay } from "@/lib/daily/use-local-day";
 import { VerseShare } from "./verse-share";
 export function DailyVerse({ showHeading = true }: { showHeading?: boolean }) {
@@ -39,7 +43,7 @@ export function DailyVerse({ showHeading = true }: { showHeading?: boolean }) {
             <button onClick={() => setSharing(true)}>
               <Share2 size={17} /> Share quote
             </button>
-            <Link href={`/quran?surah=${verse.surah}#ayah-${verse.ayah}`}>
+            <Link href={quranPath(verse.surah, undefined, verse.ayah)}>
               Read in surah <ArrowRight size={17} />
             </Link>
           </div>

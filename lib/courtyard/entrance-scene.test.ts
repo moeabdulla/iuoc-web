@@ -1,3 +1,4 @@
+import { entranceStageTop } from "./entrance-scene";
 import { describe, it, expect } from "vitest";
 import geometry from "../../public/courtyard/geometry.json";
 import {
@@ -192,3 +193,9 @@ it.each(sizes)(
     expect(parked.visible && intersectsViewport(parked, w, h)).toBe(false);
   },
 );
+
+it("keeps the entrance sticky, then clips it above the viewport after its travel", () => {
+  expect(entranceStageTop(0, 100, 800)).toBe(100);
+  expect(entranceStageTop(500, 100, 800)).toBe(0);
+  expect(entranceStageTop(1100, 100, 800)).toBe(-200);
+});

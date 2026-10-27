@@ -9,6 +9,7 @@ import { createScenePainter } from "./scene-painter";
 import geometry from "@/public/courtyard/geometry.json";
 import {
   clamp01,
+  entranceStageTop,
   DEPTH,
   ROOM_OVERSCAN,
   entranceLayout,
@@ -42,6 +43,10 @@ export function useEntranceMotion(
     const canvasRenderer =
       comparison !== "dom-layers" && comparison !== "retired-layers";
     const persistentLayers = comparison !== "retired-layers";
+    const touchViewport = matchMedia("(hover:none) and (pointer:coarse)");
+    home.dataset.stableViewport = String(
+      touchViewport.matches || comparison === "touch-viewport",
+    );
     home.dataset.sceneRenderer = canvasRenderer
       ? "canvas"
       : persistentLayers
@@ -69,6 +74,7 @@ export function useEntranceMotion(
       boundary: number[][] = [],
       sectionTop = 0,
       travel = 1,
+      readingTravel = 1,
       frame = 0,
       facadeExit = 1,
       copyExit = 1,
@@ -131,6 +137,11 @@ export function useEntranceMotion(
         layerExitProgress(base, i === 0 ? DEPTH.leaves : DEPTH.pot, layout),
       );
       copyExit = layerExitProgress(copyBase, DEPTH.facade, layout);
+      readingTravel = Math.max(
+        layout.height,
+        home.offsetHeight - section.offsetHeight,
+      );
+      copy.style.opacity = "1";
       render();
     }
     function place(
@@ -140,6 +151,7 @@ export function useEntranceMotion(
       camera: ReturnType<typeof entrancePose>["camera"],
     ) {
       const p = projectRect(base, depth, camera, layout.axis);
+      if (painter?.isReady() && el !== copy) return p;
       // Cull offscreen surfaces rather than rasterising enormous texture tiles.
       const visible =
         p.visible &&
@@ -153,7 +165,7 @@ export function useEntranceMotion(
           el,
           `translate(${p.x - base.x}px,${p.y - base.y}px) scale(${p.scale})`,
         );
-        return;
+        return p;
       }
       paintSceneLayer(
         el,
@@ -162,6 +174,7 @@ export function useEntranceMotion(
           ? `translate(${p.x - base.x}px,${p.y - base.y}px) scale(${p.scale})`
           : "none",
       );
+      return p;
     }
     function render() {
       frame = 0;
@@ -170,27 +183,28 @@ export function useEntranceMotion(
       const pose = entrancePose(p, layout);
       const readingProgress = reduced
         ? 0
-        : clamp01(
-            (scrollY - sectionTop - travel) /
-              Math.max(
-                stage.clientHeight,
-                home.offsetHeight - section.offsetHeight,
-              ),
-          );
+        : clamp01((scrollY - sectionTop - travel) / readingTravel);
       const r =
         reduced || p >= 1
           ? interiorPose(readingProgress, layout).room
           : pose.room;
-      room.style.transformOrigin = "0 0";
-      room.style.transform = `translate(${r.x}px,${r.y}px) scale(${r.scale})`;
+      const paintDOM = !painter?.isReady();
+      if (paintDOM) {
+        room.style.transformOrigin = "0 0";
+        room.style.transform = `translate(${r.x}px,${r.y}px) scale(${r.scale})`;
+      }
       const f = persistentLayers
         ? entrancePose(Math.min(p, facadeExit + 0.002), layout).facade
         : pose.facade;
       const passed = entranceHasCleared(p, layout, boundary, doorBases);
       const facadeTransform = `translate(${f.x - layout.plane.x}px,${f.y}px) scale(${f.scale})`;
-      if (persistentLayers) paintPersistentSceneLayer(facade, facadeTransform);
-      else paintSceneLayer(facade, !passed, !passed ? facadeTransform : "none");
-      plants.forEach((el, i) =>
+      if (paintDOM) {
+        if (persistentLayers)
+          paintPersistentSceneLayer(facade, facadeTransform);
+        else
+          paintSceneLayer(facade, !passed, !passed ? facadeTransform : "none");
+      }
+      const plantRects = plants.map((el, i) =>
         place(
           el,
           bases[i],
@@ -208,15 +222,31 @@ export function useEntranceMotion(
           ? entranceCamera(Math.min(p, copyExit + 0.002), layout)
           : pose.camera,
       );
-      copy.style.opacity = "1";
-      home.dataset.interior = String(reduced || passed);
-      section.style.setProperty("--entrance-progress", String(p));
+      const interior = String(reduced || passed);
+      if (home.dataset.interior !== interior) home.dataset.interior = interior;
       if (painter) {
         // These boxes supply geometry only; the canvas owns photographic paint.
-        [facade, room, ...plants].forEach((el) => {
-          el.style.willChange = "auto";
+        if (paintDOM)
+          [facade, room, ...plants].forEach((el) => {
+            el.style.willChange = "auto";
+          });
+        painter.paint({
+          width: layout.width,
+          height: layout.height,
+          room: r,
+          stage: {
+            x: 0,
+            y: entranceStageTop(scrollY, sectionTop, travel),
+            width: layout.width,
+            height: layout.height,
+          },
+          facade: f,
+          doors: doorBases.map((base) =>
+            projectRect(base, DEPTH.facade, pose.camera, layout.axis),
+          ),
+          plants: plantRects,
+          entranceVisible: !passed,
         });
-        painter.paint(!passed);
       }
     }
     function schedule() {

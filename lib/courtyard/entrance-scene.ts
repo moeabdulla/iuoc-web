@@ -221,3 +221,13 @@ export function layerExitProgress(
   }
   return high;
 }
+
+/** Sticky stage displacement without a synchronous DOM layout read. */
+export function entranceStageTop(
+  scroll: number,
+  sectionTop: number,
+  travel: number,
+) {
+  if (scroll < sectionTop) return sectionTop - scroll;
+  return Math.min(0, sectionTop + travel - scroll);
+}

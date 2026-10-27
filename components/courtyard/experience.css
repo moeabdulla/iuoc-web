@@ -421,3 +421,19 @@ body:has(.courtyard-home[data-no-header-blur="true"]) .courtyard-header {
 .courtyard-scene-canvas { display: none; position: absolute; inset: 0; width: 100%; height: 100%; }
 .courtyard-home[data-scene-painted="true"] .courtyard-scene-canvas { display: block; }
 .courtyard-home[data-scene-painted="true"] :is(.courtyard-room-image, .facade-plane, .entrance-foliage) { opacity: 0; }
+
+/* One stable scene extent while touch-browser chrome expands/collapses. Using
+   innerHeight for the bitmap but inset:0 / svh for the art caused mismatched
+   scaling and buffer reallocations during Safari toolbar animation. */
+ .courtyard-home[data-stable-viewport="true"] .courtyard-background { bottom: auto; height: 100lvh; }
+.courtyard-home[data-stable-viewport="true"] .entrance-stage { height: 100lvh; min-height: 0; }
+.courtyard-home[data-stable-viewport="true"] .entrance-section { height: 195lvh; }
+@media (max-width: 700px), (max-aspect-ratio: 4/5) {
+  .courtyard-home[data-stable-viewport="true"] .entrance-section { height: 215lvh; }
+}
+.courtyard-home[data-stable-viewport="true"][data-reduced="true"] .entrance-section { height: 100lvh; }
+
+.courtyard-home[data-scene-painted="true"] :is(.foliage-sway, .facade-ambient-light) { animation: none; }
+/* The photograph already contains the sunlight. Avoid a second animated,
+   full-screen blend surface on touch devices while the camera is moving. */
+.courtyard-home[data-stable-viewport="true"] .interior-atmosphere { display: none; }

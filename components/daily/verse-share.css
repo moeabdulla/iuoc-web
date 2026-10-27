@@ -229,6 +229,7 @@
 }
 .quran-ayah:target,
 .quran-ayah[data-selected="true"] {
+  padding-inline: clamp(18px, 3vw, 32px);
   background: var(--reading-gold-soft, #b18a4115);
   box-shadow: inset 3px 0 var(--reading-gold, #b18a41);
 }

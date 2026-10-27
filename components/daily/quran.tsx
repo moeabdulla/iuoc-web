@@ -2,9 +2,13 @@
 import { useEffect, useRef, type CSSProperties, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Share2, Bookmark, ArrowLeft, ArrowRight } from "lucide-react";
+import {
+  DEFAULT_TRANSLATION_KEY,
+  DEFAULT_TRANSLATION,
+} from "@/lib/daily/quran-config";
 import { useLocationHash } from "@/lib/daily/use-location-hash";
 import { VerseShare } from "./verse-share";
-import type { ShareVerse } from "@/lib/daily/verse-share";
+import { quranPath, type ShareVerse } from "@/lib/daily/verse-share";
 import { TajweedText, TajweedSettings, type TajweedChoices } from "./tajweed";
 import { spansBefore, spansAfter } from "@/lib/daily/tajweed";
 import { useBrowserStorage } from "@/lib/daily/use-browser-storage";
@@ -34,7 +38,7 @@ export function QuranReader({
   const pendingAyah = useRef<number | null>(null);
   const [translation, setTranslation] = useBrowserStorage(
     "iuoc.quran.translation",
-    "english_saheeh",
+    DEFAULT_TRANSLATION_KEY,
   );
   const [bookmark, setBookmark] = useBrowserStorage<Mark | null>(
     "iuoc.quran.bookmark",
@@ -48,13 +52,19 @@ export function QuranReader({
   );
   const selected =
     catalog.translations.find(
-      (t) => t.key === (params.get("translation") ?? translation),
-    ) ?? catalog.translations[0];
+      (t) =>
+        t.key ===
+        (params.get("translation") ??
+          (hash.startsWith("#ayah-") ? DEFAULT_TRANSLATION_KEY : translation)),
+    ) ?? DEFAULT_TRANSLATION;
   const reading = useResource<[Chapter, Translation]>(
     quranUrls(surah, selected.key),
     {
       key: resourceKey(
-        quranUrls(initial.surah, initial.translationKey ?? "english_saheeh"),
+        quranUrls(
+          initial.surah,
+          initial.translationKey ?? DEFAULT_TRANSLATION_KEY,
+        ),
       ),
       data: [initial.chapter, initial.translated],
     },
@@ -76,11 +86,7 @@ export function QuranReader({
     pendingAyah.current = ayah ?? null;
     // Native history integrates with Next's search params without an RSC route
     // remount or a stale bookmark hash forcing a second scroll/navigation.
-    window.history.replaceState(
-      null,
-      "",
-      `/quran?surah=${next}&translation=${selected.key}${ayah ? `#ayah-${ayah}` : ""}`,
-    );
+    window.history.replaceState(null, "", quranPath(next, selected.key, ayah));
     if (next === displayedSurah && ayah)
       document
         .getElementById(`ayah-${ayah}`)
@@ -129,7 +135,9 @@ export function QuranReader({
             onChange={(e) => {
               setTranslation(e.target.value);
               const url = new URL(location.href);
-              url.searchParams.set("translation", e.target.value);
+              if (e.target.value === DEFAULT_TRANSLATION_KEY)
+                url.searchParams.delete("translation");
+              else url.searchParams.set("translation", e.target.value);
               window.history.replaceState(null, "", url);
             }}
           >
@@ -176,7 +184,7 @@ export function QuranReader({
             resourceKey(
               quranUrls(
                 initial.surah,
-                initial.translationKey ?? "english_saheeh",
+                initial.translationKey ?? DEFAULT_TRANSLATION_KEY,
               ),
             )
           }

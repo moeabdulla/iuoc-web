@@ -7,15 +7,19 @@ import {
   verseLink,
   type ShareVerse,
 } from "@/lib/daily/verse-share";
+import {
+  DEFAULT_TRANSLATION_KEY,
+  DEFAULT_TRANSLATION,
+} from "@/lib/daily/quran-config";
 import { addPngAttribution } from "@/lib/daily/png-attribution";
 import catalog from "@/public/quran/v1.1-b6/catalog.json";
 import "./verse-share.css";
 
 export function VerseShare({
   verse,
-  translationKey = "english_saheeh",
-  translationName = "Saheeh International",
-  translationAttribution = "Saheeh International · Noor International · QuranEnc.com",
+  translationKey = DEFAULT_TRANSLATION_KEY,
+  translationName = DEFAULT_TRANSLATION.name,
+  translationAttribution = DEFAULT_TRANSLATION.attribution,
   onClose,
 }: {
   verse: ShareVerse;

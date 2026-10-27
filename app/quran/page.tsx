@@ -1,3 +1,4 @@
+import { DEFAULT_TRANSLATION_KEY } from "@/lib/daily/quran-config";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { quranSurah } from "@/lib/daily/quran-reading";
@@ -19,7 +20,7 @@ export default async function Page({
   const surah = quranSurah(params.surah ?? 1);
   const translationKey =
     catalog.translations.find((t) => t.key === params.translation)?.key ??
-    "english_saheeh";
+    DEFAULT_TRANSLATION_KEY;
   const root = path.join(process.cwd(), "public/quran/v1.1-b6");
   const [chapter, translated] = await Promise.all([
     readFile(path.join(root, `${surah}.json`), "utf8").then(JSON.parse),

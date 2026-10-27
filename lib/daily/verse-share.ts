@@ -1,3 +1,4 @@
+import { DEFAULT_TRANSLATION_KEY } from "./quran-config";
 import { localDayNumber } from "./quiz-select";
 export type ShareVerse = {
   surah: number;
@@ -14,13 +15,20 @@ export function dailyVerseIndex(date: Date, length: number) {
 export function verseLink(
   origin: string,
   verse: Pick<ShareVerse, "surah" | "ayah">,
-  translation = "english_saheeh",
+  translation = DEFAULT_TRANSLATION_KEY,
 ) {
-  const url = new URL("/quran", origin);
-  url.searchParams.set("surah", String(verse.surah));
-  url.searchParams.set("translation", translation);
-  url.hash = `ayah-${verse.ayah}`;
-  return url.href;
+  return new URL(quranPath(verse.surah, translation, verse.ayah), origin).href;
+}
+/** The omitted translation always means Rowwad for shared ayah links. */
+export function quranPath(
+  surah: number,
+  translation = DEFAULT_TRANSLATION_KEY,
+  ayah?: number,
+) {
+  const params = new URLSearchParams({ surah: String(surah) });
+  if (translation !== DEFAULT_TRANSLATION_KEY)
+    params.set("translation", translation);
+  return `/quran?${params}${ayah ? `#ayah-${ayah}` : ""}`;
 }
 /** Match the app's image-only presentation cleanup; stored scripture is unchanged. */
 export function shareTranslation(text: string, ayah: number) {
