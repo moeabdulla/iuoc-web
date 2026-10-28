@@ -97,26 +97,29 @@ export function useEntranceMotion(
       }
       if (!stage.clientWidth || !stage.clientHeight) return;
       const phone = portrait.matches;
-      boundary = Array.from(
-        geometry[phone ? "facade-phone" : "facade"].path.matchAll(
-          /[ML]([\d.]+),([\d.]+)/g,
-        ),
-        (m) => [Number(m[1]), Number(m[2])],
-      );
       layout = entranceLayout(
         stage.clientWidth,
         stage.clientHeight,
         geometry[phone ? "facade-phone" : "facade"],
         phone,
       );
+      facade.style.width = `${layout.plane.width}px`;
+      facade.style.height = `${layout.plane.height}px`;
+      facade.style.left = `${layout.plane.x}px`;
+      // A still mobile hero needs only its art box. Never scan the portal or
+      // reset transforms just because Safari's controls resize the viewport.
+      if (simple) return;
+      boundary = Array.from(
+        geometry[phone ? "facade-phone" : "facade"].path.matchAll(
+          /[ML]([\d.]+),([\d.]+)/g,
+        ),
+        (m) => [Number(m[1]), Number(m[2])],
+      );
       sectionTop = section.getBoundingClientRect().top + scrollY;
       travel = Math.max(1, section.offsetHeight - stage.offsetHeight);
       sectionHeight = section.offsetHeight;
       room.style.width = `${layout.width * ROOM_OVERSCAN}px`;
       room.style.height = `${layout.height * ROOM_OVERSCAN}px`;
-      facade.style.width = `${layout.plane.width}px`;
-      facade.style.height = `${layout.plane.height}px`;
-      facade.style.left = `${layout.plane.x}px`;
       facade.style.transformOrigin = "0 0";
       measureSceneLayer(facade);
       const stageRect = stage.getBoundingClientRect();
@@ -193,7 +196,7 @@ export function useEntranceMotion(
     }
     function render() {
       frame = 0;
-      if (!layout) return;
+      if (!layout || simple) return;
       const p =
         reduced || simple ? 0 : clamp01((scrollY - sectionTop) / travel);
       const pose = entrancePose(p, layout);
@@ -289,8 +292,10 @@ export function useEntranceMotion(
       else schedule();
     });
     observer.observe(stage);
-    observer.observe(copy);
-    observer.observe(home);
+    if (!simple) {
+      observer.observe(copy);
+      observer.observe(home);
+    }
     if (!simple) window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("pageshow", remeasure);
     window.addEventListener("popstate", remeasure);

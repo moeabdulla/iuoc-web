@@ -469,7 +469,7 @@ body:has(.courtyard-home[data-no-header-blur="true"]) .courtyard-header {
    scroll sampler, sticky stage or zoom. Desktop keeps the cinematic camera. */
 .courtyard-home[data-simple-entrance="true"] .entrance-section,
 .courtyard-home[data-simple-entrance="true"] .entrance-stage {
-  height: 100svh;
+  height: 100lvh;
   min-height: 0;
 }
 .courtyard-home[data-simple-entrance="true"] .entrance-stage { position: relative; }
@@ -477,7 +477,7 @@ body:has(.courtyard-home[data-no-header-blur="true"]) .courtyard-header {
   transform: none !important;
   will-change: auto !important;
 }
-.courtyard-home[data-simple-entrance="true"] .courtyard-library { margin-top: 0; }
+.courtyard-home[data-simple-entrance="true"] .courtyard-library { margin-top: 0; padding-top: 40px; }
 .courtyard-home[data-simple-entrance="true"] .courtyard-background { bottom: auto; height: 100lvh; }
 .courtyard-home[data-simple-entrance="true"] .courtyard-room-image {
   inset: 0;
