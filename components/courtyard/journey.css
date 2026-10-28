@@ -863,18 +863,15 @@
   box-shadow: 0 2px 8px #34261044;
 }
 @media (max-width: 700px) {
-  /* The document surface must also carry the architecture: Safari clips fixed
-     descendants above its translucent bottom controls. */
-  .reading-page {
-    background-image: url("/courtyard/reading-bay-1920.webp");
-    background-size: auto var(--reading-screen-height, 100lvh);
-    background-position: center top;
-  }
-  /* Safari changes the fixed viewport as its toolbars collapse. Keep the
-     architectural plate at one stable size instead of re-cropping cover. */
+  /* Match the native mobile homepage: one document-space artwork layer.
+     A fixed plate over a scrolling fallback exposes two crops when Safari's
+     toolbar changes the visual viewport. No fixed photographic surface here. */
   .reading-page .reading-scene-art {
-    bottom: auto;
-    height: var(--reading-screen-height, 100lvh);
+    position: absolute;
+    inset: 0;
+    height: auto;
+    background-size: auto var(--reading-screen-height, 100lvh);
+    background-repeat: repeat-y;
   }
   .reading-scene-art::before,
   .reading-scene-art::after {
@@ -884,7 +881,7 @@
     bottom: 0;
     width: 5%;
     background: inherit;
-    background-size: auto 100%;
+    background-size: auto var(--reading-screen-height, 100lvh);
     background-position: left top;
   }
   .reading-scene-art::before {
