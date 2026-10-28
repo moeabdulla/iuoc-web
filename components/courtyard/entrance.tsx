@@ -75,8 +75,17 @@ export function CourtyardEntrance({ children }: { children: ReactNode }) {
     window.addEventListener("touchstart", stop, { passive: true });
     window.addEventListener("keydown", stop);
   }
+  // Start with the native layout in server markup. Safari samples the bottom
+  // backdrop during reload, before effects run; briefly starting with a fixed
+  // desktop backdrop can leave its toolbar opaque for the rest of that visit.
+  // useEntranceMotion enables the desktop camera synchronously before paint.
   return (
-    <div className="courtyard-home" data-reduced={reduced} data-active={active}>
+    <div
+      className="courtyard-home"
+      data-simple-entrance="true"
+      data-reduced={reduced}
+      data-active={active}
+    >
       <div className="courtyard-background" aria-hidden="true">
         <canvas className="courtyard-scene-canvas" />
         <div className="courtyard-room-image">
