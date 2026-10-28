@@ -567,3 +567,21 @@ body:has(.courtyard-home[data-no-header-blur="true"]) .courtyard-header {
 @media (max-width: 700px) {
   .courtyard-scene-loading { --loading-header: calc(65px + env(safe-area-inset-top, 0px)); }
 }
+
+/* The same gate covers every still architectural page, on touch and desktop.
+   Keep mobile loading in document space to preserve Safari's transparent edge. */
+.reading-scene[data-scene-loading]:not([data-scene-loading="ready"]) > :is(.reading-scene-art, .reading-sheet) { visibility: hidden; }
+.reading-scene[data-scene-loading="ready"] > .courtyard-scene-loading { opacity: 0; visibility: hidden; pointer-events: none; }
+.reading-scene[data-scene-loading="slow"] .courtyard-loading-skip { display: block; }
+@media (hover: none) and (pointer: coarse) {
+  .reading-scene[data-scene-loading] > .courtyard-scene-loading { position: absolute; bottom: auto; height: 100%; min-height: 100lvh; }
+}
+.courtyard-decoded-image { opacity: 0; transition: opacity 200ms ease; }
+.courtyard-decoded-image[data-asset-ready="true"] { opacity: 1; }
+:is(.courtyard-video-image,.courtyard-series-image):has(.courtyard-decoded-image[data-asset-ready="false"]) {
+  background: linear-gradient(125deg, #b893501a, transparent 60%), var(--reading-hover);
+}
+@media (prefers-reduced-motion: reduce) {
+  .courtyard-decoded-image, .reading-scene .courtyard-scene-loading { transition: none; }
+  .reading-scene .courtyard-loading-rule { animation: none; }
+}

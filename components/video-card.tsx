@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { DecodedImage } from "@/components/courtyard/decoded-image";
 import Link from "next/link";
 import type { Doc } from "@/convex/_generated/dataModel";
 import { stripHashtags } from "@/lib/strip-hashtags";
@@ -57,7 +57,7 @@ export function VideoCard({ video, label, compact = false }: VideoCardProps) {
         {/* object-cover scales the 16:9 source to the container's height, so the
             drawn width is ~the full card width, not the container's 60% — the
             sizes hint must match the drawn width or Next serves a soft variant */}
-        <Image
+        <DecodedImage
           src={video.thumbnail}
           alt={video.title}
           fill
@@ -79,7 +79,7 @@ export function VideoCard({ video, label, compact = false }: VideoCardProps) {
     </div>
   ) : (
     <div className="relative aspect-video overflow-hidden">
-      <Image
+      <DecodedImage
         src={video.thumbnail}
         alt={video.title}
         fill

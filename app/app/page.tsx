@@ -1,6 +1,6 @@
 import { ReadingShell } from "@/components/courtyard/reading-shell";
 import type { Metadata } from "next";
-import Image from "next/image";
+import { DecodedImage } from "@/components/courtyard/decoded-image";
 import Link from "next/link";
 import {
   BookOpen,
@@ -178,7 +178,7 @@ export default function AppPage() {
             {shots.map((shot) => (
               <li key={shot.src} className="space-y-3">
                 <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-                  <Image
+                  <DecodedImage
                     src={shot.src}
                     alt={shot.alt}
                     width={640}

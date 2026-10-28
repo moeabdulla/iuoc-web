@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { DecodedImage } from "@/components/courtyard/decoded-image";
 import Link from "next/link";
 import { ArrowRight, Play } from "lucide-react";
 import type { Doc } from "@/convex/_generated/dataModel";
@@ -14,7 +14,7 @@ export function LessonImage({
 }) {
   return (
     <div className="courtyard-video-image">
-      <Image
+      <DecodedImage
         src={video.thumbnail}
         alt=""
         fill
@@ -85,7 +85,7 @@ export function SeriesCards({ series }: { series: Doc<"playlists">[] }) {
       {series.map((s) => (
         <Link key={s._id} href={`/series/${s.youtubeId}`}>
           <div className="courtyard-series-image">
-            <Image
+            <DecodedImage
               src={s.thumbnail}
               alt=""
               fill

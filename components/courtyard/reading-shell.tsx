@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ReadingSceneAssets } from "./reading-scene-assets";
 
 /** Shared still architecture: content scrolls normally and playback has no parallax. */
 export function ReadingScene({
@@ -9,10 +10,7 @@ export function ReadingScene({
   className?: string;
 }) {
   return (
-    <div className={`reading-scene ${className}`}>
-      <div className="reading-scene-art" aria-hidden="true" />
-      {children}
-    </div>
+    <ReadingSceneAssets className={className}>{children}</ReadingSceneAssets>
   );
 }
 export function ReadingShell({
