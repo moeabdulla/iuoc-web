@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { InteriorAtmosphere } from "./interior-atmosphere";
 import { ReadyArtImage } from "./ready-art-image";
 import { CourtyardArt } from "./art";
+import { SceneLoading } from "./scene-loading";
 import { useEntranceMotion } from "@/lib/courtyard/use-entrance-motion";
 import { useMotionPreference } from "@/lib/courtyard/use-motion-preference";
 
@@ -83,6 +84,7 @@ export function CourtyardEntrance({ children }: { children: ReactNode }) {
     <div
       className="courtyard-home"
       data-simple-entrance="true"
+      data-scene-loading="pending"
       data-reduced={reduced}
       data-active={active}
     >
@@ -98,6 +100,7 @@ export function CourtyardEntrance({ children }: { children: ReactNode }) {
           />
         </div>
       </div>
+      <SceneLoading entrance={root} />
       <InteriorAtmosphere />
       <div
         ref={root}

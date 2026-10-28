@@ -497,3 +497,73 @@ body:has(.courtyard-home[data-no-header-blur="true"]) .courtyard-header {
 }
 .courtyard-home[data-simple-entrance="true"] :is(.foliage-sway, .facade-ambient-light) { animation: none; }
 .courtyard-home[data-simple-entrance="true"] .interior-atmosphere { display: none; }
+
+/* No enlarged preview plates on first paint. The mobile loader stays in
+   document space: no fixed photographic layer or Safari toolbar workaround. */
+.courtyard-home:not([data-scene-loading="ready"]) :is(.courtyard-background, .entrance-stage, .courtyard-library) {
+  visibility: hidden;
+}
+.courtyard-scene-loading {
+  --loading-header: calc(73px + env(safe-area-inset-top, 0px));
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 220ms ease, visibility 220ms;
+  background: radial-gradient(ellipse at 50% 45%, #21564088, transparent 65%), #082f26;
+  color: #fff4de;
+  overflow: hidden;
+}
+.courtyard-loading-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .18;
+}
+.courtyard-loading-pattern path { fill: none; stroke: #d8b06b; stroke-width: .8; }
+.courtyard-loading-content {
+  position: absolute;
+  top: var(--loading-header);
+  left: 0;
+  width: 100%;
+  height: calc(100svh - var(--loading-header));
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  text-align: center;
+}
+.courtyard-home[data-simple-entrance="true"] .courtyard-scene-loading {
+  position: absolute;
+  bottom: auto;
+  height: var(--simple-screen-height, 100lvh);
+}
+.courtyard-home[data-scene-loading="ready"] .courtyard-scene-loading {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.courtyard-scene-loading .iuoc-brand {
+  flex-direction: column;
+  gap: 18px;
+  font-size: clamp(27px, 3vw, 38px);
+}
+.courtyard-scene-loading .iuoc-brand-mark { width: 48px; height: 48px; }
+.courtyard-scene-loading p { font-size: 18px; color: #dbcba9; }
+.courtyard-loading-rule {
+  width: 72px;
+  height: 1px;
+  background: #d8b06b;
+  animation: courtyard-loading-pulse 1.8s ease-in-out infinite;
+}
+@keyframes courtyard-loading-pulse { 50% { opacity: .35; } }
+.courtyard-loading-skip { display: none; color: #e0b974; text-decoration: underline; text-underline-offset: 5px; }
+.courtyard-home[data-scene-loading="slow"] .courtyard-loading-skip { display: block; }
+.courtyard-home[data-reduced="true"] .courtyard-scene-loading { transition: none; }
+.courtyard-home[data-reduced="true"] .courtyard-loading-rule { animation: none; }
+@media (max-width: 700px) {
+  .courtyard-scene-loading { --loading-header: calc(65px + env(safe-area-inset-top, 0px)); }
+}
