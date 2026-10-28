@@ -126,7 +126,10 @@
 .daily-controls select,
 .daily-controls input {
   min-height: 44px;
+  min-width: 0;
+  max-width: 100%;
   width: 100%;
+  box-sizing: border-box;
   border: 1px solid var(--reading-rule);
   background: var(--reading-control);
   color: var(--reading-ink);
@@ -134,6 +137,15 @@
   font:
     18px var(--font-serif),
     serif;
+}
+/* WebKit date controls have intrinsic sizing independent of their label. */
+.daily-controls input[type="date"] {
+  appearance: none;
+  display: block;
+}
+.daily-controls input[type="date"]::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
 }
 .daily-action {
   display: inline-flex;

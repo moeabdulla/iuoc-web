@@ -863,6 +863,19 @@
   box-shadow: 0 2px 8px #34261044;
 }
 @media (max-width: 700px) {
+  /* The document surface must also carry the architecture: Safari clips fixed
+     descendants above its translucent bottom controls. */
+  .reading-page {
+    background-image: url("/courtyard/reading-bay-1920.webp");
+    background-size: auto 100lvh;
+    background-position: center top;
+  }
+  /* Safari changes the fixed viewport as its toolbars collapse. Keep the
+     architectural plate at one stable size instead of re-cropping cover. */
+  .reading-page .reading-scene-art {
+    bottom: auto;
+    height: 100lvh;
+  }
   .reading-scene-art::before,
   .reading-scene-art::after {
     content: "";
@@ -871,7 +884,7 @@
     bottom: 0;
     width: 5%;
     background: inherit;
-    background-size: auto 100svh;
+    background-size: auto 100%;
     background-position: left top;
   }
   .reading-scene-art::before {
