@@ -116,7 +116,13 @@ export function useEntranceMotion(
       );
       facade.style.width = `${layout.plane.width}px`;
       facade.style.height = `${layout.plane.height}px`;
-      facade.style.left = `${layout.plane.x}px`;
+      // The portrait artwork's doorway is off-centre within the source image.
+      // Crop around the opening in the still mobile layout, rather than around
+      // the image midpoint. Door leaves stay attached to the same art plane.
+      const facadeLeft = simple && phone
+        ? layout.plane.x + layout.width / 2 - layout.axis.x
+        : layout.plane.x;
+      facade.style.left = `${facadeLeft}px`;
       // A still mobile hero needs only its art box. Never scan the portal or
       // reset transforms just because Safari's controls resize the viewport.
       if (simple) return;
