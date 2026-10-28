@@ -455,7 +455,6 @@ body:has(.courtyard-home[data-no-header-blur="true"]) .courtyard-header {
   .entrance-copy h1 { font-size: var(--scene-title-size, clamp(24px, min(7.7vw, 4.1svh), 44px)); }
 }
 @media (hover: none) and (pointer: coarse) {
-  body { background-color: #082f26; }
   .courtyard-header,
   .courtyard-header-inner {
     background: #082f26;
@@ -478,13 +477,22 @@ body:has(.courtyard-home[data-no-header-blur="true"]) .courtyard-header {
   will-change: auto !important;
 }
 .courtyard-home[data-simple-entrance="true"] .courtyard-library { margin-top: 0; padding-top: 40px; }
-.courtyard-home[data-simple-entrance="true"] .courtyard-background { bottom: auto; height: max(calc(100lvh + env(safe-area-inset-bottom, 0px)), var(--simple-screen-height, 0px)); }
+.courtyard-home[data-simple-entrance="true"] .courtyard-background {
+  position: absolute;
+  height: 100%;
+  background-color: transparent;
+  background-image: image-set(url('/courtyard/interior-wide-1920.webp') 1x, url('/courtyard/interior-wide-2800.webp') 2x);
+  background-size: auto max(calc(100lvh + env(safe-area-inset-bottom, 0px)), var(--simple-screen-height, 0px));
+  background-position: center top;
+  background-repeat: repeat-y;
+}
 .courtyard-home[data-simple-entrance="true"] .courtyard-room-image {
   inset: 0;
   width: 100% !important;
-  height: 100% !important;
+  height: max(calc(100lvh + env(safe-area-inset-bottom, 0px)), var(--simple-screen-height, 0px)) !important;
   transform: none !important;
   will-change: auto !important;
 }
 .courtyard-home[data-simple-entrance="true"] :is(.foliage-sway, .facade-ambient-light) { animation: none; }
 .courtyard-home[data-simple-entrance="true"] .interior-atmosphere { display: none; }
+

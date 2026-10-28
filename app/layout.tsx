@@ -3,7 +3,6 @@ import { Source_Serif_4, Amiri } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
 import { SiteHeader } from "@/components/site-header";
-import { BrowserChrome } from "@/components/courtyard/browser-chrome";
 import { SiteFooter } from "@/components/site-footer";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
@@ -60,12 +59,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        style={{ backgroundColor: "#082f26" }}
         className={`${sourceSerif.variable} ${amiri.variable} flex min-h-dvh flex-col font-serif antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <ConvexClientProvider>
-            <BrowserChrome />
             <SiteHeader />
             <main className="flex-1">{children}</main>
             <SiteFooter />
