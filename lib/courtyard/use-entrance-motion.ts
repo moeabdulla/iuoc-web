@@ -7,6 +7,7 @@ import {
 } from "./scene-layer";
 import { createScenePainter } from "./scene-painter";
 import { lockSceneViewport, sceneViewportChanged } from "./scene-viewport";
+import { displayHeight } from "./display-height";
 import geometry from "@/public/courtyard/geometry.json";
 import {
   clamp01,
@@ -94,11 +95,7 @@ export function useEntranceMotion(
       if (simple && touchViewport.matches) {
         // Native art must cover the physical display, including the area under
         // Safari's controls, rather than ending at the inset content frame.
-        const display = window.screen;
-        const height = matchMedia("(orientation: portrait)").matches
-          ? Math.max(display.width, display.height)
-          : Math.min(display.width, display.height);
-        const value = `${height}px`;
+        const value = `${displayHeight()}px`;
         if (home.style.getPropertyValue("--simple-screen-height") !== value)
           home.style.setProperty("--simple-screen-height", value);
       }
@@ -119,9 +116,10 @@ export function useEntranceMotion(
       // The portrait artwork's doorway is off-centre within the source image.
       // Crop around the opening in the still mobile layout, rather than around
       // the image midpoint. Door leaves stay attached to the same art plane.
-      const facadeLeft = simple && phone
-        ? layout.plane.x + layout.width / 2 - layout.axis.x
-        : layout.plane.x;
+      const facadeLeft =
+        simple && phone
+          ? layout.plane.x + layout.width / 2 - layout.axis.x
+          : layout.plane.x;
       facade.style.left = `${facadeLeft}px`;
       // A still mobile hero needs only its art box. Never scan the portal or
       // reset transforms just because Safari's controls resize the viewport.

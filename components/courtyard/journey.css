@@ -867,14 +867,14 @@
      descendants above its translucent bottom controls. */
   .reading-page {
     background-image: url("/courtyard/reading-bay-1920.webp");
-    background-size: auto 100lvh;
+    background-size: auto var(--reading-screen-height, 100lvh);
     background-position: center top;
   }
   /* Safari changes the fixed viewport as its toolbars collapse. Keep the
      architectural plate at one stable size instead of re-cropping cover. */
   .reading-page .reading-scene-art {
     bottom: auto;
-    height: 100lvh;
+    height: var(--reading-screen-height, 100lvh);
   }
   .reading-scene-art::before,
   .reading-scene-art::after {
