@@ -91,6 +91,17 @@ export function useEntranceMotion(
     const painter =
       canvasRenderer && !simple ? createScenePainter(home, schedule) : null;
     function measure() {
+      if (simple && touchViewport.matches) {
+        // Native art must cover the physical display, including the area under
+        // Safari's controls, rather than ending at the inset content frame.
+        const display = window.screen;
+        const height = matchMedia("(orientation: portrait)").matches
+          ? Math.max(display.width, display.height)
+          : Math.min(display.width, display.height);
+        const value = `${height}px`;
+        if (home.style.getPropertyValue("--simple-screen-height") !== value)
+          home.style.setProperty("--simple-screen-height", value);
+      }
       if (stableViewport && sceneViewportChanged(viewportWidth, innerWidth)) {
         viewportWidth = innerWidth;
         lockSceneViewport(home, stage, copy, touchViewport.matches);
@@ -320,6 +331,7 @@ export function useEntranceMotion(
         "--scene-height",
         "--scene-copy-top",
         "--scene-title-size",
+        "--simple-screen-height",
       ])
         home.style.removeProperty(name);
     };

@@ -54,8 +54,13 @@ export default function RootLayout({
   return (
     // `suppressHydrationWarning` only affects the html tag, and is needed by
     // `ThemeProvider` which sets the theme class attribute on it.
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      style={{ backgroundColor: "#082f26" }}
+      suppressHydrationWarning
+    >
       <body
+        style={{ backgroundColor: "#082f26" }}
         className={`${sourceSerif.variable} ${amiri.variable} flex min-h-dvh flex-col font-serif antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
