@@ -6,6 +6,7 @@ import {
   paintPersistentSceneLayer,
 } from "./scene-layer";
 import { createScenePainter } from "./scene-painter";
+import { lockSceneViewport, sceneViewportChanged } from "./scene-viewport";
 import geometry from "@/public/courtyard/geometry.json";
 import {
   clamp01,
@@ -44,9 +45,9 @@ export function useEntranceMotion(
       comparison !== "dom-layers" && comparison !== "retired-layers";
     const persistentLayers = comparison !== "retired-layers";
     const touchViewport = matchMedia("(hover:none) and (pointer:coarse)");
-    home.dataset.stableViewport = String(
-      touchViewport.matches || comparison === "touch-viewport",
-    );
+    const stableViewport =
+      touchViewport.matches || comparison === "touch-viewport";
+    home.dataset.stableViewport = String(stableViewport);
     home.dataset.sceneRenderer = canvasRenderer
       ? "canvas"
       : persistentLayers
@@ -78,9 +79,15 @@ export function useEntranceMotion(
       frame = 0,
       facadeExit = 1,
       copyExit = 1,
+      viewportWidth = 0,
+      sectionHeight = 0,
       plantExits: number[] = [];
     const painter = canvasRenderer ? createScenePainter(home, schedule) : null;
     function measure() {
+      if (stableViewport && sceneViewportChanged(viewportWidth, innerWidth)) {
+        viewportWidth = innerWidth;
+        lockSceneViewport(home, stage, copy, touchViewport.matches);
+      }
       if (!stage.clientWidth || !stage.clientHeight) return;
       const phone = portrait.matches;
       boundary = Array.from(
@@ -97,6 +104,7 @@ export function useEntranceMotion(
       );
       sectionTop = section.getBoundingClientRect().top + scrollY;
       travel = Math.max(1, section.offsetHeight - stage.offsetHeight);
+      sectionHeight = section.offsetHeight;
       room.style.width = `${layout.width * ROOM_OVERSCAN}px`;
       room.style.height = `${layout.height * ROOM_OVERSCAN}px`;
       facade.style.width = `${layout.plane.width}px`;
@@ -260,7 +268,18 @@ export function useEntranceMotion(
       });
     }
     measure();
-    const observer = new ResizeObserver(remeasure);
+    const observer = new ResizeObserver((entries) => {
+      // New lessons / quotes can change document height without changing the
+      // camera. Do not reset all layer transforms and scan the arch for that.
+      const homeEntry = entries.find((entry) => entry.target === home);
+      if (homeEntry && layout)
+        readingTravel = Math.max(
+          layout.height,
+          homeEntry.contentRect.height - sectionHeight,
+        );
+      if (entries.some((entry) => entry.target !== home)) remeasure();
+      else schedule();
+    });
     observer.observe(stage);
     observer.observe(copy);
     observer.observe(home);
@@ -269,6 +288,11 @@ export function useEntranceMotion(
     window.addEventListener("popstate", remeasure);
     window.addEventListener("hashchange", remeasure);
     portrait.addEventListener("change", remeasure);
+    const onResize = () => {
+      if (stableViewport && sceneViewportChanged(viewportWidth, innerWidth))
+        remeasure();
+    };
+    window.addEventListener("resize", onResize, { passive: true });
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
@@ -278,6 +302,13 @@ export function useEntranceMotion(
       window.removeEventListener("popstate", remeasure);
       window.removeEventListener("hashchange", remeasure);
       portrait.removeEventListener("change", remeasure);
+      window.removeEventListener("resize", onResize);
+      for (const name of [
+        "--scene-height",
+        "--scene-copy-top",
+        "--scene-title-size",
+      ])
+        home.style.removeProperty(name);
     };
   }, [root, reduced]);
 }
