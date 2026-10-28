@@ -41,12 +41,18 @@ export function useEntranceMotion(
     const comparison = new URLSearchParams(location.search).get(
       "courtyard-test",
     );
+    const touchViewport = matchMedia("(hover:none) and (pointer:coarse)");
+    const simple =
+      comparison === "mobile-simple" ||
+      (touchViewport.matches &&
+        comparison !== "mobile-cinematic" &&
+        comparison !== "touch-viewport");
+    home.dataset.simpleEntrance = String(simple);
     const canvasRenderer =
       comparison !== "dom-layers" && comparison !== "retired-layers";
     const persistentLayers = comparison !== "retired-layers";
-    const touchViewport = matchMedia("(hover:none) and (pointer:coarse)");
     const stableViewport =
-      touchViewport.matches || comparison === "touch-viewport";
+      !simple && (touchViewport.matches || comparison === "touch-viewport");
     home.dataset.stableViewport = String(stableViewport);
     home.dataset.sceneRenderer = canvasRenderer
       ? "canvas"
@@ -82,7 +88,8 @@ export function useEntranceMotion(
       viewportWidth = 0,
       sectionHeight = 0,
       plantExits: number[] = [];
-    const painter = canvasRenderer ? createScenePainter(home, schedule) : null;
+    const painter =
+      canvasRenderer && !simple ? createScenePainter(home, schedule) : null;
     function measure() {
       if (stableViewport && sceneViewportChanged(viewportWidth, innerWidth)) {
         viewportWidth = innerWidth;
@@ -187,7 +194,8 @@ export function useEntranceMotion(
     function render() {
       frame = 0;
       if (!layout) return;
-      const p = reduced ? 0 : clamp01((scrollY - sectionTop) / travel);
+      const p =
+        reduced || simple ? 0 : clamp01((scrollY - sectionTop) / travel);
       const pose = entrancePose(p, layout);
       const readingProgress = reduced
         ? 0
@@ -283,7 +291,7 @@ export function useEntranceMotion(
     observer.observe(stage);
     observer.observe(copy);
     observer.observe(home);
-    window.addEventListener("scroll", schedule, { passive: true });
+    if (!simple) window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("pageshow", remeasure);
     window.addEventListener("popstate", remeasure);
     window.addEventListener("hashchange", remeasure);

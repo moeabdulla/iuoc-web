@@ -37,6 +37,14 @@ export function CourtyardEntrance({ children }: { children: ReactNode }) {
     const target = document.getElementById("library-heading");
     if (!target) return;
     const top = Math.max(0, target.getBoundingClientRect().top + scrollY - 108);
+    if (
+      root.current?.closest<HTMLElement>(".courtyard-home")?.dataset
+        .simpleEntrance === "true"
+    ) {
+      window.scrollTo({ top, behavior: reduced ? "instant" : "smooth" });
+      target.focus({ preventScroll: true });
+      return;
+    }
     if (reduced) {
       window.scrollTo({ top });
       target.focus({ preventScroll: true });
