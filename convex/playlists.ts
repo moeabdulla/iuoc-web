@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 import { query } from "./_generated/server";
-import { boundedText } from "./lib/query-limits";
+import { boundedText } from "./lib/query_limits";
 
 export const listVisible = query({
   args: {},

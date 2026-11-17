@@ -1,7 +1,7 @@
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { query } from "./_generated/server";
-import { boundedInteger, boundedText } from "./lib/query-limits";
+import { boundedInteger, boundedText } from "./lib/query_limits";
 
 export const latest = query({
   args: { limit: v.number() },

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { createYouTubeClient } from "./youtube-client";
+import { createYouTubeClient } from "./youtube_client";
 
 const apiKey = "test-key-not-a-real-credential";
 const json = (value: unknown, status = 200) => Response.json(value, { status });

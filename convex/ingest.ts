@@ -14,7 +14,7 @@ import {
   staleYoutubeIds,
 } from "./lib/youtube";
 
-import { createYouTubeClient } from "./lib/youtube-client";
+import { createYouTubeClient } from "./lib/youtube_client";
 
 const videoValidator = v.object({
   youtubeId: v.string(),
