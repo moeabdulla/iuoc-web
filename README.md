@@ -81,10 +81,10 @@ Ingestion runs four times daily at 01:00, 16:00, 19:00 and 22:00 UTC. These are 
 
 Public Convex functions read the catalogue with validated inputs and capped requests. Imports and database writes use internal functions. Timeouts, repeat-token detection and a per-run request budget prevent runaway ingestion; an unsuccessful upstream fetch cannot prune the catalogue.
 
-The production Vercel build deploys Convex before building Next.js. Production deployment requires private environment configuration and is not part of local setup. See [`SECURITY.md`](SECURITY.md) for credential boundaries and [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for bundled content.
+The production Vercel build deploys Convex before building Next.js. Production deployment requires private environment configuration and is not part of local setup. See [`SECURITY.md`](.github/SECURITY.md) for credential boundaries and [`THIRD_PARTY_NOTICES.md`](docs/THIRD_PARTY_NOTICES.md) for bundled content.
 
 ## Reuse and licensing
 
-The original application code and documentation are [MIT licensed](LICENSE): you can study, modify and reuse them, including commercially. Bundled Quran text, translations, annotations and third-party assets retain their own terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
+The original application code and documentation are [MIT licensed](LICENSE): you can study, modify and reuse them, including commercially. Bundled Quran text, translations, annotations and third-party assets retain their own terms; see [third-party notices](docs/THIRD_PARTY_NOTICES.md).
 
 Run forks against **your own Convex deployment and YouTube API key**. The code licence does not grant access to IUoC's hosted backend, credentials or API quota. No production keys are included.
