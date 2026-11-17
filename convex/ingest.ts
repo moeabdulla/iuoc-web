@@ -1,6 +1,10 @@
 import { v } from "convex/values";
 import { internal } from "./_generated/api";
-import { internalAction, internalMutation, internalQuery } from "./_generated/server";
+import {
+  internalAction,
+  internalMutation,
+  internalQuery,
+} from "./_generated/server";
 import {
   buildSearchText,
   chunk,
@@ -10,7 +14,7 @@ import {
   staleYoutubeIds,
 } from "./lib/youtube";
 
-const API = "https://www.googleapis.com/youtube/v3";
+import { createYouTubeClient } from "./lib/youtube-client";
 
 const videoValidator = v.object({
   youtubeId: v.string(),
@@ -47,11 +51,6 @@ interface YtThumbnails {
   maxres?: YtThumbnail;
 }
 
-interface YtApiPage<T> {
-  items?: T[];
-  nextPageToken?: string;
-}
-
 interface YtPlaylistItem {
   contentDetails?: { videoId?: string };
 }
@@ -75,38 +74,6 @@ interface YtPlaylist {
     thumbnails?: YtThumbnails;
   };
   contentDetails?: { itemCount?: number };
-}
-
-async function ytFetch<T>(
-  path: string,
-  params: Record<string, string>,
-): Promise<YtApiPage<T>> {
-  const key = process.env.YOUTUBE_API_KEY;
-  if (!key) throw new Error("YOUTUBE_API_KEY is not set");
-  const qs = new URLSearchParams({ ...params, key });
-  const res = await fetch(`${API}/${path}?${qs}`);
-  if (!res.ok) {
-    throw new Error(`YouTube API ${path} failed: ${res.status} ${await res.text()}`);
-  }
-  return await res.json();
-}
-
-async function listAll<T>(
-  path: string,
-  params: Record<string, string>,
-): Promise<T[]> {
-  const items: T[] = [];
-  let pageToken: string | undefined;
-  do {
-    const page = await ytFetch<T>(path, {
-      ...params,
-      maxResults: "50",
-      ...(pageToken ? { pageToken } : {}),
-    });
-    items.push(...(page.items ?? []));
-    pageToken = page.nextPageToken;
-  } while (pageToken);
-  return items;
 }
 
 function bestThumbnail(thumbnails: YtThumbnails | undefined): string {
@@ -139,17 +106,34 @@ async function probeIsShort(videoId: string): Promise<boolean | undefined> {
 export const run = internalAction({
   args: {},
   handler: async (ctx) => {
-    const channelId = process.env.YOUTUBE_CHANNEL_ID!;
-    const uploadsId = process.env.YOUTUBE_UPLOADS_PLAYLIST_ID!;
+    const channelId = process.env.YOUTUBE_CHANNEL_ID?.trim();
+    const uploadsId = process.env.YOUTUBE_UPLOADS_PLAYLIST_ID?.trim();
+    if (!channelId || !uploadsId) {
+      throw new Error(
+        "YOUTUBE_CHANNEL_ID and YOUTUBE_UPLOADS_PLAYLIST_ID must be set",
+      );
+    }
+    const { page: ytFetch, listAll } = createYouTubeClient({
+      apiKey: process.env.YOUTUBE_API_KEY,
+    });
 
     // 1. All uploaded video ids
     const uploadItems = await listAll<YtPlaylistItem>("playlistItems", {
       part: "contentDetails",
       playlistId: uploadsId,
     });
-    const videoIds = uploadItems
-      .map((i) => i.contentDetails?.videoId)
-      .filter((id): id is string => typeof id === "string");
+    const videoIds = [
+      ...new Set(
+        uploadItems
+          .map((i) => i.contentDetails?.videoId)
+          .filter((id): id is string => typeof id === "string"),
+      ),
+    ];
+    if (videoIds.length === 0) {
+      throw new Error(
+        "YouTube uploads returned no videos; keeping the existing catalogue",
+      );
+    }
 
     // 2. Canonical video metadata in batches of 50
     const rawVideos: YtVideoItem[] = [];
@@ -198,9 +182,16 @@ export const run = internalAction({
 
     // 4. Probe Shorts status only for videos we don't already know about,
     // so re-ingests don't re-probe the whole channel every time.
-    const knownStatuses = await ctx.runQuery(internal.ingest.knownShortStatuses, {});
-    const knownMap = new Map(knownStatuses.map((k) => [k.youtubeId, k.isShort]));
-    const toProbe = videosBase.filter((video) => knownMap.get(video.youtubeId) === undefined);
+    const knownStatuses = await ctx.runQuery(
+      internal.ingest.knownShortStatuses,
+      {},
+    );
+    const knownMap = new Map(
+      knownStatuses.map((k) => [k.youtubeId, k.isShort]),
+    );
+    const toProbe = videosBase.filter(
+      (video) => knownMap.get(video.youtubeId) === undefined,
+    );
 
     const probedResults = new Map<string, boolean>();
     let probedCount = 0;
@@ -219,7 +210,9 @@ export const run = internalAction({
       }
     }
     const shortsFound = [...probedResults.values()].filter(Boolean).length;
-    console.log(`Probed ${probedCount} videos for Shorts status; found ${shortsFound} shorts`);
+    console.log(
+      `Probed ${probedCount} videos for Shorts status; found ${shortsFound} shorts`,
+    );
 
     const videos = videosBase.map((video) => ({
       ...video,
@@ -241,9 +234,12 @@ export const run = internalAction({
     }
     await ctx.runMutation(internal.ingest.upsertPlaylists, { playlists });
 
-    const removedCount = await ctx.runMutation(internal.ingest.removeStaleVideos, {
-      currentYoutubeIds: videos.map((video) => video.youtubeId),
-    });
+    const removedCount = await ctx.runMutation(
+      internal.ingest.removeStaleVideos,
+      {
+        currentYoutubeIds: videos.map((video) => video.youtubeId),
+      },
+    );
 
     console.log(
       `Ingested ${videos.length} videos, ${playlists.length} playlists; removed ${removedCount} stale videos`,

@@ -7,7 +7,7 @@ import { api } from "@/convex/_generated/api";
 import { siteConfig } from "@/lib/site";
 import { stripHashtags } from "@/lib/strip-hashtags";
 import { YouTubeEmbed } from "@/components/youtube-embed";
-import { formatDuration } from "@/components/video-card";
+import { formatDuration } from "@/lib/video-format";
 import { CourtyardVideo, SeriesCards } from "@/components/courtyard/cards";
 import { ReadingShell } from "@/components/courtyard/reading-shell";
 import { VideoDescription } from "@/components/video-description";

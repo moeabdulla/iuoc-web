@@ -2,7 +2,7 @@ import { DecodedImage } from "@/components/courtyard/decoded-image";
 import Link from "next/link";
 import { ArrowRight, Play } from "lucide-react";
 import type { Doc } from "@/convex/_generated/dataModel";
-import { formatDuration } from "@/components/video-card";
+import { formatDuration } from "@/lib/video-format";
 import { stripHashtags } from "@/lib/strip-hashtags";
 
 export function LessonImage({

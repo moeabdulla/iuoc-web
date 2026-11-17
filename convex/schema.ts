@@ -19,6 +19,7 @@ export default defineSchema({
     .index("by_youtubeId", ["youtubeId"])
     .index("by_slug", ["slug"])
     .index("by_publishedAt", ["publishedAt"])
+    .index("by_featured_and_publishedAt", ["featured", "publishedAt"])
     .searchIndex("by_searchText", { searchField: "searchText" }),
 
   playlists: defineTable({

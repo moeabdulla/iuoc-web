@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { query } from "./_generated/server";
+import { boundedText } from "./lib/query-limits";
 
 export const listVisible = query({
   args: {},
@@ -20,7 +21,9 @@ export const byYoutubeId = query({
   handler: async (ctx, args) => {
     const playlist = await ctx.db
       .query("playlists")
-      .withIndex("by_youtubeId", (q) => q.eq("youtubeId", args.youtubeId))
+      .withIndex("by_youtubeId", (q) =>
+        q.eq("youtubeId", boundedText(args.youtubeId, 128)),
+      )
       .unique();
     return playlist !== null && playlist.visible ? playlist : null;
   },

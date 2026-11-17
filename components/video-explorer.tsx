@@ -65,6 +65,7 @@ export function VideoExplorer({
         <Search size={19} aria-hidden="true" />
         <input
           type="search"
+          maxLength={200}
           aria-label="Search lessons or series"
           placeholder={view === "series" ? "Search series" : "Search lessons"}
           value={searchInput}

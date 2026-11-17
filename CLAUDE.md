@@ -32,13 +32,12 @@ bunx convex run ingest:run    # manually trigger the YouTube ingestion job
 
 `videos.tags`, `videos.featured`, `playlists.displayOrder`, and
 `playlists.visible` are curated by hand through the Convex dashboard —
-there is no admin UI yet. The ingestion cron (`convex/crons.ts`, every 12
-hours) only adds/updates video and playlist metadata from YouTube; it
+there is no admin UI yet. The ingestion cron (`convex/crons.ts`, four times daily at fixed UTC times) only adds/updates video and playlist metadata from YouTube; it
 never overwrites these curation fields, so manual edits persist across
 ingestion runs.
 
 ## Deploy
 
-`NEXT_PUBLIC_SITE_URL` must be set in the production environment (used for
-canonical URLs, sitemap, and metadata). To ship backend changes to the
+`NEXT_PUBLIC_SITE_URL` overrides the site origin used for canonical URLs,
+sitemap and metadata; the default is `https://iuoc.ca`. To ship backend changes to the
 production Convex deployment, run `bunx convex deploy`.

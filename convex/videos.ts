@@ -1,6 +1,7 @@
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { query } from "./_generated/server";
+import { boundedInteger, boundedText } from "./lib/query-limits";
 
 export const latest = query({
   args: { limit: v.number() },
@@ -9,20 +10,18 @@ export const latest = query({
       .query("videos")
       .withIndex("by_publishedAt")
       .order("desc")
-      .take(Math.min(args.limit, 50));
+      .take(boundedInteger(args.limit, 50));
   },
 });
 
 export const featured = query({
   args: {},
-  // Full-collection scans are fine at this catalog size (~700 docs, single channel); revisit if it grows past ~5k.
   handler: async (ctx) => {
-    const all = await ctx.db
+    return await ctx.db
       .query("videos")
-      .withIndex("by_publishedAt")
+      .withIndex("by_featured_and_publishedAt", (q) => q.eq("featured", true))
       .order("desc")
-      .collect();
-    return all.filter((video) => video.featured).slice(0, 6);
+      .take(6);
   },
 });
 
@@ -31,8 +30,8 @@ export const bySlug = query({
   handler: async (ctx, args) => {
     return await ctx.db
       .query("videos")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
-      // Slugs are unique by construction (makeSlug appends a youtubeId suffix); .unique() throwing on duplicates is intentional loud failure.
+      .withIndex("by_slug", (q) => q.eq("slug", boundedText(args.slug, 160)))
+      // Reject unexpected duplicates rather than silently linking the wrong video.
       .unique();
   },
 });
@@ -40,15 +39,18 @@ export const bySlug = query({
 export const byPlaylist = query({
   args: { playlistYoutubeId: v.string(), limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
-    const all = await ctx.db
+    const playlistId = boundedText(args.playlistYoutubeId, 128);
+    const limit = boundedInteger(args.limit ?? 100, 200);
+    const videos = [];
+    // Stop once the requested matches are found instead of collecting all docs.
+    for await (const video of ctx.db
       .query("videos")
       .withIndex("by_publishedAt")
-      .order("desc")
-      .collect();
-    const matching = all.filter((video) =>
-      video.playlistIds.includes(args.playlistYoutubeId),
-    );
-    return matching.slice(0, args.limit ?? 100);
+      .order("desc")) {
+      if (video.playlistIds.includes(playlistId)) videos.push(video);
+      if (videos.length === limit) break;
+    }
+    return videos;
   },
 });
 
@@ -59,16 +61,17 @@ export const byPlaylistPage = query({
     limit: v.number(),
   },
   handler: async (ctx, args) => {
+    const playlistId = boundedText(args.playlistYoutubeId, 128);
+    const limit = boundedInteger(args.limit, 48);
+    const offset = boundedInteger(args.offset, Number.MAX_SAFE_INTEGER, 0);
     const all = await ctx.db
       .query("videos")
       .withIndex("by_publishedAt")
       .order("desc")
       .collect();
     const matching = all.filter((video) =>
-      video.playlistIds.includes(args.playlistYoutubeId),
+      video.playlistIds.includes(playlistId),
     );
-    const limit = Math.min(Math.max(args.limit, 1), 48);
-    const offset = Math.max(args.offset, 0);
     return {
       videos: matching.slice(offset, offset + limit),
       total: matching.length,
@@ -79,14 +82,15 @@ export const byPlaylistPage = query({
 export const search = query({
   args: { query: v.string(), tag: v.optional(v.string()) },
   handler: async (ctx, args) => {
+    const text = boundedText(args.query, 200);
+    const tag = args.tag === undefined ? undefined : boundedText(args.tag, 100);
+    if (!text) return [];
     const results = await ctx.db
       .query("videos")
-      .withSearchIndex("by_searchText", (q) =>
-        q.search("searchText", args.query),
-      )
+      .withSearchIndex("by_searchText", (q) => q.search("searchText", text))
       .take(100);
-    const filtered = args.tag
-      ? results.filter((video) => video.tags.includes(args.tag!))
+    const filtered = tag
+      ? results.filter((video) => video.tags.includes(tag))
       : results;
     return filtered.slice(0, 30);
   },
@@ -95,23 +99,38 @@ export const search = query({
 export const paginate = query({
   args: { paginationOpts: paginationOptsValidator },
   handler: async (ctx, args) => {
+    const options = args.paginationOpts;
+    // Preserve the opaque cursors used by usePaginatedQuery, but do not trust
+    // client-supplied read budgets or arbitrarily large page requests.
+    const numItems = boundedInteger(options.numItems, 48);
+    if (options.cursor) boundedText(options.cursor, 4096);
+    if (options.endCursor) boundedText(options.endCursor, 4096);
     return await ctx.db
       .query("videos")
       .withIndex("by_publishedAt")
       .order("desc")
-      .paginate(args.paginationOpts);
+      .paginate({
+        ...options,
+        numItems,
+        maximumRowsRead: 200,
+        maximumBytesRead: 1_000_000,
+      });
   },
 });
 
 export const byTag = query({
   args: { tag: v.string() },
   handler: async (ctx, args) => {
-    const all = await ctx.db
+    const tag = boundedText(args.tag, 100);
+    const videos = [];
+    for await (const video of ctx.db
       .query("videos")
       .withIndex("by_publishedAt")
-      .order("desc")
-      .collect();
-    return all.filter((video) => video.tags.includes(args.tag)).slice(0, 200);
+      .order("desc")) {
+      if (video.tags.includes(tag)) videos.push(video);
+      if (videos.length === 200) break;
+    }
+    return videos;
   },
 });
 
